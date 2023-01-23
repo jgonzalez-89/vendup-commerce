@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { PhotoProfile } from "./photoProfile";
-import imagenUser from "../../img/imagenUser.png";
+// import { PhotoProfile } from "./photoProfile";
+// import imagenUser from "../../img/imagenUser.png";
 
 // import PropTypes from "prop-types";
 
