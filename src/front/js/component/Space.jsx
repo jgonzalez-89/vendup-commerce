@@ -8,34 +8,34 @@ import imagenUser from "../../img/imagenUser.png";
 const Space = () => {
   const { store, actions } = useContext(Context);
 
-  // //DATOS A EDITAR DE USUARIO
-  // const [name, setName] = useState("");
-  // const [lastname, setLastname] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [city, setCity] = useState("");
-  // const [tlf, setTlf] = useState("");
-  // const [adress, setAdress] = useState("");
-  // const [postcode, setPostCode] = useState("");
-  // const [photoProfile, setPhotoProfile] = useState("");
-  // const [uploadImages, setUploadImages] = useState("");
+  //DATOS A EDITAR DE USUARIO
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [tlf, setTlf] = useState("");
+  const [adress, setAdress] = useState("");
+  const [postcode, setPostCode] = useState("");
+  const [photoProfile, setPhotoProfile] = useState("");
+  const [uploadImages, setUploadImages] = useState("");
 
-  // console.log("username " + name);
+  console.log("username " + name);
+  console.log(store.consultUser);
+  //Funcion
+  const handleSubmitEditUser = (e) => {
+    actions.editUserProfile(name, lastname, email, city, tlf, adress, postcode);
+  };
+  useEffect(() => {
+    setName(store.consultUser.name);
+    setLastname(store.consultUser.lastname);
+    setEmail(store.consultUser.email);
+    setCity(store.consultUser.city);
+    setTlf(store.consultUser.tlf);
+    setAdress(store.consultUser.adress);
+    setPostCode(store.consultUser.postcode);
+    setPhotoProfile(store.consultUser.pictures);
+  }, [store.consultUser]);
   // console.log(store.consultUser);
-  // //Funcion
-  // const handleSubmitEditUser = (e) => {
-  //   actions.editUserProfile(name, lastname, email, city, tlf, adress, postcode);
-  // };
-  // useEffect(() => {
-  //   setName(store.consultUser.name);
-  //   setLastname(store.consultUser.lastname);
-  //   setEmail(store.consultUser.email);
-  //   setCity(store.consultUser.city);
-  //   setTlf(store.consultUser.tlf);
-  //   setAdress(store.consultUser.adress);
-  //   setPostCode(store.consultUser.postcode);
-  //   setPhotoProfile(store.consultUser.pictures);
-  // }, [store.consultUser]);
-  // // console.log(store.consultUser);
 
   return (
     <div
