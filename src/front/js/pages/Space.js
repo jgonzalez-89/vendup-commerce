@@ -16,7 +16,7 @@ const Space = () => {
         </div>
         <div className="row-3">
           <img
-            src={imagenUser}
+            src={""}
             className="card-img-top mx-auto mt-2 "
             alt="usuario"
             style={{ width: "10rem", height: "10rem", objectFit: "cover" }}
@@ -135,7 +135,7 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request "
                       id="recipient-name"
-                      value={name ? name : ""}
+                      value={""}
                     />
                   </div>
                   <div className="mb-3">
@@ -149,7 +149,7 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request"
                       id="recipient-name"
-                      value={lastname ? lastname : ""}
+                      value={""}
                     />
                   </div>
                   <div className="mb-3">
@@ -163,7 +163,7 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request"
                       id="recipient-name"
-                      value={city ? city : ""}
+                      value={""}
                     />
                   </div>
                   <div className="mb-3">
@@ -177,7 +177,7 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request"
                       id="recipient-name"
-                      value={adress ? adress : ""}
+                      value={""}
                     />
                   </div>
                   <div className="mb-3">
@@ -191,7 +191,7 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request"
                       id="recipient-name"
-                      value={postcode ? postcode : ""}
+                      value={""}
                     />
                   </div>
 
@@ -206,7 +206,6 @@ const Space = () => {
                       type="text"
                       className="form-control form form-control-request"
                       id="recipient-name"
-                      value={tlf ? tlf : ""}
                     />
                   </div>
                 </form>
@@ -216,7 +215,7 @@ const Space = () => {
                   data-bs-dismiss="modal"
                   type="button"
                   className="btn mail-button"
-                  onClick={handleSubmitEditUser}
+                  onClick={""}
                 >
                   aceptar
                 </button>
