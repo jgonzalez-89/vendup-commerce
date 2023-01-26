@@ -3,7 +3,7 @@ import React from "react";
 const Space = () => {
   return (
     <div
-      className=" container border border-profile border-warning border-2 rounded-3 "
+      className=" container border border-profile  border-2 rounded-3 "
       style={{ width: "600px", height: "650px", marginTop: "80px" }}
     >
       <div className=" container p-3 d-flex  justify-content-end">
@@ -14,7 +14,7 @@ const Space = () => {
             </p>
           </div>
         </div>
-        <div className="row-3">
+        {/* <div className="row-3">
           <img
             src={""}
             className="card-img-top mx-auto mt-2 "
@@ -27,7 +27,7 @@ const Space = () => {
             style={{ width: "10rem", height: "10rem", objectFit: "cover" }}
             alt="..."
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="container">
