@@ -49,6 +49,7 @@ class ShoppingCart(db.Model):
     updated_at = db.Column(db.DateTime, nullable=False)
     user = db.relationship('User', back_populates='shopping_cart')
     products = db.relationship('ShoppingCartProduct', back_populates='shopping_cart')
+    bill = db.relationship('Bill', uselist=False, back_populates='shopping_cart')
 
 class ShoppingCartProduct(db.Model):
     __tablename__ = 'Shopping_Cart_Product'
@@ -57,3 +58,12 @@ class ShoppingCartProduct(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     shopping_cart = db.relationship('ShoppingCart', back_populates='products')
     product = db.relationship('Product', back_populates='shopping_cart_products')
+
+class Bill(db.Model):
+    __tablename__ = 'Bill'
+    id = db.Column(db.Integer, primary_key=True)
+    shopping_cart_id = db.Column(db.Integer, ForeignKey('Shopping_Cart.id'), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
+    status = db.Column(db.Enum('paid', 'pending', 'refunded', name='bill_status_enum'), nullable=False)
+    shopping_cart = db.relationship('ShoppingCart', back_populates='bill')

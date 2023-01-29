@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Product, ShoppingCart, ShoppingCartProduct
+from .models import db, User, Product, ShoppingCart, ShoppingCartProduct, Bill
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -15,6 +15,8 @@ def setup_admin(app):
     admin.add_view(ModelView(Product, db.session))
     admin.add_view(ModelView(ShoppingCart, db.session))
     admin.add_view(ModelView(ShoppingCartProduct, db.session))
+    admin.add_view(ModelView(Bill, db.session))
+
 
 
 
