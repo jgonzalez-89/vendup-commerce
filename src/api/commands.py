@@ -1,3 +1,4 @@
+
 import click
 from api.models import db, User
 from datetime import datetime
@@ -19,7 +20,7 @@ def generate_random_password(length=16, chars=string.ascii_letters + string.digi
 def setup_commands(app):
     """Set up the test-users command for the Flask app."""
 
-    @app.cli.command("test-users")  # flask test-users $number
+    @app.cli.command("test-users")  # flask test-users $
     @click.argument("count")  # argument of out command
     def insert_test_data(count):
         """Insert test data for the specified number of users."""
