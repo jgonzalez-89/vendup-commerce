@@ -1,32 +1,40 @@
 
 import click
 from api.models import db, User
+from datetime import datetime
+import string
+import random
+import names
 
-"""
-In this file, you can add as many commands as you want using the @app.cli.command decorator
-Flask commands are usefull to run cronjobs or tasks outside of the API but sill in integration 
-with youy database, for example: Import the price of bitcoin every night as 12am
-"""
+
+def generate_random_person_name():
+    """Generate a random full name using the names library."""
+    return names.get_full_name()
+
+
+def generate_random_password(length=16, chars=string.ascii_letters + string.digits + string.punctuation):
+    """Generate a random password of specified length and character set."""
+    return ''.join(random.choice(chars) for i in range(length))
+
+
 def setup_commands(app):
-    
-    """ 
-    This is an example command "insert-test-users" that you can run from the command line
-    by typing: $ flask insert-test-users 5
-    Note: 5 is the number of users to add
-    """
-    @app.cli.command("insert-test-users") # name of our command
-    @click.argument("count") # argument of out command
+    """Set up the test-users command for the Flask app."""
+
+    @app.cli.command("test-users")  # flask test-users $
+    @click.argument("count")  # argument of out command
     def insert_test_data(count):
+        """Insert test data for the specified number of users."""
         print("Creating test users")
         for x in range(1, int(count) + 1):
             user = User()
-            user.email = "test_user" + str(x) + "@test.com"
-            user.password = "123456"
-            user.is_active = True
+            user.name = generate_random_person_name()
+            user.email = user.name.lower().replace(" ", "") + "@test.com"
+            user.password = generate_random_password()
+            user.is_admin = False
+            user.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            user.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             db.session.add(user)
             db.session.commit()
             print("User: ", user.email, " created.")
 
         print("All test users created")
-
-        ### Insert the code to populate others tables if needed
