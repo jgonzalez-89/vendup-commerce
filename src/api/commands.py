@@ -27,6 +27,47 @@ categories = {
     "Otros": ["Playmobil", "Mesa de billar", "Mueble de juegos", "Decoración para el hogar", "Artículos de oficina", "Regalos personalizados", "Productos de belleza", "Artículos de viaje", "Instrumentos musicales", "Productos de limpieza"]
 }
 
+pictures = {
+    "coches" : "https://i.ibb.co/mR95PFy/Coches.png",
+    "Coches eléctricos": "https://i.ibb.co/nM3Xnzy/Coches-Electricos.png",
+    "Motos": "https://i.ibb.co/wyj9x2F/Motos.png",
+    "Motor y Accesorios": "https://i.ibb.co/YpRv3zc/Motor-y-Accesorios.png",
+    "Moda y Accesorios": "https://i.ibb.co/z5kYGKL/Moda-y-Accesorios.png",
+
+
+
+"https://i.ibb.co/mR95PFy/Coches.png"
+"https://i.ibb.co/nM3Xnzy/Coches-Electricos.png" 
+"https://i.ibb.co/wyj9x2F/Motos.png" 
+"https://i.ibb.co/YpRv3zc/Motor-y-Accesorios.png"
+"https://i.ibb.co/z5kYGKL/Moda-y-Accesorios.png"
+"https://i.ibb.co/pnbQXf0/Inmobiliaria.png" 
+"https://i.ibb.co/3pQdkVh/TV-Audio-y-Foto.png
+"https://i.ibb.co/MRWQRh9/M-viles-y-Telefon-a.png" 
+"https://i.ibb.co/F5Ph3Ns/Inform-tica-y-Electr-nica.png" 
+"https://i.ibb.co/FWqfZ08/Deporte-y-Ocio.png
+"https://i.ibb.co/sj4GtnY/Bicicletas.png" 
+"https://i.ibb.co/L6X25Jb/Consolas-y-Videojuegos.png" 
+"https://i.ibb.co/gyvjB5n/Hogar-y-Jard-n.png"
+"https://i.ibb.co/Fqjc6Fw/Electrodom-sticos.png" 
+"https://i.ibb.co/fv8hvg3/Cine-Libros-y-M-sica.png" 
+"https://i.ibb.co/JR45Kfd/Ni-os-y-Beb-s.png"
+"https://i.ibb.co/CvZHK0H/Coleccionismo.png" 
+"https://i.ibb.co/1bDpHpy/Otros.png" 
+"https://i.ibb.co/mczCy45/Construcci-n-y-Reformas.png"  
+"https://i.ibb.co/DGSqsyk/Industria-y-Agricultura.png"
+"https://i.ibb.co/1GtgXCT/Captura-de-pantalla-20230131-212753.png"
+    
+
+
+
+
+
+
+
+}
+select_words = ["Nuevo", "Usado", "Semi","Fresh", "Happy", "Bright", "Magic", "Max", "Pro"]
+
 
 def setup_commands(app):
     """Set up the test-users command for the Flask app."""
@@ -59,13 +100,20 @@ def setup_commands(app):
     @click.argument("count")  # argument of out command
     def insert_test_product(count):
         """Insert test data for the specified number of products."""
+
+        def random_price():
+            return random.randint(1, 9000)
         
         print("Creating test users")
         for x in range(1, int(count) + 1):
+            category = random.choice(list(categories.keys()))
+            product_name = random.choice(categories[category])
+            word = random.choice(select_words)
+
             product = Product()
-            product.name = "test Name"
-            product.description = "test description"
-            product.price = 99
+            product.name = f"{product_name} {word}"
+            product.description = f"Esto es una breve description de {product_name} ubicado en la categoria ({category})"
+            product.price = random_price()
             product.images = "imagen troll"
             db.session.add(product)
             db.session.commit()
