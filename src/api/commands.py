@@ -23,7 +23,6 @@ categories = {
     "Coleccionismo": [["Figuras de Lladró", "Teléfono antiguo", "Reloj antiguo", "Moneda antigua", "Taza antigua", "Sello antiguo", "Fotografía antigua", "Objeto de arte antiguo", "Militaría antigua", "Cromo antiguo"], ["https://i.ibb.co/CvZHK0H/Coleccionismo.png"]],
     "Construcción y Reformas": [["Puertas de madera", "Soplador", "Herramientas eléctricas", "Llaves de tuza", "Taladro", "Mampostería", "Pintura", "Ladrillos", "Azulejos", "Grifos", "Ventanas", "Techo"], ["https://i.ibb.co/mczCy45/Construcci-n-y-Reformas.png"]],
     "Industria y Agricultura": [["Retroexcavadora", "Tractores", "Maquinaria agrícola", "Montacargas", "Motores diesel", "Generadores eléctricos", "Herramientas manuales", "Compresores de aire", "Herramientas de jardinería", "Sistemas de riego"], ["https://i.ibb.co/DGSqsyk/Industria-y-Agricultura.png"]],
-    # "Servicios": [["Limpieza", "Clases particulares", "Masajes", "Catering", "Fotografía", "Traducción", "Reparación de electrodomésticos", "Reparación de móviles", "Carpintería", "Servicios de jardinería"], []],
     "Otros": [["Playmobil", "Mesa de billar", "Mueble de juegos", "Decoración para el hogar", "Artículos de oficina", "Regalos personalizados", "Productos de belleza", "Artículos de viaje", "Instrumentos musicales", "Productos de limpieza"], ["https://i.ibb.co/1GtgXCT/Captura-de-pantalla-20230131-212753.png"]]
 }
 
@@ -42,7 +41,7 @@ def setup_commands(app):
         def generate_random_person_name():
             return names.get_full_name()
 
-        print("Creating test users")
+        print("Creating test users...")
         for x in range(1, int(count) + 1):
             user = User()
             user.name = generate_random_person_name()
@@ -64,7 +63,7 @@ def setup_commands(app):
         def random_price():
             return random.randint(1, 9000)
         
-        print("Creating test products")
+        print("Creating test products...")
         for x in range(1, int(count) + 1):
             category = random.choice(list(categories.keys()))
             product_name = random.choice(categories[category][0])
@@ -79,8 +78,8 @@ def setup_commands(app):
             product.hash_map = str(uuid.uuid4())
             product.description = f"A brief description of {product_name} located in the ({category}) category."
             product.price = random_price()
-            product.images = str(http_url)
+            product.images = ':'.join(http_url)
             db.session.add(product)
             db.session.commit()
 
-        print(f"{count} --> products created")
+        print(f"Created {count} products")
