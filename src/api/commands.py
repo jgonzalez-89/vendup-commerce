@@ -1,9 +1,5 @@
 
-import click
-import string
-import random
-import names
-import uuid
+import click, string, random, names, uuid
 from sqlalchemy import func
 from api.models import db, User, Product
 from datetime import datetime
@@ -31,8 +27,7 @@ categories = {
     "Otros": [["Playmobil", "Mesa de billar", "Mueble de juegos", "Decoración para el hogar", "Artículos de oficina", "Regalos personalizados", "Productos de belleza", "Artículos de viaje", "Instrumentos musicales", "Productos de limpieza"], ["https://i.ibb.co/1GtgXCT/Captura-de-pantalla-20230131-212753.png"]]
 }
 
-select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante",
-                "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
+select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante", "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
 
 
 # Use this command to create Users and Products
@@ -75,14 +70,13 @@ def setup_commands(app):
 
         def random_price():
             return random.randint(1, 9000)
-
+        
         status_options = ["active", "inactive", "completed"]
-
+        
         print("Creating test products...")
         for x in range(1, int(count) + 1):
 
-            # Obtener un objeto de usuario aleatorio desde la base de datos
-            random_user = User.query.order_by(func.random()).first()
+            random_user = User.query.order_by(func.random()).first() # Obtener un objeto de usuario aleatorio desde la base de datos
             category = random.choice(list(categories.keys()))
             product_name = random.choice(categories[category][0])
             http_url = categories[category][1]
@@ -92,7 +86,7 @@ def setup_commands(app):
                 return http_url
 
             product = Product()
-            product.name = f"{product_name} {word}"
+            product.name = f"{product_name} {word}" 
             product.description = f"A brief description of {product_name} located in the ({category}) category."
             product.price = random_price()
             product.images = ':'.join(http_url)
