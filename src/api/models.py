@@ -43,7 +43,7 @@ class User(db.Model):
     picture_large = db.Column(db.String)
     picture_medium = db.Column(db.String)
     picture_thumbnail = db.Column(db.String)
-                    #Table relationships :
+        #Table relationships :
     products = db.relationship('Product', backref='User', lazy=True)
     shopping_products = db.relationship('ShoppingProduct', backref='User', lazy=True)
 

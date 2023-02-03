@@ -1,17 +1,13 @@
 
-import click, string, random, names, uuid, requests
+import click
+import string
+import random
+import names
+import uuid
+import requests
 from sqlalchemy import func
 from api.models import db, User, Product
 from datetime import datetime
-
-url = "https://randomuser.me/api/"
-response = requests.get(url)
-
-if response.status_code == 200:
-    data = response.json()
-    print(data)
-else:
-    print("La llamada a la API ha fallado con código de estado: ", response.status_code)
 
 categories = {
     "Coches": [["Audi A5", "Nissan Qashqai", "Toyota LandCruiser", "Volkswagen Passat", "Mazda X8", "BMW X5", "Ford Focus", "Mercedes Vito", "Renault Trafic"], ["https://i.ibb.co/mR95PFy/Coches.png"]],
@@ -36,7 +32,8 @@ categories = {
     "Otros": [["Playmobil", "Mesa de billar", "Mueble de juegos", "Decoración para el hogar", "Artículos de oficina", "Regalos personalizados", "Productos de belleza", "Artículos de viaje", "Instrumentos musicales", "Productos de limpieza"], ["https://i.ibb.co/1GtgXCT/Captura-de-pantalla-20230131-212753.png"]]
 }
 
-select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante", "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
+select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante",
+                "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
 
 
 # Use this command to create Users and Products
@@ -48,18 +45,14 @@ def setup_commands(app):
     @app.cli.command("test-users")  # flask test-users $
     @click.argument("count")  # argument of out command
     def insert_test_user(count):
-        
-        # def generate_random_password(length=16, chars=string.ascii_letters + string.digits + string.punctuation):
-        #     return ''.join(random.choice(chars) for i in range(length))
-        # def generate_random_person_name():
-        #     return names.get_full_name()
 
         def generate_random_person():
             response = requests.get("https://randomuser.me/api/")
             if response.status_code == 200:
                 data = response.json()
                 gender = data["results"][0]["gender"]
-                name = data["results"][0]["name"]["first"] + " " + data["results"][0]["name"]["last"]
+                name = data["results"][0]["name"]["first"] + \
+                    " " + data["results"][0]["name"]["last"]
                 email = data['results'][0]['email']
                 login_username = data["results"][0]["login"]["username"]
                 login_password = data["results"][0]["login"]["password"]
@@ -85,7 +78,7 @@ def setup_commands(app):
         for x in range(1, int(count) + 1):
             user = User()
             gender, name, email, login_username, login_password, location_street_name, location_street_number, location_city, location_state, location_country, location_postcode, dob_date, dob_age, registered_date, phone, picture_large, picture_medium, picture_thumbnail = generate_random_person()
-            
+
             user.gender = gender
             user.name = name
             user.account_prefix = 'ES'
@@ -121,13 +114,14 @@ def setup_commands(app):
 
         def random_price():
             return random.randint(1, 9000)
-        
+
         status_options = ["active", "inactive", "completed"]
-        
+
         print("Creating test products...")
         for x in range(1, int(count) + 1):
 
-            random_user = User.query.order_by(func.random()).first() # Obtener un objeto de usuario aleatorio desde la base de datos
+            # Obtener un objeto de usuario aleatorio desde la base de datos
+            random_user = User.query.order_by(func.random()).first()
             category = random.choice(list(categories.keys()))
             product_name = random.choice(categories[category][0])
             http_url = categories[category][1]
@@ -137,7 +131,7 @@ def setup_commands(app):
                 return http_url
 
             product = Product()
-            product.name = f"{product_name} {word}" 
+            product.name = f"{product_name} {word}"
             product.description = f"A brief description of {product_name} located in the ({category}) category."
             product.price = random_price()
             product.images = ':'.join(http_url)
