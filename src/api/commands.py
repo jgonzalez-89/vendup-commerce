@@ -29,6 +29,9 @@ categories = {
 select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante", "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
 
 
+# Use this command to create Users and Products
+# $ flask test-users 10 && flask test-products 100
+
 def setup_commands(app):
     """Set up the test-users command for the Flask app."""
 
@@ -75,7 +78,7 @@ def setup_commands(app):
 
             product = Product()
             product.name = f"{product_name} {word}" 
-            product.hash_map = str(uuid.uuid4())
+            product.hash_id = str(uuid.uuid4())
             product.description = f"A brief description of {product_name} located in the ({category}) category."
             product.price = random_price()
             product.images = ':'.join(http_url)

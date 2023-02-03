@@ -7,53 +7,50 @@ db = SQLAlchemy()
 class Product(db.Model):
     __tablename__ = 'Product'
     id = db.Column(db.Integer, primary_key=True)
-    hash_map = db.Column(db.String, unique=True, nullable=False)
-    name = db.Column(db.String(255), unique=False, nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    name = db.Column(db.String(255), nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Numeric(precision=19, scale=4), nullable=False)
     images = db.Column(db.String, nullable=False)
-    shopping_cart_products = db.relationship(
-        'ShoppingCartProduct', back_populates='product')
+    created_at_product = db.Column(db.DateTime, nullable=False)
+    status_shooping = db.Column(db.Enum(
+        'active', 'inactive', 'reserved', name="_status_shopping_enum"), nullable=False)
+    shopping_products = db.relationship(
+        'ShoppingProduct', backref='Product', lazy=True)
 
 
 class User(db.Model):
     __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), unique=True, nullable=False)
-    email = db.Column(db.String(255), unique=True, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
+    account_number = db.Column(db.Integer, nullable=False)
+    paypal = db.Column(db.String(255), nullable=False, unique=True)
+    user_profile_img = db.Column(db.String, nullable=False)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    shopping_cart = db.relationship('ShoppingCart', back_populates='user')
+    created_at_user = db.Column(db.DateTime, nullable=False)
+    update_at_user = db.Column(db.DateTime, nullable=False)
+    products = db.relationship('Product', backref='User', lazy=True)
+    shopping_products = db.relationship(
+        'ShoppingProduct', backref='User', lazy=True)
 
 
-class ShoppingCart(db.Model):
-    __tablename__ = 'Shopping_Cart'
+class ShoppingProduct(db.Model):
+    __tablename__ = "Shopping_Product"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
-    status = db.Column(db.Enum('active', 'inactive', 'completed', name='test_shoping_chart_enum'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    updated_at = db.Column(db.DateTime, nullable=False)
-    user = db.relationship('User', back_populates='shopping_cart')
-    products = db.relationship('ShoppingCartProduct', back_populates='shopping_cart')
-    bill = db.relationship('Bill', uselist=False, back_populates='shopping_cart')
-
-
-class ShoppingCartProduct(db.Model):
-    __tablename__ = 'Shopping_Cart_Product'
-    shopping_cart_id = db.Column(db.Integer, db.ForeignKey('Shopping_Cart.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('Product.id'), primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False)
-    shopping_cart = db.relationship('ShoppingCart', back_populates='products')
-    product = db.relationship('Product', back_populates='shopping_cart_products')
-
-
-class Bill(db.Model):
-    __tablename__ = 'Bill'
-    id = db.Column(db.Integer, primary_key=True)
-    shopping_cart_id = db.Column(db.Integer, ForeignKey('Shopping_Cart.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False)
-    total_price = db.Column(db.Float, nullable=False)
-    status = db.Column(db.Enum('paid', 'pending', 'refunded', name='test_bill_status_enum'), nullable=False)
-    shopping_cart = db.relationship('ShoppingCart', back_populates='bill')
+    buyer_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
+    product_id = db.Column(db.Integer, ForeignKey(
+        "Product.id"), nullable=False)
+    status_shopping = db.Column(db.Enum(
+        "active", "inactive", "completed", name="_shoppingProduct_enum"), nullable=False)
+    created_at_shopping = db.Column(db.DateTime, nullable=False)
+    updated_at_shopping = db.Column(db.DateTime, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
+    status_paid = db.Column(db.Enum(
+        "paid", "pending", "refunded", name="_status_paid_enum"), nullable=False)
+    paid_at = db.Column(db.DateTime, nullable=False)
+    purchase_method = db.Column(db.String, nullable=False)
+    commission = db.Column(db.Numeric(6, 2), nullable=False)
+    buyer = db.relationship("User", back_populates="shopping_products")
+    product = db.relationship("Product", back_populates="shopping_products")
