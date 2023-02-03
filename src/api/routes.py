@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Product
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -16,6 +16,7 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
 
 @api.route('/users', methods=['GET'])
 def get_all_users():
@@ -32,7 +33,8 @@ def get_all_users():
         user_data['is_admin'] = user.is_admin
         user_data['created_at_user'] = user.created_at_user
         output.append(user_data)
-    return jsonify({'users' : output})
+    return jsonify({'users': output})
+
 
 @api.route('/users/<int:id>', methods=['GET'])
 def get_user_by_id(id):
@@ -49,5 +51,39 @@ def get_user_by_id(id):
     user_data['password'] = user.password
     user_data['is_admin'] = user.is_admin
     user_data['created_at_user'] = user.created_at_user
-    user_data['products'] = [{'id': product.id, 'name': product.name, 'price': product.price} for product in user.products]
+    user_data['products'] = [{'id': product.id, 'name': product.name,
+                              'price': product.price} for product in user.products]
     return jsonify({'user': user_data})
+
+
+@api.route('/products', methods=['GET'])
+def get_all_products():
+    products = Product.query.all()
+    output = []
+    for product in products:
+        product_data = {}
+        product_data['id'] = product.id
+        product_data['name'] = product.name
+        product_data['description'] = product.description
+        product_data['price'] = product.price
+        output.append(product_data)
+    return jsonify({'product': output})
+
+
+@api.route('/products/<int:id>', methods=['GET'])
+def get_product_by_id(id):
+    product = Product.query.get(id)
+    if not product:
+        return jsonify({'message': 'No product found with that ID'}), 404
+
+    product_data = {}
+    product_data['id'] = product.id
+    product_data['name'] = product.name
+    product_data['owner_id'] = product.owner_id
+    product_data['description'] = product.description
+    product_data['price'] = product.price
+    product_data['images'] = product.images
+    product_data['created_at_product'] = product.created_at_product
+    product_data['status_shooping'] = product.status_shooping
+
+    return jsonify({'product': product_data})
