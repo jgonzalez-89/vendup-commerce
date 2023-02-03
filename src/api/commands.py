@@ -1,5 +1,10 @@
 
-import click, string, random, names, uuid
+import click
+import string
+import random
+import names
+import uuid
+from sqlalchemy import func
 from api.models import db, User, Product
 from datetime import datetime
 
@@ -26,7 +31,8 @@ categories = {
     "Otros": [["Playmobil", "Mesa de billar", "Mueble de juegos", "Decoración para el hogar", "Artículos de oficina", "Regalos personalizados", "Productos de belleza", "Artículos de viaje", "Instrumentos musicales", "Productos de limpieza"], ["https://i.ibb.co/1GtgXCT/Captura-de-pantalla-20230131-212753.png"]]
 }
 
-select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante", "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
+select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mágico", "Max", "Pro", "Ultra", "Elite", "Super", "Plus", "Eco", "Vibrante",
+                "Elegante", "Moderno", "Futurista", "Dinámico", "De Lujo", "Avanzado", "Calidad", "Impresionante", "Genial", "Experto", "Esencial", "Práctico", "Lujo"]
 
 
 # Use this command to create Users and Products
@@ -48,11 +54,15 @@ def setup_commands(app):
         for x in range(1, int(count) + 1):
             user = User()
             user.name = generate_random_person_name()
+            user.account_prefix = 'ES'
+            user.account_number = 14650100722030876293
+            user.paypal = user.name.lower().replace(" ", "") + "@paypal.com"
+            user.user_profile_img = "imagen de prueba"
             user.email = user.name.lower().replace(" ", "") + "@test.com"
             user.password = generate_random_password()
             user.is_admin = False
-            user.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            user.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            user.created_at_user = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            user.update_at_user = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             db.session.add(user)
             db.session.commit()
 
@@ -65,9 +75,14 @@ def setup_commands(app):
 
         def random_price():
             return random.randint(1, 9000)
-        
+
+        status_options = ["active", "inactive", "completed"]
+
         print("Creating test products...")
         for x in range(1, int(count) + 1):
+
+            # Obtener un objeto de usuario aleatorio desde la base de datos
+            random_user = User.query.order_by(func.random()).first()
             category = random.choice(list(categories.keys()))
             product_name = random.choice(categories[category][0])
             http_url = categories[category][1]
@@ -77,11 +92,13 @@ def setup_commands(app):
                 return http_url
 
             product = Product()
-            product.name = f"{product_name} {word}" 
-            product.hash_id = str(uuid.uuid4())
+            product.name = f"{product_name} {word}"
             product.description = f"A brief description of {product_name} located in the ({category}) category."
             product.price = random_price()
             product.images = ':'.join(http_url)
+            product.created_at_product = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            product.status_shooping = "active"
+            product.owner_id = random_user.id
             db.session.add(product)
             db.session.commit()
 
