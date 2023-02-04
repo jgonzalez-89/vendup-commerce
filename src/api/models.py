@@ -13,9 +13,9 @@ class Product(db.Model):
     price = db.Column(db.Numeric(precision=7, scale=2), nullable=False)
     images = db.Column(db.String, nullable=False)
     created_at_product = db.Column(db.DateTime, nullable=False)
-    status_shooping = db.Column(db.Enum('active', 'inactive', 'reserved', name="_status_shopping_enum"), nullable=False)
-        #Table relationships :
-    shopping_products = db.relationship('ShoppingProduct', backref='Product', lazy=True)
+    status_shooping = db.Column(db.Enum(
+        'active', 'inactive', 'reserved', name="_status_shopping_enum"), nullable=False)
+    owner = db.relationship('User', backref=db.backref('products', lazy=True))
 
 
 class User(db.Model):
@@ -43,24 +43,25 @@ class User(db.Model):
     picture_large = db.Column(db.String)
     picture_medium = db.Column(db.String)
     picture_thumbnail = db.Column(db.String)
-        #Table relationships :
-    products = db.relationship('Product', backref='User', lazy=True)
-    shopping_products = db.relationship('ShoppingProduct', backref='User', lazy=True)
 
 
 class ShoppingProduct(db.Model):
     __tablename__ = "Shopping_Product"
     id = db.Column(db.Integer, primary_key=True)
     buyer_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
-    product_id = db.Column(db.Integer, ForeignKey("Product.id"), nullable=False)
-    status_shopping = db.Column(db.Enum("active", "inactive", "completed", name="_shoppingProduct_enum"), nullable=False)
+    product_id = db.Column(db.Integer, ForeignKey(
+        "Product.id"), nullable=False)
+    status_shopping = db.Column(db.Enum(
+        "active", "inactive", "completed", name="_shoppingProduct_enum"), nullable=False)
     created_at_shopping = db.Column(db.DateTime, nullable=False)
     updated_at_shopping = db.Column(db.DateTime, nullable=False)
     price = db.Column(db.Numeric, nullable=False)
-    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="_status_paid_enum"), nullable=False)
+    status_paid = db.Column(db.Enum(
+        "paid", "pending", "refunded", name="_status_paid_enum"), nullable=False)
     paid_at = db.Column(db.DateTime, nullable=False)
     purchase_method = db.Column(db.String, nullable=False)
     commission = db.Column(db.Numeric(6, 2), nullable=False)
-       #Table relationships :
-    buyer = db.relationship("User", backref=db.backref("Shopping_Product", uselist=False), overlaps="User")
-    product = db.relationship("Product", backref=db.backref("Shopping_Product", uselist=False), overlaps="Product")
+    buyer = db.relationship('User', backref=db.backref(
+        'shopping_products', lazy=True))
+    product = db.relationship(
+        'Product', backref=db.backref('shopping_products', lazy=True))
