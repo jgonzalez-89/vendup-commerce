@@ -18,10 +18,6 @@ gunicorn = "*"
 cloudinary = "*"
 flask-admin = "*"
 typing-extensions = "*"
-names = "*"
-autopep8 = "*"
-certifi = "*"
-tomli = "*"
 
 [requires]
 python_version = "3.10"
