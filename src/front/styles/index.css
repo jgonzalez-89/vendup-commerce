@@ -5,3 +5,15 @@
 .footercolor {
     background-color: #f5eada;
 }
+
+.stylenavar {
+    background-color: #f5eada;
+    width: 100%;
+}
+
+.botoneshome {
+    width: 55px;
+    height: 30px;
+    margin: 10px;
+    padding: 0;
+}
