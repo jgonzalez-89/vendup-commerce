@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import MyCarousel from "../component/MyCarrousel.jsx";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
@@ -34,6 +35,9 @@ const Home = () => {
           <Button className="botoneshome">Construcción y Reformas</Button>
           <Button className="botoneshome">Industria y Agricultura</Button>
           <Button className="botoneshome">Otros...</Button>
+        </div>
+        <div className="container">
+          <MyCarousel />
         </div>
         <Form className="d-flex">
           <Form.Control
