@@ -5,6 +5,7 @@ from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
 
+
 def serialize_user(user):
     return {
         'id': user.id,
@@ -192,6 +193,26 @@ def create_products():
     db.session.add(product)
     db.session.commit()
     return jsonify({'product': serialize_product(product)}), 201
+
+
+@api.route('/products/<int:id>', methods=['PUT'])
+def update_product(id):
+    product = Product.query.get(id)
+    if not product:
+        return jsonify({'messenge': 'No product found with that ID'}), 404
+
+    data = request.get_json()
+
+    product.owner_id = data.get('owner_id', product.owner_id)
+    product.name = data.get('name', product.name)
+    product.description = data.get('description', product.description)
+    product.price = data.get('price', product.price)
+    product.images = data.get('images', product.images)
+    product.created_at_product = data.get('created_at_product', product.created_at_product)
+    product.status_shooping = data.get('status_shooping', product.status_shooping)
+
+    db.session.commit()
+    return jsonify({'product': serialize_product(product)})
 
 
 @api.route('/products/<int:id>', methods=['DELETE'])
