@@ -5,6 +5,7 @@ import random
 import names
 import uuid
 import requests
+import bcrypt
 from sqlalchemy import func
 from api.models import db, User, Product
 from datetime import datetime
@@ -39,6 +40,41 @@ select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mági
 # Use this command to create Users and Products
 # $ flask test-users 50 && flask test-products 100
 
+# class User(db.Model):
+#     __tablename__ = 'User'
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(100))
+#     password = db.Column(db.String(100))
+
+#     def set_password(self, password):
+#         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+#     def check_password(self, password):
+#         return bcrypt.checkpw(password.encode('utf-8'), self.password)
+
+#     def insert_test_user(count):
+#         def generate_random_person():
+#             response = requests.get("https://randomuser.me/api/")
+#             if response.status_code == 200:
+#                 data = response.json()
+#                 username = data["results"][0]["login"]["username"]
+#                 password = data["results"][0]["login"]["password"]
+#                 return(username, password)
+#             else:
+#                 print("Error al llamar a la API: ", response.status_code)
+#                 return ""
+#         print("Creating test users...")
+#         for x in range(1, int(count) + 1):
+#             user = User()
+#             username, password =  generate_random_person()
+#             user.username = username
+#             user.password = password
+
+#             db.session.add(user)
+#             db.session.commit()
+
+#         print(f"Created {count} Users")
+
 def setup_commands(app):
     """Set up the test-users command for the Flask app."""
 
@@ -54,8 +90,8 @@ def setup_commands(app):
                 name = data["results"][0]["name"]["first"] + \
                     " " + data["results"][0]["name"]["last"]
                 email = data['results'][0]['email']
-                login_username = data["results"][0]["login"]["username"]
-                login_password = data["results"][0]["login"]["password"]
+                username = data["results"][0]["login"]["username"]
+                password = data["results"][0]["login"]["password"]
                 location_street_name = data['results'][0]['location']['street']['name']
                 location_street_number = data['results'][0]['location']['street']['number']
                 location_city = data["results"][0]["location"]["city"]
@@ -69,7 +105,7 @@ def setup_commands(app):
                 picture_large = data["results"][0]["picture"]["large"]
                 picture_medium = data["results"][0]["picture"]["medium"]
                 picture_thumbnail = data["results"][0]["picture"]["thumbnail"]
-                return (gender, name, email, login_username, login_password, location_street_name, location_street_number, location_city, location_state, location_country, location_postcode, dob_date, dob_age, registered_date, phone, picture_large, picture_medium, picture_thumbnail)
+                return (gender, name, email, username, password, location_street_name, location_street_number, location_city, location_state, location_country, location_postcode, dob_date, dob_age, registered_date, phone, picture_large, picture_medium, picture_thumbnail)
             else:
                 print("Error al llamar a la API: ", response.status_code)
                 return ""
@@ -77,7 +113,7 @@ def setup_commands(app):
         print("Creating test users...")
         for x in range(1, int(count) + 1):
             user = User()
-            gender, name, email, login_username, login_password, location_street_name, location_street_number, location_city, location_state, location_country, location_postcode, dob_date, dob_age, registered_date, phone, picture_large, picture_medium, picture_thumbnail = generate_random_person()
+            gender, name, email, username, password, location_street_name, location_street_number, location_city, location_state, location_country, location_postcode, dob_date, dob_age, registered_date, phone, picture_large, picture_medium, picture_thumbnail = generate_random_person()
 
             user.gender = gender
             user.name = name
@@ -86,8 +122,8 @@ def setup_commands(app):
             user.paypal = user.name.lower().replace(" ", "") + "@paypal.com"
             user.email = email
             user.is_admin = False
-            user.login_username = login_username
-            user.login_password = login_password
+            user.username = username
+            user.set_password(password)
             user.location_street_number = location_street_number
             user.location_street_name = location_street_name
             user.location_city = location_city

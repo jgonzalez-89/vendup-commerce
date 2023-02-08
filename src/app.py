@@ -7,18 +7,24 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db, User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 
 # from models import Person
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+
+# JWT Configuration
+app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+jwt = JWTManager(app)
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -52,6 +58,40 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
+#################################
+class User(db.Model):
+    __tablename__ = 'User'
+    username = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.String(200), nullable=False)
+    salt = db.Column(db.String(200), nullable=False)
+
+    def set_password(self, password):
+        self.salt = bcrypt.gensalt().decode('utf-8')
+        self.password = bcrypt.hashpw(password.encode('utf-8'), self.salt.encode('utf-8'))
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), (self.password + self.salt).encode('utf-8'))
+
+#################################
+
+@app.route('/login', methods=['POST'])
+def login():
+    # Obtener los datos de usuario y contraseña del cuerpo de la solicitud
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    # Buscar el usuario en la base de datos
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return "El usuario no existe.", 404
+
+    # Verificar si la contraseña es válida
+    if not user.check_password(password):
+        return "La contraseña es incorrecta.", 401
+
+    # El usuario y la contraseña son válidos
+    return "Bienvenido {}!".format(user.username), 200
 
 
 @app.route('/')

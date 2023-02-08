@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey, Enum
+import bcrypt
 
 db = SQLAlchemy()
 
@@ -13,7 +14,8 @@ class Product(db.Model):
     price = db.Column(db.Numeric(precision=7, scale=2), nullable=False)
     images = db.Column(db.String, nullable=False)
     created_at_product = db.Column(db.DateTime, nullable=False)
-    status_shooping = db.Column(db.Enum('active', 'inactive', 'reserved', name="_status_shopping_enum"), nullable=False)
+    status_shooping = db.Column(db.Enum(
+        'active', 'inactive', 'reserved', name="_status_shopping_enum"), nullable=False)
     owner = db.relationship('User', backref=db.backref('products', lazy=True))
 
 
@@ -22,13 +24,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     gender = db.Column(db.String(10))
     name = db.Column(db.String(100))
-    account_prefix = db.Column(db.String(10), nullable=False)
-    account_number = db.Column(db.Numeric(30, 0), nullable=False)
-    paypal = db.Column(db.String(255), nullable=False, unique=True)
+    account_prefix = db.Column(db.String(10))
+    account_number = db.Column(db.Numeric(30, 0))
+    paypal = db.Column(db.String(255), unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     is_admin = db.Column(db.Boolean, nullable=False)
-    login_username = db.Column(db.String(100))
-    login_password = db.Column(db.String(100))
+    username = db.Column(db.String(100), nullable=False, unique=True)
+    password = db.Column(db.String(200), nullable=False)
     location_street_number = db.Column(db.Integer)
     location_street_name = db.Column(db.String(100))
     location_city = db.Column(db.String(50))
@@ -43,19 +45,30 @@ class User(db.Model):
     picture_medium = db.Column(db.String)
     picture_thumbnail = db.Column(db.String)
 
+    def set_password(self, password):
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), self.password.encode('utf-8'))
+
 
 class ShoppingProduct(db.Model):
     __tablename__ = "Shopping_Product"
     id = db.Column(db.Integer, primary_key=True)
     buyer_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
-    product_id = db.Column(db.Integer, ForeignKey("Product.id"), nullable=False)
-    status_shopping = db.Column(db.Enum("active", "inactive", "completed", name="_shoppingProduct_enum"), nullable=False)
+    product_id = db.Column(db.Integer, ForeignKey(
+        "Product.id"), nullable=False)
+    status_shopping = db.Column(db.Enum(
+        "active", "inactive", "completed", name="_shoppingProduct_enum"), nullable=False)
     created_at_shopping = db.Column(db.DateTime, nullable=False)
     updated_at_shopping = db.Column(db.DateTime, nullable=False)
     price = db.Column(db.Numeric, nullable=False)
-    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="_status_paid_enum"), nullable=False)
+    status_paid = db.Column(db.Enum(
+        "paid", "pending", "refunded", name="_status_paid_enum"), nullable=False)
     paid_at = db.Column(db.DateTime, nullable=False)
     purchase_method = db.Column(db.String, nullable=False)
     commission = db.Column(db.Numeric(6, 2), nullable=False)
-    buyer = db.relationship('User', backref=db.backref('shopping_products', lazy=True))
-    product = db.relationship('Product', backref=db.backref('shopping_products', lazy=True))
+    buyer = db.relationship('User', backref=db.backref(
+        'shopping_products', lazy=True))
+    product = db.relationship(
+        'Product', backref=db.backref('shopping_products', lazy=True))
