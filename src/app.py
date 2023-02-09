@@ -1,6 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
@@ -12,6 +9,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+import bcrypt
 
 # from models import Person
 
@@ -58,40 +56,58 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-#################################
-class User(db.Model):
-    __tablename__ = 'User'
-    username = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(200), nullable=False)
-    salt = db.Column(db.String(200), nullable=False)
 
-    def set_password(self, password):
-        self.salt = bcrypt.gensalt().decode('utf-8')
-        self.password = bcrypt.hashpw(password.encode('utf-8'), self.salt.encode('utf-8'))
 
-    def check_password(self, password):
-        return bcrypt.checkpw(password.encode('utf-8'), (self.password + self.salt).encode('utf-8'))
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        email = request.json.get('email', None)
+        password = request.json.get('password', None)
+        
+        if not email:
+            return 'Missing email', 400
+        if not password:
+            return 'Missing password', 400
+        
+        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-#################################
+        user = User(email=email, hash=hashed)
+        db.session.add(user)
+        db.session.commit()
+
+        return f'Welcome! {email}', 200
+    except IntegrityError:
+        # the rollback func reverts the changes made to the db ( so if an error happens after we commited changes they will be reverted )
+        db.session.rollback()
+        return 'User Already Exists', 400
+    except AttributeError:
+        return 'Provide an Email and Password in JSON format in the request body', 400
+
 
 @app.route('/login', methods=['POST'])
 def login():
-    # Obtener los datos de usuario y contraseña del cuerpo de la solicitud
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+    try:
+        email = request.json.get('email', None)
+        password = request.json.get('password', None)
+        
+        if not email:
+            return 'Missing email', 400
+        if not password:
+            return 'Missing password', 400
+        
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return 'User Not Found!', 404
+        
+        # user.hash = user.hash.encode('utf-8')
 
-    # Buscar el usuario en la base de datos
-    user = User.query.filter_by(username=username).first()
-    if not user:
-        return "El usuario no existe.", 404
+        if bcrypt.checkpw(password.encode('utf-8'), user.hash):
+            return f'Logged in, Welcome {email}!', 200
+        else:
+            return 'Invalid Login Info!', 400
+    except AttributeError:
+        return 'Provide an Email and Password in JSON format in the request body', 400
 
-    # Verificar si la contraseña es válida
-    if not user.check_password(password):
-        return "La contraseña es incorrecta.", 401
-
-    # El usuario y la contraseña son válidos
-    return "Bienvenido {}!".format(user.username), 200
 
 
 @app.route('/')

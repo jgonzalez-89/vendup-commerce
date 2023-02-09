@@ -91,9 +91,10 @@ def create_user():
         account_number=data.get('account_number'),
         paypal=data.get('paypal'),
         email=data.get('email'),
-        is_admin=data.get('is_admin', False),
+        # is_admin=data.get('is_admin', False),
         username=data.get('username'),
-        # password=data.get('password'),
+        password=data.get('password'),
+        hash=data.get('hash'),
         location_street_number=data.get('location_street_number'),
         location_street_name=data.get('location_street_name'),
         location_city=data.get('location_city'),
@@ -108,7 +109,7 @@ def create_user():
         picture_medium=data.get('picture_medium'),
         picture_thumbnail=data.get('picture_thumbnail')
     )
-    user.set_password(data.get('password'))  # Hash the password
+    # user.set_password(data.get('password'))  # Hash the password
     db.session.add(user)
     db.session.commit()
     return jsonify({'user': serialize_user(user)}), 201
