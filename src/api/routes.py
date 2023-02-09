@@ -16,8 +16,8 @@ def serialize_user(user):
         'paypal': user.paypal,
         'email': user.email,
         'is_admin': user.is_admin,
-        'login_username': user.login_username,
-        'login_password': user.login_password,
+        'username': user.username,
+        'password': user.password,
         'location': {
             'street_number': user.location_street_number,
             'street_name': user.location_street_name,
@@ -92,8 +92,9 @@ def create_user():
         paypal=data.get('paypal'),
         email=data.get('email'),
         is_admin=data.get('is_admin', False),
-        login_username=data.get('login_username'),
-        login_password=data.get('login_password'),
+        username=data.get('username'),
+        password=data.get('password'),
+        hash=data.get('hash'),
         location_street_number=data.get('location_street_number'),
         location_street_name=data.get('location_street_name'),
         location_city=data.get('location_city'),
@@ -108,6 +109,7 @@ def create_user():
         picture_medium=data.get('picture_medium'),
         picture_thumbnail=data.get('picture_thumbnail')
     )
+    # user.set_password(data.get('password'))  # Hash the password
     db.session.add(user)
     db.session.commit()
     return jsonify({'user': serialize_user(user)}), 201
@@ -128,8 +130,8 @@ def update_user(id):
     user.paypal = data.get('paypal', user.paypal)
     user.email = data.get('email', user.email)
     user.is_admin = data.get('is_admin', user.is_admin)
-    user.login_username = data.get('login_username', user.login_username)
-    user.login_password = data.get('login_password', user.login_password)
+    user.username = data.get('username', user.username)
+    user.password = data.get('password', user.password)
     user.location_street_number = data.get('location_street_number', user.location_street_number)
     user.location_street_name = data.get('location_street_name', user.location_street_name)
     user.location_city = data.get('location_city', user.location_city)

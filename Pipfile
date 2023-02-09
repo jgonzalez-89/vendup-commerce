@@ -20,6 +20,8 @@ flask-admin = "*"
 typing-extensions = "*"
 names = "*"
 requests = "*"
+flask_bcrypt = "*"
+flask_jwt_extended = "*"
 
 [requires]
 python_version = "3.10"
