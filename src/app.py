@@ -9,7 +9,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
-import bcrypt
+from flask_bcrypt import Bcrypt
 
 # from models import Person
 
@@ -18,6 +18,7 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.url_map.strict_slashes = False
 
 # JWT Configuration
@@ -60,53 +61,41 @@ def handle_invalid_usage(error):
 
 @app.route('/register', methods=['POST'])
 def register():
-    try:
-        email = request.json.get('email', None)
-        password = request.json.get('password', None)
-        
-        if not email:
-            return 'Missing email', 400
-        if not password:
-            return 'Missing password', 400
-        
-        hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    
+    if not email:
+        return 'Missing email', 400
+    if not password:
+        return 'Missing password', 400
+    
+    hashed = bcrypt.generate_password_hash(password).decode('utf-8')
+    user = User(email=email, hash=hashed)
 
-        user = User(email=email, hash=hashed)
-        db.session.add(user)
-        db.session.commit()
+    db.session.add(user)
+    db.session.commit()
 
-        return f'Welcome! {email}', 200
-    except IntegrityError:
-        # the rollback func reverts the changes made to the db ( so if an error happens after we commited changes they will be reverted )
-        db.session.rollback()
-        return 'User Already Exists', 400
-    except AttributeError:
-        return 'Provide an Email and Password in JSON format in the request body', 400
+    return f'Welcome! {email}'
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    try:
-        email = request.json.get('email', None)
-        password = request.json.get('password', None)
-        
-        if not email:
-            return 'Missing email', 400
-        if not password:
-            return 'Missing password', 400
-        
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            return 'User Not Found!', 404
-        
-        # user.hash = user.hash.encode('utf-8')
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    
+    if not email:
+        return 'Missing email', 400
+    if not password:
+        return 'Missing password', 400
+    
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return 'User Not Found!', 404
 
-        if bcrypt.checkpw(password.encode('utf-8'), user.hash):
-            return f'Logged in, Welcome {email}!', 200
-        else:
-            return 'Invalid Login Info!', 400
-    except AttributeError:
-        return 'Provide an Email and Password in JSON format in the request body', 400
+    if bcrypt.check_password_hash(user.hash, password):
+        return f'Logged in, Welcome {email}!', 200
+    else:
+        return 'Invalid Login Info!', 400
 
 
 

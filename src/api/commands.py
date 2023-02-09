@@ -5,10 +5,10 @@ import random
 import names
 import uuid
 import requests
-import bcrypt
 from sqlalchemy import func
 from api.models import db, User, Product
 from datetime import datetime
+from flask_bcrypt import Bcrypt
 
 categories = {
     "Coches": [["Audi A5", "Nissan Qashqai", "Toyota LandCruiser", "Volkswagen Passat", "Mazda X8", "BMW X5", "Ford Focus", "Mercedes Vito", "Renault Trafic"], ["https://i.ibb.co/mR95PFy/Coches.png"]],
@@ -47,6 +47,7 @@ def setup_commands(app):
     @app.cli.command("test-users")  # flask test-users $
     @click.argument("count")  # argument of out command
     def insert_test_user(count):
+        bcrypt = Bcrypt()
 
         def generate_random_person():
             response = requests.get("https://randomuser.me/api/")
@@ -87,10 +88,11 @@ def setup_commands(app):
             user.account_number = 14650100722030876293
             user.paypal = user.name.lower().replace(" ", "") + "@paypal.com"
             user.email = email
-            # user.is_admin = False
+            user.is_admin = False
             user.username = username
             user.password = password
-            # user.set_password(password)
+            user.hash = bcrypt.generate_password_hash(password).decode('utf-8')
+            # user.password = bcrypt.generate_password_hash(password).decode('utf-8')
             user.location_street_number = location_street_number
             user.location_street_name = location_street_name
             user.location_city = location_city
