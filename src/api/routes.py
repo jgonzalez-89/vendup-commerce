@@ -91,7 +91,7 @@ def create_user():
         account_number=data.get('account_number'),
         paypal=data.get('paypal'),
         email=data.get('email'),
-        # is_admin=data.get('is_admin', False),
+        is_admin=data.get('is_admin', False),
         username=data.get('username'),
         password=data.get('password'),
         hash=data.get('hash'),

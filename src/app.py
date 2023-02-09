@@ -67,6 +67,8 @@ def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
+    if not name:
+        return "Missing name", 400
     if not email:
         return "Missing email", 400
     if not password:

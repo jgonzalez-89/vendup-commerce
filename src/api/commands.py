@@ -38,7 +38,7 @@ select_words = ["Nuevo", "Usado", "Semi", "Fresco", "Feliz", "Brillante", "Mági
 
 
 # Use this command to create Users and Products
-# $ flask test-users 50 && flask test-products 100
+# --> $ flask test-users 50 && flask test-products 100
 
 
 def setup_commands(app):
