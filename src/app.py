@@ -67,12 +67,14 @@ def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    if not name:
-        return "Missing name", 400
     if not email:
         return "Missing email", 400
     if not password:
         return "Missing password", 400
+    
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return "Email already exists", 400
 
     hashed = bcrypt.generate_password_hash(password).decode("utf-8")
     user = User(email=email, hash=hashed)
