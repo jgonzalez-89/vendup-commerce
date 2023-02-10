@@ -1,9 +1,9 @@
 import React from "react";
 
 const Footer = () => (
-  <footer className="page-footer font-small blue pt-4 footercolor">
+  <footer className="page-footer font-small pt-4 footercolor">
     <div className="container-fluid text-center text-md-left">
-      <div className="row">
+      <div className="row text-white">
         <div className="col-md-6 mt-md-0 mt-3">
           <h5 className="text-uppercase">Footer Content</h5>
           <p>
