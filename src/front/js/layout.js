@@ -1,19 +1,16 @@
 import React from "react";
-import {
-    BrowserRouter,
-    Route,
-    Routes
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import {
-    Home
-} from "./pages/home";
+import { Home } from "./pages/home";
 import Space from "./pages/Space";
 import injectContext from "./store/appContext";
 
 import Navbar from "./component/Navbar.js";
 import Footer from "./component/Footer.js";
+import Login from "./pages/login.jsx";
+import SignUp from "./pages/signup.jsx";
+
 
 //create your first component
 const Layout = () => {
@@ -21,38 +18,23 @@ const Layout = () => {
         // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
         const basename = process.env.BASENAME || "";
 
-        return ( <
-            div >
-            <
-            BrowserRouter basename = {
-                basename
-            } >
-            <
-            ScrollToTop >
-            <
-            Navbar / >
-            <
-            Routes >
-            <
-            Route element = {
-                < Home / >
-            }
-            path = "/" / >
-            <
-            Route element = {
-                < Space / >
-            }
-            path = "/space" / >
-            <
-            Route element = {
-                < h1 > Not found! < /h1>} / >
-                <
-                /Routes>{" "} <
-                Footer / >
-                <
-                /ScrollToTop>{" "} <
-                /BrowserRouter>{" "} <
-                /div>
+        return ( 
+            <div >
+            <BrowserRouter basename = { basename } >
+                <ScrollToTop >
+                    <Navbar />
+                        <Routes >
+                            <Route element = {<Home /> } path = "/" />
+                            {/* <Route element={<Login />} path="/login" />
+                            <Route element={<SignUp />} path="/signup" /> */}
+                            <Route element = {<Space />} path = "/space" />
+                            <Route element = {<h1> Not found! </h1>} />
+            </Routes>{" "} 
+            <Footer />
+                </ScrollToTop>{" "} 
+                </BrowserRouter>{" "} 
+            
+            </div>
             );
         };
 

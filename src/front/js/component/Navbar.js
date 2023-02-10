@@ -1,28 +1,30 @@
 import React from "react";
+import logo from "../component/logowhite.png";
+import Login from "../pages/login.jsx";
+import SignUp from "../pages/signup.jsx";
 
 function Navbar() {
   return (
-    <nav className="navbar  navbar-expand-lg d-flex justify-content-between navbar-light p-50">
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav mx-auto">
-          <li className="nav-item active">
-            <a className="nav-link text-black" href="">
-              HOME <span className="sr-only"> (current) </span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link text-black" href="">
-              SPACE
-            </a>
-          </li>
-          <li className="nav-item active">
-            <a className="nav-link text-black" href="">
-              LOGIN <span className="sr-only"> (current) </span>
-            </a>
-          </li>
+    <>
+    <header className="p-3 bg-dark text-bg-dark">
+    <div className="container-fluid">
+      <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" className="d-flex align-items-left mb-2 mb-lg-0 text-white text-decoration-none">
+          <img src={logo} width="100" role="img" aria-label="Vendup"></img>
+          <span className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start fs-4">VENDUP</span>
+        </a>
+
+        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         </ul>
+
+        <div className="text-end">
+          <button type="button" className="btn btn-outline-light me-2" onClick={Login} to="/login">Login</button>
+          <button type="button" className="btn btn-warning" onClick={SignUp} to="/signup">Sign-up</button>
+        </div>
       </div>
-    </nav>
+    </div>
+  </header>
+  </>
   );
 }
 
