@@ -1,13 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-
 import Home from "./pages/home.jsx";
-import Space from "./pages/Space";
 import injectContext from "./store/appContext";
-
-import Customernavar from "./component/Customernavar.jsx";
-import Footer from "./component/Footer.js";
+import Footer from "./component/Footer.jsx";
 
 //create your first component
 const Layout = () => {
@@ -16,19 +11,15 @@ const Layout = () => {
   const basename = process.env.BASENAME || "";
 
   return (
-    <div>
+    <>
       <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Customernavar />
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Space />} path="/space" />
-            <Route element={<h1> Not found! </h1>} />
-          </Routes>{" "}
-          <Footer />
-        </ScrollToTop>{" "}
-      </BrowserRouter>{" "}
-    </div>
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<h1> Not found! </h1>} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 };
 

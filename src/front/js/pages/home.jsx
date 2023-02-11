@@ -2,57 +2,70 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import Button from "../component/Button.jsx";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import MyCarousel from "../component/MyCarrousel.jsx";
+import logo from "../../../../public/logowhite.png";
+import SearchPage from "../component/Search.jsx";
+import ButtonCategory from "../component/ButtonCategory.jsx";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="text-center mt-5 ">
-      <div className="container ">
-        <div className="justify-content-center">
-          <Button className="botoneshome">Todos</Button>
-          <Button className="botoneshome">Coches</Button>
-          <Button className="botoneshome">Coches eléctricos</Button>
-          <Button className="botoneshome">Motos</Button>
-          <Button className="botoneshome">Motor y Accesorios</Button>
-          <Button className="botoneshome">Moda y Accesorios</Button>
-          <Button className="botoneshome">Inmobiliaria</Button>
-          <Button className="botoneshome">TV, Audio y Foto</Button>
-          <Button className="botoneshome">Móviles y Telefonía</Button>
-          <Button className="botoneshome">Informática y Electrónica</Button>
-          <Button className="botoneshome">Deporte y Ocio</Button>
-          <Button className="botoneshome">Bicicletas</Button>
-          <Button className="botoneshome">Consolas y Videojuegos</Button>
-          <Button className="botoneshome">Hogar y Jardín</Button>
-          <Button className="botoneshome">Electrodomésticos</Button>
-          <Button className="botoneshome">Cine, Libros y Música</Button>
-          <Button className="botoneshome">Niños y Bebés</Button>
-          <Button className="botoneshome">Coleccionismo</Button>
-          <Button className="botoneshome">Construcción y Reformas</Button>
-          <Button className="botoneshome">Industria y Agricultura</Button>
-          <Button className="botoneshome">Otros...</Button>
+    <>
+      <header className="p-3 bg-dark text-bg-dark">
+        <div className="container-fluid">
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a
+              href="/"
+              className="d-flex align-items-left mb-2 mb-lg-0 text-white text-decoration-none"
+            >
+              <img src={logo} width="100" role="img" aria-label="Vendup"></img>
+              <span className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start fs-4">
+                VENDUP
+              </span>
+            </a>
+
+            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></ul>
+            <Button text="login" />
+            <Button text="signup" />
+          </div>
         </div>
-        <div className="container">
-          <MyCarousel />
+      </header>
+
+      <SearchPage />
+
+      <div className="text-center mt-5 ">
+        <div className="container ">
+          <div className="justify-content-center">
+            <ButtonCategory text="Todos" />
+            <ButtonCategory text="Coches" />
+            <ButtonCategory text="Coches eléctricos" />
+            <ButtonCategory text="Motor y Accesorios" />
+            <ButtonCategory text="Moda y Accesorios" />
+            <ButtonCategory text="Inmobiliaria" />
+            <ButtonCategory text="TV, Audio y Foto" />
+            <ButtonCategory text="Móviles y Telefonía" />
+            <ButtonCategory text="Informática y Electrónica" />
+            <ButtonCategory text="Deporte y Ocio" />
+            <ButtonCategory text="Bicicletas" />
+            <ButtonCategory text="Consolas y Videojuegos" />
+            <ButtonCategory text="Hogar y Jardín" />
+            <ButtonCategory text="Electrodomésticos" />
+            <ButtonCategory text="Cine, Libros y Música" />
+            <ButtonCategory text="Niños y Bebés" />
+            <ButtonCategory text="Coleccionismo" />
+            <ButtonCategory text="Construcción y Reformas" />
+            <ButtonCategory text="Industria y Agricultura" />
+            <ButtonCategory text="Otros..." />
+          </div>
+          <img src="https://user-images.githubusercontent.com/112573464/216276882-8d2a2299-fe88-404f-ab6d-cab3290e779a.png" />
+          {store.message ||
+            "Loading message from the backend (make sure your python backend is running)... ok?"}
         </div>
-        <Form className="d-flex">
-          <Form.Control
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-          />
-          <Button variant="outline-success">Search</Button>
-        </Form>
-        <img src="https://user-images.githubusercontent.com/112573464/216276882-8d2a2299-fe88-404f-ab6d-cab3290e779a.png" />{" "}
-        {store.message ||
-          "Loading message from the backend (make sure your python backend is running)... ok?"}{" "}
-      </div>{" "}
-    </div>
+      </div>
+    </>
   );
 };
 
