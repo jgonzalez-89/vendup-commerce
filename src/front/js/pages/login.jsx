@@ -4,15 +4,15 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
 function Login() {
-  const { store, actions } = useContext(Context);
-  const [email, setEmail] = useState("");
-  const [passWord, setpassWord] = useState("");
-  const navigate = useNavigate;
-  const token = sessionStorage.getItem("token");
+  // const { store, actions } = useContext(Context);
+  // const [email, setEmail] = useState("");
+  // const [passWord, setpassWord] = useState("");
+  // const navigate = useNavigate;
+  // const token = sessionStorage.getItem("token");
 
-  const handleClick = () => {
-    actions.login(email, passWord);
-  };
+  // const handleClick = () => {
+  //   actions.login(email, passWord);
+  // };
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -35,16 +35,16 @@ function Login() {
                type="email" 
                className="form-control" 
                placeholder="email"
-               value={email}
-               onChange={(evt) => setEmail(evt.target.value)}
+              //  value={email}
+              //  onChange={(evt) => setEmail(evt.target.value)}
                />
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password" 
                 className="form-control" 
                 placeholder="Password"
-                value={passWord}
-                onChange={(evt) => setpassWord(evt.target.value)}
+                // value={passWord}
+                // onChange={(evt) => setpassWord(evt.target.value)}
               />
             </Form.Group>
           </Form>

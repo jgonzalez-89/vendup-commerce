@@ -21,34 +21,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			login: async (email, password) => {
-				const opts = {
-				  method: "POST",
-				  headers: {
-					"Content-type": "application/json",
-				  },
-				  body: JSON.stringify({
-					email: email,
-					password: password,
-				  }),
-				};
-				try {
-				  const resp = await fetch(
-					"https://3001-jgonzalez89-subastaecom-7ov78xn03rn.ws-eu86.gitpod.io/api/users",
-					opts
-				  );
-				  if (resp.status !== 200) {
-					alert("An error ocurred");
-					return false;
-				  }
-				  const data = await resp.json();
-				  localStorage.setItem("token", data.acces_token);
-				  setStore({ token: data.acces_token });
-				  return true;
-				} catch (error) {
-				  console.log("There has been an error");
-				}
-			  },
+			// login: async (email, password) => {
+			// 	const opts = {
+			// 	  method: "POST",
+			// 	  headers: {
+			// 		"Content-type": "application/json",
+			// 	  },
+			// 	  body: JSON.stringify({
+			// 		email: email,
+			// 		password: password,
+			// 	  }),
+			// 	};
+			// 	try {
+			// 	  const resp = await fetch(
+			// 		"https://3001-jgonzalez89-subastaecom-7ov78xn03rn.ws-eu86.gitpod.io/api/users",
+			// 		opts
+			// 	  );
+			// 	  if (resp.status !== 200) {
+			// 		alert("An error ocurred");
+			// 		return false;
+			// 	  }
+			// 	  const data = await resp.json();
+			// 	  localStorage.setItem("token", data.acces_token);
+			// 	  setStore({ token: data.acces_token });
+			// 	  return true;
+			// 	} catch (error) {
+			// 	  console.log("There has been an error");
+			// 	}
+			//   },
 		
 
 			getMessage: async () => {

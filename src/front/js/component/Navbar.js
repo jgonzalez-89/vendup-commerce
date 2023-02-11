@@ -17,10 +17,10 @@ function Navbar() {
         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         </ul>
 
-        <div className="text-end">
+        {/* <div className="text-end">
           <button type="button" className="btn btn-outline-light me-2" onClick={Login} to="/login">Login</button>
           <button type="button" className="btn btn-warning" onClick={SignUp} to="/signup">Sign-up</button>
-        </div>
+        </div> */}
       </div>
     </div>
   </header>
