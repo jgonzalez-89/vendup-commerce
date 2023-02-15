@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home.jsx";
 import injectContext from "./store/appContext";
 import Footer from "./component/Footer.jsx";
+import Userpage from "./pages/userpage.jsx";
 
 //create your first component
 const Layout = () => {
@@ -15,9 +16,10 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<Home />} path="/" />
+          <Route element={<Userpage />} path="/user" />
           <Route element={<h1> Not found! </h1>} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );

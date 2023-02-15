@@ -1,9 +1,9 @@
 import React from "react";
-import logo from "../component/logowhite.png";
-import Login from "../pages/login.jsx";
-import SignUp from "../pages/signup.jsx";
+import logo from "../../../../public/logowhite.png";
+// import Login from "../pages/login.jsx";
+// import SignUp from "../pages/signup.jsx";
 
-function header() {
+function Header() {
   return (
     <>
       <header className="p-3 bg-dark text-bg-dark">
@@ -32,4 +32,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;
