@@ -1,12 +1,40 @@
 import React, { useState } from "react";
 import Header from "../component/Navbar.jsx";
+import ComprasComponent from "../component/ComprasComponent.jsx";
+import VentasComponent from "../component/VentasComponent.jsx";
+import FavoritosComponent from "../component/FavoritosComponent.jsx";
+import BuzonComponent from "../component/BuzonComponent.jsx";
+import AjustesComponent from "../component/AjustesComponent.jsx";
 
 const Userpage = () => {
   const [selectedButton, setSelectedButton] = useState("Compras");
+  const userId = 1; // Aquí se especifica el ID del usuario
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
   };
+
+  let renderComponent;
+
+  switch (selectedButton) {
+    case "Compras":
+      renderComponent = <ComprasComponent userId={userId}/>;
+      break;
+    case "Ventas":
+      renderComponent = <VentasComponent userId={userId}/>;
+      break;
+    case "Favoritos":
+      renderComponent = <FavoritosComponent />;
+      break;
+    case "Buzón":
+      renderComponent = <BuzonComponent />;
+      break;
+    case "Ajustes":
+      renderComponent = <AjustesComponent />;
+      break;
+    default:
+      renderComponent = <div>No se encontró componente.</div>;
+  }
 
   return (
     <>
@@ -19,16 +47,15 @@ const Userpage = () => {
               className="d-flex flex-column flex-shrink-0 p-3 bg-light"
               style={{ height: "100vh" }}
             >
-              <a
-                href="/"
-                className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
-              >
-                <svg className="bi pe-none me-2" width="40" height="32">
+              <a className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <svg
+                  className="bi pe-none me-2 justify-content-center"
+                  width="40"
+                  height="32"
+                >
                   <use href="#bootstrap" />
                 </svg>
-                <span className="fs-4">
-                  Aqui va el nombre de usuario de la API
-                </span>
+                <span className="fs-4">User Name</span>
               </a>
               <hr />
               <ul className="nav nav-pills flex-column mb-auto">
@@ -40,7 +67,7 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Compras")}
-                      style={{ width: "80%" }}
+                      style={{ width: "80%", marginTop: "2vw" }}
                     >
                       Compras
                     </button>
@@ -54,7 +81,7 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Ventas")}
-                      style={{ width: "80%" }}
+                      style={{ width: "80%", marginTop: "2vw" }}
                     >
                       Ventas
                     </button>
@@ -68,7 +95,7 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Favoritos")}
-                      style={{ width: "80%" }}
+                      style={{ width: "80%", marginTop: "2vw" }}
                     >
                       Favoritos
                     </button>
@@ -82,7 +109,7 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Buzón")}
-                      style={{ width: "80%" }}
+                      style={{ width: "80%", marginTop: "2vw" }}
                     >
                       Buzón
                     </button>
@@ -96,7 +123,7 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Ajustes")}
-                      style={{ width: "80%" }}
+                      style={{ width: "80%", marginTop: "2vw" }}
                     >
                       Ajustes
                     </button>
@@ -109,23 +136,7 @@ const Userpage = () => {
         </div>
         <div style={{ width: "80%", backgroundColor: "#ddd" }}>
           {/* Contenido del segundo div */}
-          <div className="container">
-            <div
-              className="card"
-              style={{ marginLeft: "50px", marginTop: "50px" }}
-            >
-              <div className="card-body">
-                <h5 className="card-title">Card Title</h5>
-                <p className="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-                <a href="#" className="btn btn-primary">
-                  Go somewhere
-                </a>
-              </div>
-            </div>
-          </div>
+          <div className="container">{renderComponent}</div>
         </div>
       </div>
     </>
