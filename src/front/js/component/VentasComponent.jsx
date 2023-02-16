@@ -7,11 +7,11 @@ const VentasComponent = ({ userId }) => {
   const handler = new HttpHandler();
 
   useEffect(() => {
-    debugger;
+    // debugger;
     async function getUser() {
       const { user } = await handler.getUserById(userId);
       setUserValue(user);
-      console.log(user);
+      // console.log(user);
     }
 
     getUser();

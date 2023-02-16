@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { HttpHandler } from "../../../http/handler";
+
 import Header from "../component/Navbar.jsx";
 import ComprasComponent from "../component/ComprasComponent.jsx";
 import VentasComponent from "../component/VentasComponent.jsx";
@@ -7,6 +9,20 @@ import BuzonComponent from "../component/BuzonComponent.jsx";
 import AjustesComponent from "../component/AjustesComponent.jsx";
 
 const Userpage = () => {
+  const [userName, setUserName] = useState({});
+  const handler = new HttpHandler();
+
+  useEffect(() => {
+    // debugger;
+    async function getUser() {
+      const { user } = await handler.getUserById(userId);
+      setUserName(user);
+      // console.log(user);
+    }
+
+    getUser();
+  }, []);
+
   const [selectedButton, setSelectedButton] = useState("Compras");
   const userId = 1; // Aquí se especifica el ID del usuario
 
@@ -18,10 +34,10 @@ const Userpage = () => {
 
   switch (selectedButton) {
     case "Compras":
-      renderComponent = <ComprasComponent userId={userId}/>;
+      renderComponent = <ComprasComponent userId={userId} />;
       break;
     case "Ventas":
-      renderComponent = <VentasComponent userId={userId}/>;
+      renderComponent = <VentasComponent userId={userId} />;
       break;
     case "Favoritos":
       renderComponent = <FavoritosComponent />;
@@ -40,7 +56,7 @@ const Userpage = () => {
     <>
       <Header />
       <div style={{ display: "flex" }}>
-        <div style={{ width: "20%", backgroundColor: "#eee" }}>
+        <div style={{ width: "20vw", backgroundColor: "#EEEEEF" }}>
           {/* Contenido del primer div */}
           <div>
             <div
@@ -55,7 +71,20 @@ const Userpage = () => {
                 >
                   <use href="#bootstrap" />
                 </svg>
-                <span className="fs-4">User Name</span>
+
+                <div className="flex-column">
+                  <div className="row mx-auto">
+                    <img src={userName.pictures} alt="" />
+                  </div>
+                  <div
+                    className="row fs-4 mx-auto p-3"
+                    style={{ color: "#7F7D82" }}
+                  >
+                    Bienvenido <br />
+                    {userName.name + " " + userName.surnames}
+                  </div>
+                </div>
+
               </a>
               <hr />
               <ul className="nav nav-pills flex-column mb-auto">
@@ -67,7 +96,13 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Compras")}
-                      style={{ width: "80%", marginTop: "2vw" }}
+                      style={{
+                        width: "80%",
+                        marginTop: "2vw",
+                        backgroundColor:
+                          selectedButton === "Compras" ? "#FEBD2F" : "",
+                        color: "#7F7D82",
+                      }}
                     >
                       Compras
                     </button>
@@ -81,7 +116,13 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Ventas")}
-                      style={{ width: "80%", marginTop: "2vw" }}
+                      style={{
+                        width: "80%",
+                        marginTop: "2vw",
+                        backgroundColor:
+                          selectedButton === "Ventas" ? "#FEBD2F" : "",
+                        color: "#7F7D82",
+                      }}
                     >
                       Ventas
                     </button>
@@ -95,7 +136,13 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Favoritos")}
-                      style={{ width: "80%", marginTop: "2vw" }}
+                      style={{
+                        width: "80%",
+                        marginTop: "2vw",
+                        backgroundColor:
+                          selectedButton === "Favoritos" ? "#FEBD2F" : "",
+                        color: "#7F7D82",
+                      }}
                     >
                       Favoritos
                     </button>
@@ -109,7 +156,13 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Buzón")}
-                      style={{ width: "80%", marginTop: "2vw" }}
+                      style={{
+                        width: "80%",
+                        marginTop: "2vw",
+                        backgroundColor:
+                          selectedButton === "Buzón" ? "#FEBD2F" : "",
+                        color: "#7F7D82",
+                      }}
                     >
                       Buzón
                     </button>
@@ -123,7 +176,13 @@ const Userpage = () => {
                       }`}
                       aria-current="page"
                       onClick={() => handleButtonClick("Ajustes")}
-                      style={{ width: "80%", marginTop: "2vw" }}
+                      style={{
+                        width: "80%",
+                        marginTop: "2vw",
+                        backgroundColor:
+                          selectedButton === "Ajustes" ? "#FEBD2F" : "",
+                        color: "#7F7D82",
+                      }}
                     >
                       Ajustes
                     </button>
@@ -134,7 +193,7 @@ const Userpage = () => {
             </div>
           </div>
         </div>
-        <div style={{ width: "80%", backgroundColor: "#ddd" }}>
+        <div style={{ width: "80vw", backgroundColor: "#C4BFBD" }}>
           {/* Contenido del segundo div */}
           <div className="container">{renderComponent}</div>
         </div>
