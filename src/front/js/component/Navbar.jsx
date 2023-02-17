@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 
 function Header() {
   return (
-    <Navbar bg="dark" variant="dark" style={{ minHeight: "64px" }}>
+    <Navbar bg="dark" variant="dark" style={{ minHeight: "50px" }}>
       <Container>
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="me-auto">

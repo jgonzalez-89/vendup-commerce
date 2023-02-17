@@ -54,7 +54,7 @@ const Userpage = () => {
       renderComponent = <div>No se encontró componente.</div>;
   }
 
-  const navbarHeight = 64;
+  const navbarHeight = 50;
   return (
     <>
       <Header />
