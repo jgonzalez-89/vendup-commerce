@@ -7,10 +7,11 @@ import VentasComponent from "../component/VentasComponent.jsx";
 import FavoritosComponent from "../component/FavoritosComponent.jsx";
 import BuzonComponent from "../component/BuzonComponent.jsx";
 import AjustesComponent from "../component/AjustesComponent.jsx";
+import PremiumComponent from "../component/PremiumComponent.jsx";
 import ButtonUser from "../component/ButtonUser.jsx";
 
 const Userpage = () => {
-  const userId = 12; // Aquí se especifica el ID del usuario
+  const userId = 22; // Aquí se especifica el ID del usuario
 
   const [userName, setUserName] = useState({});
   const handler = new HttpHandler();
@@ -50,6 +51,9 @@ const Userpage = () => {
     case "Ajustes":
       renderComponent = <AjustesComponent />;
       break;
+    case "Premium":
+      renderComponent = <PremiumComponent />;
+      break;
     default:
       renderComponent = <div>No se encontró componente.</div>;
   }
@@ -66,10 +70,6 @@ const Userpage = () => {
           >
             <div className="d-flex flex-column flex-shrink-0 p-3 bg-light">
               <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                {/* <svg className="bi pe-none me-2 justify-content-center" width="40" height="32">
-                  <use href="#bootstrap" />
-                </svg> */}
-
                 <div className="flex-column">
                   <div className="row mx-auto">
                     <img
@@ -132,6 +132,15 @@ const Userpage = () => {
                         text="Ajustes"
                         selected={selectedButton === "Ajustes"}
                         handleClick={() => handleButtonClick("Ajustes")}
+                      />
+                    </div>
+                  </li>
+                  <li className="nav-item">
+                    <div className="d-flex justify-content-center">
+                      <ButtonUser
+                        text="Premium"
+                        selected={selectedButton === "Premium"}
+                        handleClick={() => handleButtonClick("Premium")}
                       />
                     </div>
                   </li>
