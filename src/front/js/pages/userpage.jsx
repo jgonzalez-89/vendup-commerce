@@ -58,7 +58,7 @@ const Userpage = () => {
       renderComponent = <div>No se encontró componente.</div>;
   }
 
-  const navbarHeight = 50;
+  // const navbarHeight = 50;
   return (
     <>
       <Header />
@@ -66,7 +66,8 @@ const Userpage = () => {
         <div className="row">
           <div
             className="col-lg-3 col-md-4 col-sm-12"
-            style={{ height: `calc(100vh - ${navbarHeight}px)` }}
+            // style={{height: "100vh"}}
+            // style={{ height: `calc(100vh - ${navbarHeight}px)` }}
           >
             <div className="d-flex flex-column flex-shrink-0 p-3 bg-light">
               <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -76,6 +77,7 @@ const Userpage = () => {
                       src={userName.pictures}
                       alt=""
                       className="rounded-circle"
+                      style={{maxHeight : "80px", maxWidth: "80px"}}
                     />
                   </div>
                   <div
@@ -88,7 +90,7 @@ const Userpage = () => {
                 </div>
               </div>
               <hr />
-              <div className="mipo">
+              <div className="">
                 <ul className="nav nav-pills flex-column mb-auto">
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">

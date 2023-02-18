@@ -1,6 +1,8 @@
 export function HttpHandler() {
 
-  const url ="http://127.0.0.1:3001/api/users";
+  // Poner aqui la URL de Gitpod
+  const url ="https://3000-jgonzalez89-subastaecom-6i3fs7ijqtf.ws-eu87.gitpod.io/users";
+
   const contentType = { "Content-Type": "application/json" };
 
   async function get() {
