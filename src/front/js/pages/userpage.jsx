@@ -11,7 +11,7 @@ import PremiumComponent from "../component/PremiumComponent.jsx";
 import ButtonUser from "../component/ButtonUser.jsx";
 
 const Userpage = () => {
-  const userId = 22; // Aquí se especifica el ID del usuario
+  const userId = 4; // Aquí se especifica el ID del usuario
 
   const [userName, setUserName] = useState({});
   const handler = new HttpHandler();
@@ -77,7 +77,7 @@ const Userpage = () => {
                       src={userName.pictures}
                       alt=""
                       className="rounded-circle"
-                      style={{maxHeight : "80px", maxWidth: "80px"}}
+                      style={{ maxHeight: "80px", maxWidth: "80px" }}
                     />
                   </div>
                   <div

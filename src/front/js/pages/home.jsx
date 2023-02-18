@@ -1,16 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import Form from "react-bootstrap/Form";
 import Button from "../component/Button.jsx";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import logo from "../../../../public/logowhite.png";
 import SearchPage from "../component/Search.jsx";
-import ButtonCategory from "../component/ButtonCategory.jsx";
+import Cards from "../component/Cards.jsx";
+import { HttpHandler } from "../../../http/handler";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
+
+  const [data, setData] = useState([]);
+  const handler = new HttpHandler();
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await handler.get();
+      setData(result);
+    }
+    fetchData();
+  }, []);
+  console.log(data);
 
   return (
     <>
@@ -39,30 +49,92 @@ const Home = () => {
       <div className="text-center mt-5 ">
         <div className="container ">
           <div className="justify-content-center">
-            <ButtonCategory text="Todos" />
-            <ButtonCategory text="Coches" />
-            <ButtonCategory text="Coches eléctricos" />
-            <ButtonCategory text="Motor y Accesorios" />
-            <ButtonCategory text="Moda y Accesorios" />
-            <ButtonCategory text="Inmobiliaria" />
-            <ButtonCategory text="TV, Audio y Foto" />
-            <ButtonCategory text="Móviles y Telefonía" />
-            <ButtonCategory text="Informática y Electrónica" />
-            <ButtonCategory text="Deporte y Ocio" />
-            <ButtonCategory text="Bicicletas" />
-            <ButtonCategory text="Consolas y Videojuegos" />
-            <ButtonCategory text="Hogar y Jardín" />
-            <ButtonCategory text="Electrodomésticos" />
-            <ButtonCategory text="Cine, Libros y Música" />
-            <ButtonCategory text="Niños y Bebés" />
-            <ButtonCategory text="Coleccionismo" />
-            <ButtonCategory text="Construcción y Reformas" />
-            <ButtonCategory text="Industria y Agricultura" />
-            <ButtonCategory text="Otros..." />
+            <div className="col-lg-4 col-md-6 col-8 card-image1"></div>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-globe" alt="Todos"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-car" alt="Coches"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-motorcycle" alt="Motos"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-shirt" alt="Moda y accesorios"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-home" alt="Inmobiliaria"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-tv" alt="Tv, Audio, Accesorios"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-mobile-screen-button"
+                alt="Móviles y Telefonía"
+              ></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-laptop"
+                alt="Informática y Electrónica"
+              ></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-heart-pulse" alt="Deporte y Ocio"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-bicycle" alt="Bicicletas"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-desktop"
+                alt="Consolas y Videojuegos"
+              ></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-couch" alt="Hogar y Jardín"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-hard-drive" alt="Electrodomesticos"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-book" alt="Cine, Libros y Música"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-baby-carriage" alt="Niños y Bebes"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-palette" alt="Coleccionismo"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-trowel-bricks"
+                alt="construccion y Reformas"
+              ></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-industry"
+                alt="Industria y Agricultura"
+              ></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-person-digging" alt="Empleo"></i>{" "}
+            </button>
+            <button type="button" class="botoneshome rounded">
+              <i className="fa-solid fa-spinner" alt="Otros..."></i>{" "}
+            </button>
+            {/* <button type="button" class="botoneshome rounded">
+              <i
+                className="fa-solid fa-car-circle-bolt"
+                alt="Coches Electricos"
+              ></i>{" "} */}
+            {/* </button> */}
+            {/* <ButtonCategory text="Coches eléctricos" /> */}
           </div>
-          <img src="https://user-images.githubusercontent.com/112573464/216276882-8d2a2299-fe88-404f-ab6d-cab3290e779a.png" />
-          {store.message ||
-            "Loading message from the backend (make sure your python backend is running)... ok?"}
+          <Cards />
+          <Cards />
         </div>
       </div>
     </>
