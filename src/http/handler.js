@@ -1,7 +1,5 @@
 export function HttpHandler() {
-    // Poner aqui la URL de Gitpod
-    const url =
-        "https://3001-jgonzalez89-subastaecom-kngpr71jbz8.ws-eu87.gitpod.io/api/users";
+    const url = process.env.BACKEND_URL + "/api/users";
 
     const contentType = {
         "Content-Type": "application/json",
