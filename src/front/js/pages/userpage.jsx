@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { HttpHandler } from "../../../http/handler";
 
-import Header from "../component/Navbar.jsx";
+import Header from "../component/NavbarUser.jsx";
 import ComprasComponent from "../component/ComprasComponent.jsx";
 import VentasComponent from "../component/VentasComponent.jsx";
+import ProductoComponent from "../component/ProductoComponent.jsx";
 import FavoritosComponent from "../component/FavoritosComponent.jsx";
 import BuzonComponent from "../component/BuzonComponent.jsx";
 import AjustesComponent from "../component/AjustesComponent.jsx";
@@ -41,6 +42,9 @@ const Userpage = () => {
       break;
     case "Ventas":
       renderComponent = <VentasComponent userId={userId} />;
+      break;
+    case "Producto":
+      renderComponent = <ProductoComponent userId={userId}/>;
       break;
     case "Favoritos":
       renderComponent = <FavoritosComponent />;
@@ -107,6 +111,15 @@ const Userpage = () => {
                         text="Ventas"
                         selected={selectedButton === "Ventas"}
                         handleClick={() => handleButtonClick("Ventas")}
+                      />
+                    </div>
+                  </li>
+                  <li className="nav-item">
+                    <div className="d-flex justify-content-center">
+                      <ButtonUser
+                        text="Producto"
+                        selected={selectedButton === "Producto"}
+                        handleClick={() => handleButtonClick("Producto")}
                       />
                     </div>
                   </li>

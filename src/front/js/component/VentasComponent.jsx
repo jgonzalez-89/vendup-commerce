@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
-
 import { HttpHandler } from "../../../http/handler";
 
 const VentasComponent = ({ userId }) => {

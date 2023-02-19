@@ -1,10 +1,12 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 
 const ButtonUser = ({ text, selected, handleClick }) => {
   return (
     <div className="d-flex justify-content-center">
-    <button
+    <Button
       className={`nav-link ${selected ? "active" : ""}`}
+      variant="warning"
       aria-current="page"
       onClick={handleClick}
       style={{
@@ -15,7 +17,7 @@ const ButtonUser = ({ text, selected, handleClick }) => {
       }}
     >
       {text}
-    </button>
+    </Button>
   </div>
   )
 }
