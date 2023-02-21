@@ -16,7 +16,7 @@ class Product(db.Model):
     images = db.Column(db.String)
     created_at_product = db.Column(db.DateTime)
     status_shooping = db.Column(
-        db.Enum("active", "inactive", "reserved", name="status_shooping_enum_3")
+        db.Enum("active", "inactive", "reserved", name="status_shooping_enum_5")
     )
 
 
@@ -48,14 +48,14 @@ class ShoppingProduct(db.Model):
     owner_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
     product_id = db.Column(db.Integer, ForeignKey("Product.id"), nullable=False)
     status_shopping = db.Column(
-        db.Enum("active", "inactive", "completed", name="status_shopping_enum_4"),
+        db.Enum("active", "inactive", "completed", name="status_shopping_enum_6"),
         nullable=False,
     )
     created_at_shopping = db.Column(db.DateTime, nullable=False)
     updated_at_shopping = db.Column(db.DateTime, nullable=False)
     price = db.Column(db.Numeric, nullable=False)
     status_paid = db.Column(
-        db.Enum("paid", "pending", "refunded", name="status_paid_enum_3"),
+        db.Enum("paid", "pending", "refunded", name="status_paid_enum_5"),
         nullable=False,
     )
     paid_at = db.Column(db.DateTime, nullable=False)

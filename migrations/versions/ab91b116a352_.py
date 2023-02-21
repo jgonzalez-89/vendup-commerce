@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f4583ee7a4c3
+Revision ID: ab91b116a352
 Revises: 
-Create Date: 2023-02-18 23:50:48.726743
+Create Date: 2023-02-19 23:39:09.438927
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f4583ee7a4c3'
+revision = 'ab91b116a352'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -47,7 +47,7 @@ def upgrade():
     sa.Column('price', sa.Numeric(precision=7, scale=2), nullable=True),
     sa.Column('images', sa.String(), nullable=True),
     sa.Column('created_at_product', sa.DateTime(), nullable=True),
-    sa.Column('status_shooping', sa.Enum('active', 'inactive', 'reserved', name='status_shooping_enum_3'), nullable=True),
+    sa.Column('status_shooping', sa.Enum('active', 'inactive', 'reserved', name='status_shooping_enum_5'), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['User.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -55,11 +55,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('status_shopping', sa.Enum('active', 'inactive', 'completed', name='status_shopping_enum_4'), nullable=False),
+    sa.Column('status_shopping', sa.Enum('active', 'inactive', 'completed', name='status_shopping_enum_6'), nullable=False),
     sa.Column('created_at_shopping', sa.DateTime(), nullable=False),
     sa.Column('updated_at_shopping', sa.DateTime(), nullable=False),
     sa.Column('price', sa.Numeric(), nullable=False),
-    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_3'), nullable=False),
+    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_5'), nullable=False),
     sa.Column('paid_at', sa.DateTime(), nullable=False),
     sa.Column('purchase_method', sa.String(), nullable=False),
     sa.Column('commission', sa.Numeric(precision=6, scale=2), nullable=False),
