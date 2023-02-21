@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
+import Modal from "react-bootstrap/Modal";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import { HttpHandler } from "../../../http/handler";
+import FormularioProductoComponent from "./FormularioProductoComponent.jsx";
 
 const VentasComponent = ({ userId }) => {
   const [userValue, setUserValue] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const handler = new HttpHandler();
 
   useEffect(() => {
@@ -16,6 +20,16 @@ const VentasComponent = ({ userId }) => {
 
     getUser();
   }, []);
+
+  const handleEditClick = (producto) => {
+    setSelectedProduct(producto);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -51,12 +65,20 @@ const VentasComponent = ({ userId }) => {
                       <Card.Img
                         variant="top"
                         src={producto.images}
-                        style={{height: "200px", width: "100%", objectFit: "cover",}}
+                        style={{
+                          height: "200px",
+                          width: "100%",
+                          objectFit: "cover",
+                        }}
                       />
                       <Card.Body>
                         <Card.Title>{producto.name}</Card.Title>
                         <Card.Text
-                          style={{height: "150px", maxHeight: "150px", overflow: "hidden",}}
+                          style={{
+                            height: "150px",
+                            maxHeight: "150px",
+                            overflow: "hidden",
+                          }}
                         >
                           {producto.description}
                         </Card.Text>
@@ -73,7 +95,12 @@ const VentasComponent = ({ userId }) => {
                             ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
                             : "Venta Finalizada"}
                         </small>
-                        <Button variant="warning">Editar +</Button>
+                        <Button
+                          variant="warning"
+                          onClick={() => handleEditClick(producto)}
+                        >
+                          Editar +
+                        </Button>
                       </Card.Footer>
                     </Card>
                   </div>
@@ -83,48 +110,32 @@ const VentasComponent = ({ userId }) => {
           </div>
         </div>
       )}
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar producto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedProduct && (
+            <div>
+              <FormularioProductoComponent userId={userId} selectedProduct={selectedProduct}/>
+              {/* <h4>{selectedProduct.name}</h4>
+              <p>{selectedProduct.description}</p>
+              <p>Precio: {selectedProduct.price} €</p> */}
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Guardar cambios
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
 
 export default VentasComponent;
-
-{
-  /* <Card
-                      style={{
-                        width: "18rem",
-                        height: "100%",
-                        maxWidth: "400px",
-                        overflow: "hidden",
-                      }}
-                      className="bg-light border-primary"
-                    >
-                      <Card.Img
-                        variant="top"
-                        src={producto.images}
-                        style={{ height: "50%", objectFit: "cover" }}
-                      />
-                      <Card.Body style={{ height: "50%" }}>
-                        <Card.Title
-                          style={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {producto.name}
-                        </Card.Title>
-                        <Card.Text
-                          style={{ maxHeight: "80px", overflow: "hidden" }}
-                        >
-                          {producto.description}
-                        </Card.Text>
-                        <Card.Text>Precio: {producto.price} €</Card.Text>
-                        <Card.Text>
-                          {daysRemaining > 0
-                            ? `${daysRemaining} días restantes`
-                            : "Venta Finalizada"}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card> */
-}
