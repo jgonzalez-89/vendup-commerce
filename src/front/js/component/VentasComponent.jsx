@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
-import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
-import { HttpHandler } from "../../../http/handler";
-import FormularioProductoComponent from "./FormularioProductoComponent.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
+import { HttpHandler } from '../../../http/handler';
+import FormularioComponent from './FormularioComponent.jsx';
 
 const VentasComponent = ({ userId }) => {
   const [userValue, setUserValue] = useState({});
@@ -26,9 +23,12 @@ const VentasComponent = ({ userId }) => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = async () => {
     setSelectedProduct(null);
     setShowModal(false);
+    // Actualizar el estado userValue
+    const { user } = await handler.getUserById(userId);
+    setUserValue(user);
   };
 
   return (
@@ -38,9 +38,7 @@ const VentasComponent = ({ userId }) => {
       ) : (
         <div className="container">
           <div className="row">
-            <h1 className="text-center my-5">
-              Estos son tus articulos en Venta
-            </h1>
+            <h1 className="text-center my-5">Estos son tus articulos en Venta</h1>
             {userValue.products.length === 0 ? (
               <div>Aún no has vendido nada</div>
             ) : (
@@ -49,56 +47,40 @@ const VentasComponent = ({ userId }) => {
                 const startDate = new Date(producto.created_at_product);
                 startDate.setDate(startDate.getDate() + 3); // Agregar 3 días a la fecha de creación
                 const timeDiff = startDate.getTime() - currentDate.getTime();
-                const daysRemaining = Math.floor(
-                  timeDiff / (1000 * 60 * 60 * 24)
-                );
-                const hoursRemaining = Math.floor(
-                  (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                );
+                const daysRemaining = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hoursRemaining = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
                 return (
-                  <div
-                    className="col-lg-4 col-md-6 col-12 my-1"
-                    key={producto.id}
-                  >
+                  <div className="col-lg-4 col-md-6 col-12 my-1" key={producto.id}>
                     <Card>
                       <Card.Img
                         variant="top"
                         src={producto.images}
                         style={{
-                          height: "200px",
-                          width: "100%",
-                          objectFit: "cover",
+                          height: '200px',
+                          width: '100%',
+                          objectFit: 'cover',
                         }}
                       />
                       <Card.Body>
                         <Card.Title>{producto.name}</Card.Title>
                         <Card.Text
                           style={{
-                            height: "150px",
-                            maxHeight: "150px",
-                            overflow: "hidden",
+                            height: '150px',
+                            maxHeight: '150px',
+                            overflow: 'hidden',
                           }}
                         >
                           {producto.description}
                         </Card.Text>
                         <ListGroup className="list-group-flush">
                           <hr />
-                          <ListGroup.Item>
-                            Precio: {producto.price} €
-                          </ListGroup.Item>
+                          <ListGroup.Item>Precio: {producto.price} €</ListGroup.Item>
                         </ListGroup>
                       </Card.Body>
                       <Card.Footer className="d-flex justify-content-between align-items-center">
-                        <small className="text-muted">
-                          {daysRemaining > 0
-                            ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
-                            : "Venta Finalizada"}
-                        </small>
-                        <Button
-                          variant="warning"
-                          onClick={() => handleEditClick(producto)}
-                        >
+                        <small className="text-muted">{daysRemaining > 0 ? `${daysRemaining} días y ${hoursRemaining} horas restantes` : 'Venta Finalizada'}</small>
+                        <Button variant="warning" onClick={() => handleEditClick(producto)}>
                           Editar +
                         </Button>
                       </Card.Footer>
@@ -118,21 +100,13 @@ const VentasComponent = ({ userId }) => {
         <Modal.Body>
           {selectedProduct && (
             <div>
-              <FormularioProductoComponent userId={userId} selectedProduct={selectedProduct}/>
-              {/* <h4>{selectedProduct.name}</h4>
-              <p>{selectedProduct.description}</p>
-              <p>Precio: {selectedProduct.price} €</p> */}
+              <FormularioComponent
+                selectedProduct={selectedProduct}
+                onCloseModal={handleCloseModal}
+              />
             </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleCloseModal}>
-            Guardar cambios
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
