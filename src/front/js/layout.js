@@ -1,8 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home.jsx";
+import Homelola from "./pages/homelola.jsx";
 import injectContext from "./store/appContext";
 import Footer from "./component/Footer.jsx";
+import Terms from "./component/Terms.jsx";
+import Team from "./component/Team.jsx";
+import FAQs from "./component/FAQS.jsx";
 import Userpage from "./pages/userpage.jsx";
 
 //create your first component
@@ -17,9 +21,14 @@ const Layout = () => {
         <Routes>
           <Route element={<Home />} path="/" />
           <Route element={<Userpage />} path="/user" />
+          <Route element={<Homelola />} path="/home" />
+          <Route element={<Terms />} path="/terms" />
+          <Route element={<FAQs />} path="/FAQs" />
+          <Route element={<Team />} path="/team" />
+
           <Route element={<h1> Not found! </h1>} />
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </>
   );
