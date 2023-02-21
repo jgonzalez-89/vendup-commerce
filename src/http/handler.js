@@ -1,6 +1,7 @@
 export function HttpHandler() {
     const urlUser = process.env.BACKEND_URL + "/api/users";
     const urlProduct = process.env.BACKEND_URL + "/api/products";
+    const urlLoginRegister = process.env.BACKEND_URL;
 
     const contentType = {
         "Content-Type": "application/json",
@@ -95,6 +96,26 @@ export function HttpHandler() {
         return response.status === 200 ? true : false;
     }
 
+    async function register(email, password) {
+        const response = await fetch(`${urlLoginRegister}/register`, {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: contentType,
+        });
+
+        return response.json();
+    }
+
+    async function login(email, password) {
+        const response = await fetch(`${urlLoginRegister}/login`, {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: contentType,
+        });
+
+        return response.json();
+    }
+
     return {
         getUser,
         getUserById,
@@ -105,6 +126,8 @@ export function HttpHandler() {
         getProductById,
         postProduct,
         putProductById,
-        deleteProductById
+        deleteProductById,
+        login,
+        register
     };
 }
