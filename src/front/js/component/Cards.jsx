@@ -14,7 +14,7 @@ function Cards() {
             <div className="card-body">
               <h5 className="card-title">Zapatillas Nike</h5>
               <p className="card-text"> Poco uso, muy comodas</p>
-              <a href="" classNameName="btn btn-primary">
+              <a href="" className="btn btn-primary">
                 ir al anuncio
               </a>
             </div>
@@ -28,7 +28,7 @@ function Cards() {
             <div className="card-body">
               <h5 className="card-title">Zapatillas Nike</h5>
               <p className="card-text"> Poco uso, muy comodas</p>
-              <a href="" classNameName="btn btn-primary">
+              <a href="" className="btn btn-primary">
                 ir al anuncio
               </a>
             </div>
@@ -42,7 +42,7 @@ function Cards() {
             <div className="card-body">
               <h5 className="card-title">Zapatillas Nike</h5>
               <p className="card-text"> Poco uso, muy comodas</p>
-              <a href="" classNameName="btn btn-primary">
+              <a href="" className="btn btn-primary">
                 ir al anuncio
               </a>
             </div>
@@ -57,7 +57,7 @@ function Cards() {
             <div className="card-body">
               <h5 className="card-title">Zapatillas Nike</h5>
               <p className="card-text"> Poco uso, muy comodas</p>
-              <a href="" classNameName="btn btn-primary">
+              <a href="" className="btn btn-primary">
                 ir al anuncio
               </a>
             </div>

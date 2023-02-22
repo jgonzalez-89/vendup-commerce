@@ -5,12 +5,12 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body{
+/* body{
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .container{
     transform-style: preserve-3d;
