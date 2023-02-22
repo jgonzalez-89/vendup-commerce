@@ -11,9 +11,6 @@ from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from flask_bcrypt import Bcrypt
 
-# from models import Person
-
-
 ENV = os.getenv("FLASK_DEBUG")
 static_file_dir = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), "../public/"
@@ -53,16 +50,12 @@ setup_commands(app)
 app.register_blueprint(api, url_prefix="/api")
 
 # Handle/serialize errors like a JSON object
-
-
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 
 # generate sitemap with all your endpoints
-
-
 @app.route("/register", methods=["POST"])
 def register():
     email = request.json.get("email", None)
@@ -91,19 +84,23 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    if not email:
-        return jsonify({"message": "Missing email", "status": 400})
-    if not password:
-        return jsonify({"message": "Missing password", "status": 400})
+    if not email or not password:
+        return jsonify({"message": "Missing email or password", "status": 400})
 
     user = User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({"message": "User Not Found!", "status": 404})
+        return jsonify({"message": "User not found", "status": 404})
 
-    if bcrypt.check_password_hash(user.hash, password):
-        return jsonify({"message": f"Logged in, Welcome {email}!", "status": 200})
-    else:
-        return jsonify({"message": "Invalid Login Info!", "status": 400})
+    if not bcrypt.check_password_hash(user.hash, password):
+        return jsonify({"message": "Invalid email or password", "status": 401})
+
+    # Generar el token de acceso
+    access_token = create_access_token(identity=user.id)
+
+    return jsonify({
+        "message": "Logged in successfully",
+        "access_token": access_token
+    })
 
 
 @app.route("/")
@@ -111,9 +108,6 @@ def sitemap():
     if ENV == "1":
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, "index.html")
-
-
-# any other endpoint will try to serve it like a static file
 
 
 @app.route("/<path:path>", methods=["GET"])

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Row, Col, Container } from 'react-bootstrap';
+import { HttpHandler } from '../../../http/handler.js';
+import Cookies from 'js-cookie';
 import Forgotpass from './PasswordModal.jsx';
 import '../../../../public/logoblack.png';
 import '../../styles/modals.css';
-import { HttpHandler } from '../../../http/handler.js';
+
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -24,9 +26,10 @@ function Login() {
     console.log(email, password);
     const response = await handler.login(email, password);
     console.log(response);
-
-    if (response.status === 200) {
+  
+    if (response.access_token) {
       setShow(false);
+      Cookies.set('access_token', response.access_token, { expires: 7 });
       navigate('/user');
     } else {
       setErrorMessage('Email o contraseña incorrectos');
