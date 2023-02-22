@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { HttpHandler } from '../../../http/handler';
-
+import jwt_decode from "jwt-decode";
+import Cookies from 'js-cookie';
 import Header from '../component/NavbarUser.jsx';
 import ComprasComponent from '../component/ComprasComponent.jsx';
 import VentasComponent from '../component/VentasComponent.jsx';
@@ -12,7 +13,9 @@ import PremiumComponent from '../component/PremiumComponent.jsx';
 import ButtonUser from '../component/ButtonUser.jsx';
 
 const Userpage = () => {
-  const userId = 4; // Aquí se especifica el ID del usuario
+  const token = Cookies.get("access_token");
+  const decoded = jwt_decode(token);
+  const userId = decoded.sub;
 
   const [userName, setUserName] = useState({});
   const handler = new HttpHandler();
@@ -64,7 +67,6 @@ const Userpage = () => {
       renderComponent = <div>No se encontró componente.</div>;
   }
 
-  // const navbarHeight = 50;
   return (
     <>
       <Header />
@@ -72,8 +74,6 @@ const Userpage = () => {
         <div className="row">
           <div
             className="col-lg-3 col-md-4 col-sm-12"
-            // style={{height: "100vh"}}
-            // style={{ height: `calc(100vh - ${navbarHeight}px)` }}
           >
             <div className="d-flex flex-column flex-shrink-0 p-3 bg-light">
               <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">

@@ -1,8 +1,20 @@
+import Cookies from 'js-cookie';
+
 export function HttpHandler() {
   const urlUser = process.env.BACKEND_URL + '/api/users';
   const urlProduct = process.env.BACKEND_URL + '/api/products';
   const urlLogin = process.env.BACKEND_URL + '/login';
   const urlRegister = process.env.BACKEND_URL + '/register';
+
+  function getToken() {
+    const access_token = Cookies.get('access_token');
+    if (access_token) {
+      return `Bearer ${access_token}`;
+    } else {
+      return '';
+    }
+  }
+
 
   const contentType = {
     'Content-Type': 'application/json',
@@ -120,9 +132,15 @@ export function HttpHandler() {
         }),
         headers: contentType,
       });
-
+  
       const data = await response.json();
       console.log('Respuesta del backend:', data);
+  
+      if (response.ok) {
+        // Agregar el token de acceso a la cookie del cliente
+        Cookies.set('access_token', data.access_token, { expires: 1 });
+      }
+  
       return data;
     } catch (error) {
       console.error(error);
