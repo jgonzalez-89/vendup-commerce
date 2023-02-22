@@ -69,13 +69,13 @@ def register():
     password = request.json.get("password", None)
 
     if not email:
-        return "Missing email", 400
+        return jsonify({"message": "Missing email", "status": 400})
     if not password:
-        return "Missing password", 400
-    
+        return jsonify({"message": "Missing password", "status": 400})
+
     user = User.query.filter_by(email=email).first()
     if user:
-        return "Email already exists", 400
+        return jsonify({"message": "Email already exists", "status": 400})
 
     hashed = bcrypt.generate_password_hash(password).decode("utf-8")
     user = User(email=email, hash=hashed)
@@ -83,7 +83,7 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return f"Welcome! {email}", 200
+    return jsonify({"message": f"Welcome! {email}", "status": 200})
 
 
 @app.route("/login", methods=["POST"])
@@ -92,18 +92,18 @@ def login():
     password = request.json.get("password", None)
 
     if not email:
-        return "Missing email", 400
+        return jsonify({"message": "Missing email", "status": 400})
     if not password:
-        return "Missing password", 400
+        return jsonify({"message": "Missing password", "status": 400})
 
     user = User.query.filter_by(email=email).first()
     if not user:
-        return "User Not Found!", 404
+        return jsonify({"message": "User Not Found!", "status": 404})
 
     if bcrypt.check_password_hash(user.hash, password):
-        return f"Logged in, Welcome {email}!", 200
+        return jsonify({"message": f"Logged in, Welcome {email}!", "status": 200})
     else:
-        return "Invalid Login Info!", 400
+        return jsonify({"message": "Invalid Login Info!", "status": 400})
 
 
 @app.route("/")
