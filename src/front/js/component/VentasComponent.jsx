@@ -100,10 +100,7 @@ const VentasComponent = ({ userId }) => {
         <Modal.Body>
           {selectedProduct && (
             <div>
-              <FormularioComponent
-                selectedProduct={selectedProduct}
-                onCloseModal={handleCloseModal}
-              />
+              <FormularioComponent selectedProduct={selectedProduct} onCloseModal={handleCloseModal} />
             </div>
           )}
         </Modal.Body>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { HttpHandler } from "../../../http/handler.js";
-import { Card, Modal, ListGroup, Button } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { HttpHandler } from '../../../http/handler.js';
+import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 
 function CardsHome() {
   const [data, setData] = useState({});
@@ -34,18 +34,18 @@ function CardsHome() {
                       variant="top"
                       src={item.images}
                       style={{
-                        height: "200px",
-                        width: "100%",
-                        objectFit: "cover",
+                        height: '200px',
+                        width: '100%',
+                        objectFit: 'cover',
                       }}
                     />
                     <Card.Body>
                       <Card.Title>{item.name}</Card.Title>
                       <Card.Text
                         style={{
-                          height: "150px",
-                          maxHeight: "150px",
-                          overflow: "hidden",
+                          height: '150px',
+                          maxHeight: '150px',
+                          overflow: 'hidden',
                         }}
                       >
                         {item.description}

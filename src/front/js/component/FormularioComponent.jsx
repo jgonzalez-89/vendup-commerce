@@ -6,7 +6,7 @@ import { HttpHandler } from '../../../http/handler.js';
 const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
   const handler = new HttpHandler();
   const [product, setProduct] = useState({
-    id : selectedProduct.id,
+    id: selectedProduct.id,
     owner_id: selectedProduct.owner_id,
     name: selectedProduct.name,
     description: selectedProduct.description,
@@ -27,7 +27,7 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
     event.preventDefault();
     try {
       const payload = {
-        id : selectedProduct.id,
+        id: selectedProduct.id,
         owner_id: product.owner_id,
         name: product.name,
         description: product.description,
