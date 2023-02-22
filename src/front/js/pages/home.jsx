@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import logo from "../../../../public/logowhite.png";
 import SearchPage from "../component/Search.jsx";
-import Cards from "../component/Cards.jsx";
+import CardsHome from "../component/CardsHome.jsx";
 import Login from "../component/LoginModal.jsx";
 import SignUp from "../component/SignupModal.jsx";
 import Forgotpass from "../component/PasswordModal.jsx";
@@ -144,8 +144,8 @@ const Home = () => {
             {/* </button> */}
             {/* <ButtonCategory text="Coches eléctricos" /> */}
           </div>
-          <Cards />
-          <Cards />
+          <CardsHome />
+          {/* <CardsHome /> */}
         </div>
       </div>
     </>
