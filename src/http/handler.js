@@ -3,7 +3,6 @@ export function HttpHandler() {
   const urlProduct = process.env.BACKEND_URL + '/api/products';
   const urlLogin = process.env.BACKEND_URL + '/login';
   const urlRegister = process.env.BACKEND_URL + '/register';
-//   const urlLoginRegister = 'https://3001-jgonzalez89-subastaecom-gezkrcrw27i.ws-eu87.gitpod.io/login';
 
   const contentType = {
     'Content-Type': 'application/json',
@@ -100,7 +99,10 @@ export function HttpHandler() {
   async function register(email, password) {
     const response = await fetch(urlRegister, {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+      }),
       headers: contentType,
     });
 
@@ -112,7 +114,10 @@ export function HttpHandler() {
       console.log('Enviando datos al backend:', email, password);
       const response = await fetch(urlLogin, {
         method: 'POST',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
         headers: contentType,
       });
 

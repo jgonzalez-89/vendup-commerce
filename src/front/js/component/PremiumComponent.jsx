@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 const PremiumComponent = () => {
   return (
@@ -9,9 +9,7 @@ const PremiumComponent = () => {
           <div className="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 className="display-4 fw-normal">Pricing</h1>
             <p className="fs-5 text-muted">
-              Quickly build an effective pricing table for your potential
-              customers with this Bootstrap example. Its built with default
-              Bootstrap components and utilities with little customization.
+              Quickly build an effective pricing table for your potential customers with this Bootstrap example. Its built with default Bootstrap components and utilities with little customization.
             </p>
           </div>
         </Container>
@@ -36,11 +34,7 @@ const PremiumComponent = () => {
                     <li>Email support</li>
                     <li>Help center access</li>
                   </ul>
-                  <Button
-                    className="w-100 d-grid"
-                    variant="outline-warning"
-                    size="lg"
-                  >
+                  <Button className="w-100 d-grid" variant="outline-warning" size="lg">
                     Sign up for free
                   </Button>
                 </Card.Body>
