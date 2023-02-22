@@ -1,26 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import Button from "../component/Button.jsx";
 import logo from "../../../../public/logowhite.png";
 import SearchPage from "../component/Search.jsx";
 import Cards from "../component/Cards.jsx";
-import { HttpHandler } from "../../../http/handler";
+import Login from "../component/LoginModal.jsx";
+import SignUp from "../component/SignupModal.jsx";
+import Forgotpass from "../component/PasswordModal.jsx";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showForgotpassModal, setShowForgotpassModal] = useState(false);
 
-  const [data, setData] = useState([]);
-  const handler = new HttpHandler();
+  const handleLoginClick = () => {
+    setShowLoginModal(true);
+  };
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await handler.getProduct();
-      setData(result);
-    }
-    fetchData();
-  }, []);
-  console.log(data);
+  const handleSignupClick = () => {
+    setShowSignupModal(true);
+  };
+
+  const handleForgotpassClick = () => {
+    setShowForgotpassModal(true);
+  };
 
   return (
     <>
@@ -37,9 +41,16 @@ const Home = () => {
               </span>
             </a>
 
-            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></ul>
-            <Button text="login" />
-            <Button text="signup" />
+            <ul className="nav col-8 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></ul>
+            <Login
+              className="me-2"
+              tabindex="-1"
+              onClose={() => setShowLoginModal(false)}
+            />
+            <SignUp
+              className="me-2"
+              onClose={() => setShowSignupModal(false)}
+            />
           </div>
         </div>
       </header>
