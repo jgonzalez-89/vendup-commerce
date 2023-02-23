@@ -61,7 +61,7 @@ function Login() {
               <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
           </Form>
-          {errorMessage !== '' && <p className="text-danger">{errorMessage}</p>}
+          {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="warning" onClick={handleLogin}>

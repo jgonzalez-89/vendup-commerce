@@ -15,7 +15,6 @@ export function HttpHandler() {
     }
   }
 
-
   const contentType = {
     'Content-Type': 'application/json',
   };
@@ -132,15 +131,15 @@ export function HttpHandler() {
         }),
         headers: contentType,
       });
-  
+
       const data = await response.json();
       console.log('Respuesta del backend:', data);
-  
+
       if (response.ok) {
         // Agregar el token de acceso a la cookie del cliente
         Cookies.set('access_token', data.access_token, { expires: 1 });
       }
-  
+
       return data;
     } catch (error) {
       console.error(error);

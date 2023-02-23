@@ -27,7 +27,7 @@ const ComprasComponent = ({ userId }) => {
             <h1 className="text-center my-5">Estos son tus articulos Comprados</h1>
             {userValue.shopping_products.length === 0 ? (
               <div className="de-flex text-center">
-                <h1>Aún no has comprado nada</h1>
+                <h3 className="alert alert-danger text-center">Aún no has comprado nada</h3>
               </div>
             ) : (
               userValue.shopping_products.map((producto) => (

@@ -45,7 +45,7 @@ const Home = () => {
 
       <SearchPage />
 
-      <div className="text-center mt-5 ">
+      <div className="text-center mt-5 mb-5">
         <div className="container ">
           <div className="justify-content-center">
             <div className="col-lg-4 col-md-6 col-8 card-image1"></div>

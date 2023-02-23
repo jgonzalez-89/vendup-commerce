@@ -40,7 +40,9 @@ const VentasComponent = ({ userId }) => {
           <div className="row">
             <h1 className="text-center my-5">Estos son tus articulos en Venta</h1>
             {userValue.products.length === 0 ? (
-              <div>Aún no has vendido nada</div>
+              <div className="de-flex text-center">
+                <h3 className="alert alert-danger text-center">Aún no has comprado nada</h3>
+              </div>
             ) : (
               userValue.products.map((producto) => {
                 const currentDate = new Date();
