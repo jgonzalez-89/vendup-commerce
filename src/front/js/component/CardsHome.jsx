@@ -56,11 +56,11 @@ function CardsHome() {
                       </ListGroup>
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between align-items-center">
-                      {/* <small className="text-muted">
-                    {daysRemaining > 0
+                      <small className="text-muted">
+                    {/* {daysRemaining > 0
                       ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
-                      : "Venta Finalizada"}
-                  </small> */}
+                      : "Venta Finalizada"} */}
+                  </small>
                       {/* <Button
                     variant="warning"
                     onClick={() => handleEditClick(producto)}

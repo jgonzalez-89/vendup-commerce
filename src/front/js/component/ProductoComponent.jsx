@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
+// import { fill } from '@cloudinary/url-gen/actions/resize';
 
-const cld = new CloudinaryImage({
-  cloud: {
-    cloudName: 'dazdmgrf8',
-  },
-});
+const cld = new CloudinaryImage('Prueba', { cloudName: 'dazdmgrf8', apiKey: '183117376743833', apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' });
 
 const categories = [
   { value: 'Coches', label: 'Coches' },
@@ -40,7 +37,7 @@ const ProductoComponent = ({ userId }) => {
     name: '',
     description: '',
     price: '',
-    image: '', // incluye la información de la imagen
+    images: '', // incluye la información de la imagen
     imagePreviewUrl: '', // incluye una vista previa de la imagen
   });
   const httpHandler = new HttpHandler();
@@ -49,9 +46,11 @@ const ProductoComponent = ({ userId }) => {
     setProduct((prevState) => ({
       ...prevState,
       name: '',
+      category: '',
       description: '',
       price: '',
-      image: '',
+      images: '',
+      imagePreviewUrl: '',
     }));
   };
 
@@ -70,9 +69,10 @@ const ProductoComponent = ({ userId }) => {
         }
       );
       const data = await response.json();
+      // console.log(data);
       setProduct((prevState) => ({
         ...prevState,
-        [name]: data.secure_url, // guarda la URL de la imagen en Cloudinary
+        images: data.secure_url,
       }));
       handleImagePreview(file); // crea una vista previa de la imagen
     } else {
@@ -87,12 +87,15 @@ const ProductoComponent = ({ userId }) => {
     event.preventDefault();
     try {
       const payload = {
-        ...product,
-        created_at_product: new Date().toISOString(),
-        image: product.image, // incluye la URL de la imagen en Cloudinary en el objeto payload
+        owner_id: product.owner_id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        images: product.images,
+        created_at_product: new Date().toISOString(), // Agregar fecha actual
       };
       const response = await httpHandler.postProduct(payload);
-      console.log(response);
+      // console.log(response);
       setShowMessage(true);
       resetForm();
     } catch (error) {
@@ -113,7 +116,7 @@ const ProductoComponent = ({ userId }) => {
     reader.readAsDataURL(file);
   };
 
-  console.log(product);
+  // console.log(product);
 
   return (
     <>
@@ -151,21 +154,18 @@ const ProductoComponent = ({ userId }) => {
 
           <FormGroup controlId="productImage" className="mt-3">
             <FormLabel>Imagen del producto</FormLabel>
-            {product.imagePreviewUrl && <img src={product.imagePreviewUrl} alt="Vista previa de la imagen" style={{ maxWidth: '100%', maxHeight: '150px' }} />}
+            {product.imagePreviewUrl && <img src={product.imagePreviewUrl} alt="Vista previa de la imagen" style={{ maxWidth: '100%', maxHeight: '150px', margin: '30px' }} />}
             <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
           </FormGroup>
-          {/* <FormGroup controlId="productImage" className="mt-3">
-            <FormLabel>Imagen del producto</FormLabel>
-            <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
-          </FormGroup> */}
+
           <div className="d-flex justify-content-center m-4">
             <Button variant="warning" type="submit">
               Subir producto
             </Button>
           </div>
+          {showMessage && <div className="alert alert-success text-center">El producto se ha enviado con éxito</div>}
         </Form>
       </Container>
-      {showMessage && <div className="alert alert-success text-center">El producto se ha enviado con éxito</div>}
     </>
   );
 };
