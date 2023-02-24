@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <>
-      <Button variant="warning" onClick={handleShow}>
+      <Button variant="warning" className="m-2" onClick={handleShow}>
         Login
       </Button>
 

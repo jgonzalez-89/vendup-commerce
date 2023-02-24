@@ -66,7 +66,7 @@ const Userpage = () => {
 
   return (
     <>
-      <Header />
+      <Header NavHome={"/"} NavProducts={"/products"} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">

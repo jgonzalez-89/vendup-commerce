@@ -10,7 +10,7 @@ function Signup() {
 
   return (
     <>
-      <Button className="m-3" variant="warning" onClick={handleShow}>
+      <Button className="m-2" variant="warning" onClick={handleShow}>
         Sing Up
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -61,7 +61,7 @@ function Signup() {
                 <img alt="" src="logowhite.png" width="100" height="60" className="position-absolute top-0 start-0" />{' '}
               </Col>
               <Col xs={7} md={4}>
-                <Button variant="warning btn-lg" onClick={handleClose}>
+                <Button variant="warning" onClick={handleClose}>
                   Sing In
                 </Button>
               </Col>

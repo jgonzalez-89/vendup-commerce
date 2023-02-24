@@ -2,32 +2,9 @@ import React, { useState } from 'react';
 import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
-// import { fill } from '@cloudinary/url-gen/actions/resize';
+import { categories } from '../../../../data';
 
 const cld = new CloudinaryImage('Prueba', { cloudName: 'dazdmgrf8', apiKey: '183117376743833', apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' });
-
-const categories = [
-  { value: 'Coches', label: 'Coches' },
-  { value: 'Coches eléctricos', label: 'Coches eléctricos' },
-  { value: 'Motos', label: 'Motos' },
-  { value: 'Motor y Accesorios', label: 'Motor y Accesorios' },
-  { value: 'Moda y Accesorios', label: 'Moda y Accesorios' },
-  { value: 'Inmobiliaria', label: 'Inmobiliaria' },
-  { value: 'TV, Audio y Foto', label: 'TV, Audio y Foto' },
-  { value: 'Móviles y Telefonía', label: 'Móviles y Telefonía' },
-  { value: 'Informática y Electrónica', label: 'Informática y Electrónica' },
-  { value: 'Deporte y Ocio', label: 'Deporte y Ocio' },
-  { value: 'Bicicletas', label: 'Bicicletas' },
-  { value: 'Consolas y Videojuegos', label: 'Consolas y Videojuegos' },
-  { value: 'Hogar y Jardín', label: 'Hogar y Jardín' },
-  { value: 'Electrodomésticos', label: 'Electrodomésticos' },
-  { value: 'Cine, Libros y Música', label: 'Cine, Libros y Música' },
-  { value: 'Niños y Bebés', label: 'Niños y Bebés' },
-  { value: 'Coleccionismo', label: 'Coleccionismo' },
-  { value: 'Construcción y Reformas', label: 'Construcción y Reformas' },
-  { value: 'Industria y Agricultura', label: 'Industria y Agricultura' },
-  { value: 'Otros', label: 'Otros' },
-];
 
 const ProductoComponent = ({ userId }) => {
   const [showMessage, setShowMessage] = useState(false);

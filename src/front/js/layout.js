@@ -7,6 +7,7 @@ import Terms from './component/Terms.jsx';
 import Team from './component/Team.jsx';
 import FAQs from './component/FAQS.jsx';
 import Userpage from './pages/userpage.jsx';
+import ProductView from './pages/productview.jsx';
 
 //create your first component
 const Layout = () => {
@@ -19,6 +20,7 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<Home />} path="/" />
+          <Route element={<ProductView />} path="/products" />
           <Route element={<Userpage />} path="/user" />
           <Route element={<Home />} path="/home" />
           <Route element={<Terms />} path="/terms" />
