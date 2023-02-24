@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Button } from 'react-bootstrap';
+import { Card, ListGroup, Button, Modal, Form } from 'react-bootstrap'; // Importar el componente Modal
 import { HttpHandler } from '../../../http/handler';
 import { categories } from '../../../../data.js';
 import Header from '../component/NavbarUser.jsx';
-
 
 const ProductView = () => {
   const [category, setCategory] = useState('');
@@ -29,7 +28,7 @@ const ProductView = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentPageItems = filteredItems.slice(startIndex, endIndex);
 
-//   console.log(data);
+  //   console.log(data);
 
   return (
     <>
@@ -83,7 +82,7 @@ const ProductView = () => {
                       <hr />
                       <ListGroup.Item className="d-flex justify-content-between">
                         <span>Precio: {item.price} €</span>
-                        <Button variant="warning" onClick={() => handleEditClick()}>
+                        <Button variant="warning" onClick={{}}>
                           Comprar
                         </Button>
                       </ListGroup.Item>
