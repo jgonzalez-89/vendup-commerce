@@ -3,7 +3,7 @@ import logo from '../../../../public/logowhite.png';
 
 const Footer = () => (
   <div className="container-fluid p-3 bg-dark text-bg-dark">
-    <footer className="d-flex flex-wrap justify-content-between align-items-center">
+    <footer className="d-flex flex-wrap justify-content-between align-items-center" style={{ minHeight: '50px', bottom: '0' }}>
       <p className="col-md-4 mb-0 text-muted">&copy; 2023 Jose, Lola & Quique</p>
 
       <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">

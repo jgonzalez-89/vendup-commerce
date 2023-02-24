@@ -15,16 +15,15 @@ def serialize_user(user):
         "email": user.email,
         "is_admin": user.is_admin,
         "password": user.password,
-        "location": {
-            "city": user.location_city,
-            "state": user.location_state,
-            "country": user.location_country,
-            "postcode": user.location_postcode,
-        },
-        "dob": {"date": user.dob_date, "age": user.dob_age},
+        "location_city": user.location_city,
+        "location_state": user.location_state,
+        "location_country": user.location_country,
+        "location_postcode": user.location_postcode,
+        "dob_date": user.dob_date,
+        "dob_age": user.dob_age,
         "registered_date": user.registered_date,
         "phone": user.phone,
-        "pictures": user.picture_large,
+        "picture_large": user.picture_large,
     }
 
 

@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 
 function Header() {
   return (
-    <Navbar bg="dark" variant="dark" style={{ minHeight: '50px' }}>
+    <Navbar bg="dark" variant="dark" style={{ minHeight: '50px', top: '0' }}>
       <Container>
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="me-auto">
