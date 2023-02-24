@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
+import empy from '../../../../public/empy2.jpg';
 
 const ComprasComponent = ({ userId }) => {
   const [userValue, setUserValue] = useState({});
@@ -24,10 +25,19 @@ const ComprasComponent = ({ userId }) => {
       ) : (
         <div className="container">
           <div className="row">
-            <h1 className="text-center my-5">Estos son tus articulos Comprados</h1>
+            <h1 className="text-center my-5">{userValue.shopping_products && userValue.shopping_products.length > 0 ? 'Estos son tus articulos Comprados' : 'Aun no has comprado nada ...'}</h1>
             {userValue.shopping_products.length === 0 ? (
-              <div className="de-flex text-center">
-                <h3 className="alert alert-danger text-center">Aún no has comprado nada</h3>
+              <div>
+                <div className="d-flex justify-content-center">
+                  <img
+                    width={400}
+                    height={286}
+                    className="align-self-center mr-3"
+                    src={empy}
+                    alt="Mi imagen"
+                    style={{ borderRadius: '10%', boxShadow: '1px 2px 9px'}}
+                  />
+                </div>
               </div>
             ) : (
               userValue.shopping_products.map((producto) => (
@@ -65,21 +75,8 @@ const ComprasComponent = ({ userId }) => {
                             ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
                             : "Venta Finalizada"} */}
                       </small>
-                      {/* <Button variant="warning">Editar +</Button> */}
                     </Card.Footer>
                   </Card>
-                  {/* <Card style={{ width: "18rem", height: "100%" }}>
-                  <Card.Img
-                    variant="top"
-                    src={producto.images}
-                    style={{ height: "50%" }}
-                  />
-                  <Card.Body style={{ height: "50%" }}>
-                    <Card.Title>{producto.name}</Card.Title>
-                    <Card.Text>{producto.description}</Card.Text>
-                    <Card.Text>Precio: {producto.price} €</Card.Text>
-                  </Card.Body>
-                </Card> */}
                 </div>
               ))
             )}
@@ -91,3 +88,18 @@ const ComprasComponent = ({ userId }) => {
 };
 
 export default ComprasComponent;
+
+{
+  /* <Card style={{ width: "18rem", height: "100%" }}>
+                  <Card.Img
+                    variant="top"
+                    src={producto.images}
+                    style={{ height: "50%" }}
+                  />
+                  <Card.Body style={{ height: "50%" }}>
+                    <Card.Title>{producto.name}</Card.Title>
+                    <Card.Text>{producto.description}</Card.Text>
+                    <Card.Text>Precio: {producto.price} €</Card.Text>
+                  </Card.Body>
+                </Card> */
+}

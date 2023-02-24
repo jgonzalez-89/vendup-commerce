@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
-import FormularioComponent from './FormularioComponent.jsx';
+import FormularioComponent from './ComponenteFormulario.jsx';
 
 const VentasComponent = ({ userId }) => {
   const [userValue, setUserValue] = useState({});
