@@ -28,7 +28,7 @@ function CardsHome() {
           <div className="row">
             {data.product &&
               data.product.slice(-6).map((item, index) => (
-                <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
+                <div className="col-lg-4 col-md-6 col-12 mt-2" key={index} style={{ marginBottom: '6rem' }}>
                   <Card>
                     <Card.Img
                       variant="top"

@@ -24,7 +24,7 @@ const Home = () => {
       </Navbar>
 
       <div className="text-center mt-5 mb-5">
-        <div className="container ">
+        <div className="container mb-5">
           <SearchPage />
 
           <CardsHome />

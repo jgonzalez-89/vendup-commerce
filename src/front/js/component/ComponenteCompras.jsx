@@ -25,11 +25,22 @@ const ComprasComponent = ({ userId }) => {
       ) : (
         <div className="container">
           <div className="row">
-            <h1 className="text-center my-5">{userValue.shopping_products && userValue.shopping_products.length > 0 ? 'Estos son tus articulos Comprados' : 'Aun no has comprado nada ...'}</h1>
+            <h1 className="text-center my-5">
+              {userValue.shopping_products && userValue.shopping_products.length > 0
+                ? 'Estos son tus articulos Comprados'
+                : 'Aun no has comprado nada ...'}
+            </h1>
             {userValue.shopping_products.length === 0 ? (
               <div>
                 <div className="d-flex justify-content-center">
-                  <img width={400} height={286} className="align-self-center mr-3" src={empy} alt="Mi imagen" style={{ borderRadius: '10%', boxShadow: '1px 2px 9px' }} />
+                  <img
+                    width={400}
+                    height={286}
+                    className="align-self-center mr-3"
+                    src={empy}
+                    alt="Mi imagen"
+                    style={{ borderRadius: '10%', boxShadow: '1px 2px 9px' }}
+                  />
                 </div>
               </div>
             ) : (

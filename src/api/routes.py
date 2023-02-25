@@ -13,17 +13,16 @@ def serialize_user(user):
         "name": user.name,
         "surnames": user.surnames,
         "email": user.email,
-        "is_admin": user.is_admin,
+        "is_premium": user.is_premium,
         "password": user.password,
         "location_city": user.location_city,
         "location_state": user.location_state,
         "location_country": user.location_country,
         "location_postcode": user.location_postcode,
         "dob_date": user.dob_date,
-        "dob_age": user.dob_age,
         "registered_date": user.registered_date,
         "phone": user.phone,
-        "picture_large": user.picture_large,
+        "profile_picture": user.profile_picture,
     }
 
 
@@ -32,6 +31,7 @@ def serialize_product(product):
         "id": product.id,
         "owner_id": product.owner_id,
         "name": product.name,
+        "premium": product.premium,
         "description": product.description,
         "category": product.category,
         "price": str(product.price),
@@ -76,7 +76,7 @@ def create_user():
         name=data.get("name"),
         surnames=data.get("surnames"),
         email=data.get("email"),
-        is_admin=data.get("is_admin", False),
+        is_premium=data.get("is_premium", False),
         password=data.get("password"),
         hash=data.get("hash"),
         location_city=data.get("location_city"),
@@ -84,10 +84,9 @@ def create_user():
         location_country=data.get("location_country"),
         location_postcode=data.get("location_postcode"),
         dob_date=data.get("dob_date"),
-        dob_age=data.get("dob_age"),
         registered_date=data.get("registered_date"),
         phone=data.get("phone"),
-        picture_large=data.get("picture_large"),
+        profile_picture=data.get("profile_picture"),
     )
     db.session.add(user)
     db.session.commit()
@@ -104,17 +103,16 @@ def update_user(id):
     user.name = data.get("name", user.name)
     user.surnames = data.get("surnames", user.surnames)
     user.email = data.get("email", user.email)
-    user.is_admin = data.get("is_admin", user.is_admin)
+    user.is_premium = data.get("is_premium", user.is_premium)
     user.password = data.get("password", user.password)
     user.location_city = data.get("location_city", user.location_city)
     user.location_state = data.get("location_state", user.location_state)
     user.location_country = data.get("location_country", user.location_country)
     user.location_postcode = data.get("location_postcode", user.location_postcode)
     user.dob_date = data.get("dob_date", user.dob_date)
-    user.dob_age = data.get("dob_age", user.dob_age)
     user.registered_date = data.get("registered_date", user.registered_date)
     user.phone = data.get("phone", user.phone)
-    user.picture_large = data.get("picture_large", user.picture_large)
+    user.profile_picture = data.get("profile_picture", user.profile_picture)
 
     db.session.commit()
     return jsonify({"user": serialize_user(user)})

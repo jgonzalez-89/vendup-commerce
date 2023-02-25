@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ab91b116a352
+Revision ID: 09aee28e40d6
 Revises: 
-Create Date: 2023-02-19 23:39:09.438927
+Create Date: 2023-02-25 23:21:06.360963
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ab91b116a352'
+revision = '09aee28e40d6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,18 +23,17 @@ def upgrade():
     sa.Column('name', sa.String(length=100), nullable=True),
     sa.Column('surnames', sa.String(length=100), nullable=True),
     sa.Column('email', sa.String(length=255), nullable=False),
-    sa.Column('is_admin', sa.Boolean(), nullable=True),
-    sa.Column('password', sa.String(length=200), nullable=True),
+    sa.Column('is_premium', sa.Boolean(), nullable=True),
+    sa.Column('password', sa.String(length=200), nullable=False),
     sa.Column('hash', sa.Text(), nullable=True),
     sa.Column('location_city', sa.String(length=50), nullable=True),
     sa.Column('location_state', sa.String(length=50), nullable=True),
     sa.Column('location_country', sa.String(length=50), nullable=True),
     sa.Column('location_postcode', sa.String(length=50), nullable=True),
     sa.Column('dob_date', sa.String(length=100), nullable=True),
-    sa.Column('dob_age', sa.Integer(), nullable=True),
     sa.Column('registered_date', sa.String(length=100), nullable=True),
     sa.Column('phone', sa.String(length=20), nullable=True),
-    sa.Column('picture_large', sa.String(), nullable=True),
+    sa.Column('profile_picture', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -43,11 +42,12 @@ def upgrade():
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
+    sa.Column('premium', sa.Boolean(), nullable=True),
     sa.Column('category', sa.String(), nullable=True),
     sa.Column('price', sa.Numeric(precision=7, scale=2), nullable=True),
     sa.Column('images', sa.String(), nullable=True),
     sa.Column('created_at_product', sa.DateTime(), nullable=True),
-    sa.Column('status_shooping', sa.Enum('active', 'inactive', 'reserved', name='status_shooping_enum_5'), nullable=True),
+    sa.Column('status_shooping', sa.Enum('active', 'inactive', 'reserved', name='Product_enum_a1'), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['User.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -55,14 +55,14 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('status_shopping', sa.Enum('active', 'inactive', 'completed', name='status_shopping_enum_6'), nullable=False),
-    sa.Column('created_at_shopping', sa.DateTime(), nullable=False),
-    sa.Column('updated_at_shopping', sa.DateTime(), nullable=False),
-    sa.Column('price', sa.Numeric(), nullable=False),
-    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_5'), nullable=False),
-    sa.Column('paid_at', sa.DateTime(), nullable=False),
-    sa.Column('purchase_method', sa.String(), nullable=False),
-    sa.Column('commission', sa.Numeric(precision=6, scale=2), nullable=False),
+    sa.Column('status_shopping', sa.Enum('active', 'inactive', 'completed', name='status_shopping_enum_a1'), nullable=True),
+    sa.Column('created_at_shopping', sa.DateTime(), nullable=True),
+    sa.Column('updated_at_shopping', sa.DateTime(), nullable=True),
+    sa.Column('price', sa.Numeric(), nullable=True),
+    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_a1'), nullable=True),
+    sa.Column('paid_at', sa.DateTime(), nullable=True),
+    sa.Column('purchase_method', sa.String(), nullable=True),
+    sa.Column('commission', sa.Numeric(precision=6, scale=2), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['User.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['Product.id'], ),
     sa.PrimaryKeyConstraint('id')
