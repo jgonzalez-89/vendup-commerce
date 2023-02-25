@@ -1,11 +1,10 @@
 import React from 'react';
-import Navbar from '../component/Navbar.jsx';
+// import Navbar from '../component/Navbar.jsx';
 import Accordion from 'react-bootstrap/Accordion';
 
 const FAQs = () => (
   <>
-    <Navbar></Navbar>
-
+    
     <h2 class="text-center m-4 p-2 text-warning fw-bold">FAQ</h2>
     <p class="text-center mb-5">Find the answers for the most frequently asked questions below</p>
 

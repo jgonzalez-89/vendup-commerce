@@ -6,8 +6,6 @@ import Header from '../component/NavbarUser.jsx';
 import ComprasComponent from '../component/ComponenteCompras.jsx';
 import VentasComponent from '../component/ComponenteVentas.jsx';
 import ProductoComponent from '../component/ComponenteFormularioProducto.jsx';
-import FavoritosComponent from '../component/ComponenteFavoritos.jsx';
-import BuzonComponent from '../component/ComponenteBuzon.jsx';
 import AjustesComponent from '../component/ComponenteFormularioPerfil.jsx';
 import PremiumComponent from '../component/ComponentePremium.jsx';
 import ButtonUser from '../component/ButtonUser.jsx';
@@ -48,12 +46,6 @@ const Userpage = () => {
     case 'Producto':
       renderComponent = <ProductoComponent userId={userId} />;
       break;
-    case 'Favoritos':
-      renderComponent = <FavoritosComponent />;
-      break;
-    case 'Buzón':
-      renderComponent = <BuzonComponent />;
-      break;
     case 'Ajustes':
       renderComponent = <AjustesComponent userId={userId} />;
       break;
@@ -66,7 +58,7 @@ const Userpage = () => {
 
   return (
     <>
-      <Header NavHome={"/"} NavProducts={"/products"} />
+      <Header NavHome={'/'} NavProducts={'/products'} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
@@ -77,7 +69,7 @@ const Userpage = () => {
                     <img src={userName.picture_large} alt="" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover' }} />
                   </div>
                   <div className="row fs-4 p-3" style={{ color: 'black' }}>
-                    Bienvenido <br />
+                    Hola! <br />
                     {userName.name + ' ' + userName.surnames}
                   </div>
                 </div>
@@ -100,16 +92,7 @@ const Userpage = () => {
                       <ButtonUser text="Subir Producto" selected={selectedButton === 'Producto'} handleClick={() => handleButtonClick('Producto')} />
                     </div>
                   </li>
-                  <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Productos Favoritos" selected={selectedButton === 'Favoritos'} handleClick={() => handleButtonClick('Favoritos')} />
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Buzón" selected={selectedButton === 'Buzón'} handleClick={() => handleButtonClick('Buzón')} />
-                    </div>
-                  </li>
+
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
                       <ButtonUser text="Editar Perfil" selected={selectedButton === 'Ajustes'} handleClick={() => handleButtonClick('Ajustes')} />
@@ -125,7 +108,7 @@ const Userpage = () => {
               <hr />
             </div>
           </div>
-          <div className="col-lg-9 col-md-8 col-sm-12" style={{  }}>
+          <div className="col-lg-9 col-md-8 col-sm-12" style={{}}>
             <div className="container">{renderComponent}</div>
           </div>
         </div>

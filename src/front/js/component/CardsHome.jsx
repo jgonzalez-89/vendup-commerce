@@ -56,17 +56,7 @@ function CardsHome() {
                       </ListGroup>
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                    {/* {daysRemaining > 0
-                      ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
-                      : "Venta Finalizada"} */}
-                  </small>
-                      {/* <Button
-                    variant="warning"
-                    onClick={() => handleEditClick(producto)}
-                  >
-                    Editar +
-                  </Button> */}
+                      <small className="text-muted"></small>
                     </Card.Footer>
                   </Card>
                 </div>
@@ -79,28 +69,3 @@ function CardsHome() {
 }
 
 export default CardsHome;
-
-{
-  /* <div className="m-5">
-        <div className="container-xl">
-          <div className="row row-cols-1 row-cols-md-5 g-4">
-            {data.product &&
-              data.product.map((item, index) => (
-                <div className="card xl m-4 p-1" key={index}>
-                  <img src={item.images} className="card-img-top" alt="..." />
-                  <div className="card-body">
-                    <h5 className="card-title">{item.name}</h5>
-                    <p className="card-text">{item.description}</p>
-                    <a href="" className="btn btn-primary">
-                      Ver mas
-                    </a>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-// } */
-}

@@ -1,13 +1,14 @@
 import React from 'react';
-import Navbar from './Navbar.jsx';
+// import Navbar from './Navbar.jsx';
 import '../../styles/team.css';
 import '../../../../public/Jose.png';
 import '../../../../public/quique.jpeg';
 import '../../../../public/Lola.png';
+import Header from './NavbarUser.jsx';
 
 const Team = () => (
   <>
-    <Navbar></Navbar>
+    <Header NavHome={'/'} NavProducts={'/products'} NavUser={'/user'} />
     <div className="card text-bg-dark">
       <img src="" class="video" alt="..." />
       <div className="card-img-overlay">

@@ -29,14 +29,7 @@ const ComprasComponent = ({ userId }) => {
             {userValue.shopping_products.length === 0 ? (
               <div>
                 <div className="d-flex justify-content-center">
-                  <img
-                    width={400}
-                    height={286}
-                    className="align-self-center mr-3"
-                    src={empy}
-                    alt="Mi imagen"
-                    style={{ borderRadius: '10%', boxShadow: '1px 2px 9px'}}
-                  />
+                  <img width={400} height={286} className="align-self-center mr-3" src={empy} alt="Mi imagen" style={{ borderRadius: '10%', boxShadow: '1px 2px 9px' }} />
                 </div>
               </div>
             ) : (
@@ -69,12 +62,7 @@ const ComprasComponent = ({ userId }) => {
                       </ListGroup>
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                        Aqui va algo, quizas cuando se compró!
-                        {/* {daysRemaining > 0
-                            ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
-                            : "Venta Finalizada"} */}
-                      </small>
+                      <small className="text-muted">Aqui va algo, quizas cuando se compró!</small>
                     </Card.Footer>
                   </Card>
                 </div>
@@ -88,18 +76,3 @@ const ComprasComponent = ({ userId }) => {
 };
 
 export default ComprasComponent;
-
-{
-  /* <Card style={{ width: "18rem", height: "100%" }}>
-                  <Card.Img
-                    variant="top"
-                    src={producto.images}
-                    style={{ height: "50%" }}
-                  />
-                  <Card.Body style={{ height: "50%" }}>
-                    <Card.Title>{producto.name}</Card.Title>
-                    <Card.Text>{producto.description}</Card.Text>
-                    <Card.Text>Precio: {producto.price} €</Card.Text>
-                  </Card.Body>
-                </Card> */
-}

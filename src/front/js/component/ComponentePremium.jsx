@@ -41,29 +41,6 @@ const PremiumComponent = () => {
               </Card>
             </Col>
             <Col>
-              <Card className="h-100 mb-4 rounded-3 shadow-sm">
-                <Card.Header>
-                  <h4 className="my-0 fw-normal">Pro</h4>
-                </Card.Header>
-                <Card.Body>
-                  <Card.Title className="pricing-card-title">
-                    <h1>
-                      €15<small className="text-muted fw-light">/mo</small>
-                    </h1>
-                  </Card.Title>
-                  <ul className="list-unstyled mt-3 mb-4">
-                    <li>20 products included</li>
-                    <li>10 photos per product</li>
-                    <li>Priority email support</li>
-                    <li>Help center access</li>
-                  </ul>
-                  <Button className="w-100 d-grid" variant="warning" size="lg">
-                    Get started
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
               <Card className="h-100 mb-4 rounded-3 shadow-sm border-warning">
                 <Card.Header className="text-bg-primary border-warning bg-warning">
                   <h4 className="my-0 fw-normal">Enterprise</h4>

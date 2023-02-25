@@ -1,9 +1,8 @@
 import React from 'react';
-import Navbar from '../component/Navbar.jsx';
+// import Navbar from '../component/Navbar.jsx';
 
 const Terms = () => (
   <>
-    <Navbar></Navbar>
     <div className="col-lg-8 mx-auto p-4 py-md-5">
       <h2 className="d-flex justify-content-center">
         <strong>Terms & Conditions</strong>
