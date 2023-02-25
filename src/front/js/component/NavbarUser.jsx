@@ -1,18 +1,20 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Button } from 'react-bootstrap';
+import React from "react";
+import { Button, Navbar, Nav, Container } from "react-bootstrap";
+import logo from "../../../../public/logowhite.png";
 
-function Header() {
+const Header = ({NavHome, NavProducts, NavUser}) => {
+
   return (
-    <Navbar bg="dark" variant="dark" style={{ minHeight: '50px', top: '0' }}>
+    <Navbar bg="dark" variant="dark" style={{ minHeight: "50px", top: "0" }}>
       <Container>
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <img src={logo} width="100" role="img" aria-label="Vendup" />
+        </Navbar.Brand>
+
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          {NavHome && <Nav.Link href={NavHome}>Home</Nav.Link>}
+          {NavUser && <Nav.Link href={NavUser}>Usuario</Nav.Link>}
+          {NavProducts && <Nav.Link href={NavProducts}>Productos</Nav.Link>}
         </Nav>
         <Nav className="ms-auto">
           <Button className="" variant="warning">

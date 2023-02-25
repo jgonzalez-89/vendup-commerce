@@ -10,6 +10,9 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from flask_bcrypt import Bcrypt
+import stripe
+
+stripe.api_key = "sk_test_51Mf8aTJwZ9bnrLE9ecLR2q1QeoFpuh4A8qCTK8GojuhuYZ8FQNsSYmykb2jrcgH8Rznu8tI9GX8op4sILcUkBUoD00BFItNCIy"
 
 ENV = os.getenv("FLASK_DEBUG")
 static_file_dir = os.path.join(
@@ -101,6 +104,27 @@ def login():
         "message": "Logged in successfully",
         "access_token": access_token
     })
+
+# Crear vista que maneje los pagos
+@app.route("/procesar_pago", methods=["POST"])
+def procesar_pago():
+    # Obtener la información de pago del formulario de pago de Stripe en el frontend
+    token = request.form["stripeToken"]
+    monto = request.form["monto"]
+    
+    try:
+        # Utilizar la biblioteca Stripe para procesar el pago
+        cargo = stripe.Charge.create(
+            amount=int(float(monto) * 100),
+            currency="usd",
+            description="Descripción del pago",
+            source=token
+        )
+        # Retornar una respuesta satisfactoria si el pago se procesó correctamente
+        return jsonify({"status": "success"})
+    except stripe.error.CardError as e:
+        # Retornar una respuesta de error si el pago falló
+        return jsonify({"status": "error", "message": e.user_message})
 
 
 @app.route("/")
