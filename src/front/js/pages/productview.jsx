@@ -12,7 +12,7 @@ const ProductView = () => {
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;
 
-  console.log(store);
+//   console.log(store);
 
   const [category, setCategory] = useState('');
   const [data, setData] = useState({});
@@ -39,7 +39,7 @@ const ProductView = () => {
 
   return (
     <>
-      <Header NavUser={'/user'} />
+      <Header NavUser={'/user'} NavHome={'/'} />
 
       <div className="container">
         <h1 className="text-center my-5">Aquí podrás ver y seleccionar los productos por categorías</h1>
