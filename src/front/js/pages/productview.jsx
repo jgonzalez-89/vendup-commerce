@@ -3,8 +3,17 @@ import { Card, ListGroup, Button, Modal, Form } from 'react-bootstrap'; // Impor
 import { HttpHandler } from '../../../http/handler';
 import { categories } from '../../../../data.js';
 import Header from '../component/NavbarUser.jsx';
+import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '../store/appContext.js';
+import { setSelectedProduct } from '../store/flux.js';
 
 const ProductView = () => {
+  const { store, actions } = useContext(Context);
+  const { selectedProduct } = store;
+
+  console.log(store);
+
   const [category, setCategory] = useState('');
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
@@ -27,8 +36,6 @@ const ProductView = () => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentPageItems = filteredItems.slice(startIndex, endIndex);
-
-  //   console.log(data);
 
   return (
     <>
@@ -82,7 +89,7 @@ const ProductView = () => {
                       <hr />
                       <ListGroup.Item className="d-flex justify-content-between">
                         <span>Precio: {item.price} €</span>
-                        <Button variant="warning" onClick={{}}>
+                        <Button as={NavLink} to="/shopping" onClick={() => actions.setSelectedProduct(item)}>
                           Comprar
                         </Button>
                       </ListGroup.Item>
