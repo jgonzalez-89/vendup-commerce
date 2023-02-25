@@ -7,7 +7,6 @@ import Forgotpass from './PasswordModal.jsx';
 import '../../../../public/logoblack.png';
 import '../../styles/modals.css';
 
-
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +25,7 @@ function Login() {
     console.log(email, password);
     const response = await handler.login(email, password);
     console.log(response);
-  
+
     if (response.access_token) {
       setShow(false);
       Cookies.set('access_token', response.access_token, { expires: 7 });

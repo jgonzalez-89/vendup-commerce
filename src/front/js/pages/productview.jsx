@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Button, Modal, Form } from 'react-bootstrap'; // Importar el componente Modal
+import { Card, ListGroup, Button, Modal, Form } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { categories } from '../../../../data.js';
-import Header from '../component/NavbarUser.jsx';
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../store/appContext.js';
-import { setSelectedProduct } from '../store/flux.js';
+import SearchPage from '../component/Search.jsx';
+import Header from '../component/NavbarUser.jsx';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const ProductView = () => {
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;
-
-//   console.log(store);
-
   const [category, setCategory] = useState('');
+  const [searchText, setSearchText] = useState('');
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-  const itemsPerPage = 6; // 6 elementos por página
+  const itemsPerPage = 6;
+  const token = Cookies.get('access_token');
+  const decoded = jwt_decode(token);
+  const userId = decoded.sub;
 
   const handler = new HttpHandler();
+  // const history = useHistory();
 
   useEffect(() => {
     async function fetchData() {
@@ -29,10 +33,14 @@ const ProductView = () => {
     fetchData();
   }, []);
 
-  // Filtrar los elementos por categoría si se selecciona una categoría
-  const filteredItems = data.product ? data.product.filter((item) => category === '' || item.category === category) : [];
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
 
-  // Determinar los elementos que se mostrarán en la página actual
+  const filteredItems = data.product
+    ? data.product.filter((item) => (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())))
+    : [];
+
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentPageItems = filteredItems.slice(startIndex, endIndex);
@@ -43,6 +51,7 @@ const ProductView = () => {
 
       <div className="container">
         <h1 className="text-center my-5">Aquí podrás ver y seleccionar los productos por categorías</h1>
+        <SearchPage onSearch={handleSearch} />
         <div className="my-3">
           {categories.map((categoryItem) => (
             <button key={categoryItem.value} className={`btn btn-outline-warning mx-1 ${category === categoryItem.value ? 'active' : ''}`} onClick={() => setCategory(categoryItem.value)}>
@@ -89,7 +98,18 @@ const ProductView = () => {
                       <hr />
                       <ListGroup.Item className="d-flex justify-content-between">
                         <span>Precio: {item.price} €</span>
-                        <Button as={NavLink} to="/shopping" onClick={() => actions.setSelectedProduct(item)}>
+                        <Button
+                          variant="warning"
+                          as={NavLink}
+                          to="/shopping"
+                          onClick={() => {
+                            if (item.owner_id === userId) {
+                              alert('Lo siento, no puedes comprar tu propio producto');
+                            } else {
+                              actions.setSelectedProduct(item);
+                            }
+                          }}
+                        >
                           Comprar
                         </Button>
                       </ListGroup.Item>

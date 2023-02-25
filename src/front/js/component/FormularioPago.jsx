@@ -5,25 +5,24 @@ import logo from '../../../../public/logowhite.png';
 import { HttpHandler } from '../../../http/handler';
 
 const FormularioDePago = ({ store }) => {
-  const [sellerUser, setSellerUser] = useState({});
+  const [buyerUser, setBuyerUser] = useState({});
   const [monto, setMonto] = useState(0);
   const userId = store.selectedProduct.owner_id;
   const handler = new HttpHandler();
-
   const data = store.selectedProduct;
 
   useEffect(() => {
     // debugger;
     async function getUser() {
       const { user } = await handler.getUserById(userId);
-      setSellerUser(user);
+      setBuyerUser(user);
       // console.log(user);
     }
 
     getUser();
   }, []);
 
-//   console.log(sellerUser);
+  console.log(buyerUser);
 
   // Manejador para el botón de pago
   const manejarPago = (token) => {
@@ -48,7 +47,7 @@ const FormularioDePago = ({ store }) => {
   return (
     <div>
       <StripeCheckout
-        stripeKey="sk_test_51Mf8aTJwZ9bnrLE9ecLR2q1QeoFpuh4A8qCTK8GojuhuYZ8FQNsSYmykb2jrcgH8Rznu8tI9GX8op4sILcUkBUoD00BFItNCIy"
+        stripeKey="pk_test_51Mf8aTJwZ9bnrLE9UCzTjLIpqAEjnlQFYHAGwglPkNPYLRjfOE8wKus1ggkvtDTRAGz4lVMBANxmr2AT3KI8xJe80018srH0P7"
         token={manejarPago}
         amount={monto * 100}
         name="Nombre de la empresa"

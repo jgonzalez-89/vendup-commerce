@@ -116,7 +116,7 @@ def procesar_pago():
         # Utilizar la biblioteca Stripe para procesar el pago
         cargo = stripe.Charge.create(
             amount=int(float(monto) * 100),
-            currency="usd",
+            currency="eur",
             description="Descripción del pago",
             source=token
         )

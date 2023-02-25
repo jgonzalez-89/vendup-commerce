@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap';
-import { useState } from 'react';
 import { HttpHandler } from '../../../http/handler.js';
+import { CloudinaryImage } from '@cloudinary/url-gen';
+
+const cld = new CloudinaryImage('Prueba', { cloudName: 'dazdmgrf8', apiKey: '183117376743833', apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' });
 
 const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
   const handler = new HttpHandler();
@@ -11,15 +13,35 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
     name: selectedProduct.name,
     description: selectedProduct.description,
     price: selectedProduct.price,
-    image: selectedProduct.image,
+    images: selectedProduct.images,
   });
 
-  const handleInputChange = (event) => {
+  const handleInputChange = async (event) => {
     const { name, value, type, files } = event.target;
     if (type === 'file') {
-      setProduct({ ...product, [name]: files[0] });
+      const file = files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'ml_default'); // incluye el upload preset de Cloudinary
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cld.cloudName}/image/upload`, // endpoint de Cloudinary para subir imágenes
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      // console.log(data);
+      setProduct((prevState) => ({
+        ...prevState,
+        images: data.secure_url,
+      }));
+      handleImagePreview(file); // crea una vista previa de la imagen
     } else {
-      setProduct({ ...product, [name]: value });
+      setProduct((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
   };
 
@@ -32,9 +54,9 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
         name: product.name,
         description: product.description,
         price: product.price,
-        image: product.image,
+        images: product.images,
       };
-      console.log('Payload:', payload);
+      // console.log('Payload:', payload);
       const response = await handler.putProductById(selectedProduct.id, payload);
       // console.log(response);
     } catch (error) {
@@ -45,7 +67,21 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
   const handleClose = () => {
     onCloseModal();
   };
-  // console.log(selectedProduct);
+
+  const handleImagePreview = (file) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setProduct((prevState) => ({
+        ...prevState,
+        imagePreviewUrl: reader.result,
+      }));
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  // console.log(product);
 
   return (
     <>
@@ -67,9 +103,9 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
 
         <Form.Group controlId="productImage">
           <Form.Label>Imagen del producto</Form.Label>
+          {product.imagePreviewUrl && <img src={product.imagePreviewUrl} alt="Vista previa de la imagen" style={{ maxWidth: '100%', maxHeight: '150px', margin: '30px' }} />}
           <Form.Control type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
         </Form.Group>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar

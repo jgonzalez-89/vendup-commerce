@@ -15,11 +15,10 @@ const ShoppingBasket = () => {
   return (
     <>
       <Header NavUser={'/user'} NavHome={'/'} NavProducts={'/products'} />
+      <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px auto' }}>Cesta de la compra</h1>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {selectedProduct ? (
           <div style={{ maxWidth: '400px', margin: '20px auto' }}>
-            <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px auto' }}>Cesta de la compra</h1>
-
             <Card>
               <Card.Img variant="top" src={selectedProduct.images} style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover' }} />
               <Card.Body>
@@ -37,7 +36,7 @@ const ShoppingBasket = () => {
             </Card>
           </div>
         ) : (
-          <div className="d-flex justify-content-center m-5" style={{ height: '62vh' }}>
+          <div className="d-flex justify-content-center m-5">
             <h1>No se ha seleccionado ningún producto.</h1>
           </div>
         )}
