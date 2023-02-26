@@ -14,7 +14,7 @@ const CardFree = ({ image, title, description, price, onEditClick, item, button 
     <div className="mb-5">
       <Card>
         <Card.Header className="bg-secondary bg-opacity-10">
-          <h4 className="my-0 fw-normal text-center">Free</h4>
+          <h4 className="my-0 fw-normal text-center">Advertised free</h4>
         </Card.Header>
         <Card.Img
           variant="top"

@@ -68,8 +68,9 @@ const ProductView = () => {
             const Component = item.premium ? CardPremium : CardFree;
 
             return (
-              <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
+              <div className="col-lg-4 col-md-6 col-12 my-1 mb-5" key={index}>
                 <Component
+                  button={"Comprar"}
                   item={item}
                   image={item.images}
                   title={item.name}
