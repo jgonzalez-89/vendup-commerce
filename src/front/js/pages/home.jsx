@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../store/appContext';
+// import { Context } from '../store/appContext';
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import '../../styles/home.css';
 import logo from '../../../../public/logowhite.png';
@@ -24,7 +24,7 @@ const Home = () => {
       </Navbar>
 
       <div className="text-center mt-5 mb-5">
-        <div className="container ">
+        <div className="container mb-5">
           <SearchPage />
 
           <CardsHome />

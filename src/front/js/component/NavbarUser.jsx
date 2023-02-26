@@ -12,7 +12,7 @@ const Header = ({NavHome, NavProducts, NavUser, }) => {
         </Navbar.Brand>
 
         <Nav className="me-auto">
-          {NavHome && <Nav.Link href={NavHome}><Button className="" variant="warning">Home</Button></Nav.Link>}
+          {NavHome && <Nav.Link href={NavHome}><Button className="" variant="warning">Inicio</Button></Nav.Link>}
           {NavUser && <Nav.Link href={NavUser}><Button className="" variant="warning">Perfil</Button></Nav.Link>}
           {NavProducts && <Nav.Link href={NavProducts}><Button className="" variant="warning">Productos</Button></Nav.Link>}
         </Nav>
