@@ -154,6 +154,7 @@ def create_products():
     product = Product(
         owner_id=data.get("owner_id"),
         name=data.get("name"),
+        premium=data.get("premium", True),
         description=data.get("description"),
         category=data.get("category"),
         price=data.get("price"),

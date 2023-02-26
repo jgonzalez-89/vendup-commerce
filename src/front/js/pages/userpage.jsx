@@ -66,7 +66,11 @@ const Userpage = () => {
               <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <div className="flex-column">
                   <div className="">
-                    <img src={userName.profile_picture} alt="" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover' }} />
+                    <img
+                      src={userName.profile_picture}
+                      alt=""
+                      style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover' }}
+                    />
                   </div>
                   <div className="row fs-4 p-3" style={{ color: 'black' }}>
                     Hola! <br />
@@ -79,28 +83,48 @@ const Userpage = () => {
                 <ul className="nav nav-pills flex-column mb-auto">
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
-                      <ButtonUser text="Tus Compras" selected={selectedButton === 'Compras'} handleClick={() => handleButtonClick('Compras')} />
+                      <ButtonUser
+                        text="Tus Compras"
+                        selected={selectedButton === 'Compras'}
+                        handleClick={() => handleButtonClick('Compras')}
+                      />
                     </div>
                   </li>
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
-                      <ButtonUser text="Tus Ventas" selected={selectedButton === 'Ventas'} handleClick={() => handleButtonClick('Ventas')} />
+                      <ButtonUser
+                        text="Tus Ventas"
+                        selected={selectedButton === 'Ventas'}
+                        handleClick={() => handleButtonClick('Ventas')}
+                      />
                     </div>
                   </li>
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
-                      <ButtonUser text="Subir Producto" selected={selectedButton === 'Producto'} handleClick={() => handleButtonClick('Producto')} />
+                      <ButtonUser
+                        text="Subir Producto"
+                        selected={selectedButton === 'Producto'}
+                        handleClick={() => handleButtonClick('Producto')}
+                      />
                     </div>
                   </li>
 
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
-                      <ButtonUser text="Editar Perfil" selected={selectedButton === 'Ajustes'} handleClick={() => handleButtonClick('Ajustes')} />
+                      <ButtonUser
+                        text="Editar Perfil"
+                        selected={selectedButton === 'Ajustes'}
+                        handleClick={() => handleButtonClick('Ajustes')}
+                      />
                     </div>
                   </li>
                   <li className="nav-item">
                     <div className="d-flex justify-content-center">
-                      <ButtonUser text="Hazte Premium" selected={selectedButton === 'Premium'} handleClick={() => handleButtonClick('Premium')} />
+                      <ButtonUser
+                        text="Hazte Premium"
+                        selected={selectedButton === 'Premium'}
+                        handleClick={() => handleButtonClick('Premium')}
+                      />
                     </div>
                   </li>
                 </ul>

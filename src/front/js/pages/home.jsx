@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../store/appContext';
+// import { Context } from '../store/appContext';
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import '../../styles/home.css';
 import logo from '../../../../public/logowhite.png';

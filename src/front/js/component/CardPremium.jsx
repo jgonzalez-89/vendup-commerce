@@ -1,10 +1,22 @@
 import React from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 
-const CardPremium = ({ image, title, description, price, daysRemaining, hoursRemaining, onEditClick }) => {
+const CardPremium = ({ image, title, description, price, onEditClick, item, button }) => {
+
+
+  const currentDate = new Date();
+  const startDate = new Date(item.created_at_product);
+  startDate.setDate(startDate.getDate() + 3);
+  const timeDiff = startDate.getTime() - currentDate.getTime();
+  // const daysRemaining = Math.floor(timeDiff / (500 * 60 * 60 * 24));
+  const daysRemainingPremium = Math.floor(timeDiff / (200 * 60 * 60 * 24));
+  // const hoursRemaining = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const hoursRemainingPremium = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+
   return (
     <div className="mb-5">
-      <Card className="rounded shadow border-warning">
+      <Card className="rounded shadow-lg border-warning">
         <Card.Header className="text-bg-primary border-warning bg-warning">
           <h4 className="my-0 fw-normal text-center">Premium</h4>
         </Card.Header>
@@ -35,10 +47,10 @@ const CardPremium = ({ image, title, description, price, daysRemaining, hoursRem
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between align-items-center">
           <small className="text-muted">
-            {daysRemaining > 0 ? `${daysRemaining} días y ${hoursRemaining} horas restantes` : 'Venta Finalizada'}
+            {daysRemainingPremium > 0 ? `${daysRemainingPremium} días y ${hoursRemainingPremium} horas restantes` : 'Venta Finalizada'}
           </small>
           <Button variant="warning" onClick={onEditClick} className="w-50 d-grid" size="lg">
-            Editar +
+            {button}
           </Button>
         </Card.Footer>
       </Card>

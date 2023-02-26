@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HttpHandler } from '../../../http/handler.js';
-import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
+import CardPremium from './CardPremium.jsx';
+// import Login from '../component/LoginModal.jsx';
 
 function CardsHome() {
   const [data, setData] = useState({});
@@ -15,8 +16,6 @@ function CardsHome() {
     fetchData();
   }, []);
 
-  console.log(data);
-
   return (
     <>
       {!data || !data.product ? (
@@ -29,36 +28,18 @@ function CardsHome() {
             {data.product &&
               data.product.slice(-6).map((item, index) => (
                 <div className="col-lg-4 col-md-6 col-12 mt-2" key={index} style={{ marginBottom: '6rem' }}>
-                  <Card>
-                    <Card.Img
-                      variant="top"
-                      src={item.images}
-                      style={{
-                        height: '200px',
-                        width: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text
-                        style={{
-                          height: '150px',
-                          maxHeight: '150px',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {item.description}
-                      </Card.Text>
-                      <ListGroup className="list-group-flush">
-                        <hr />
-                        <ListGroup.Item>Precio: {item.price} €</ListGroup.Item>
-                      </ListGroup>
-                    </Card.Body>
-                    <Card.Footer className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted"></small>
-                    </Card.Footer>
-                  </Card>
+                  <CardPremium
+                    // button={<Login onClose={() => setShowLoginModal(false)} />}
+                    button={'Comprar'}
+                    item={item}
+                    image={item.images}
+                    title={item.name}
+                    description={item.description}
+                    price={item.price}
+                    // daysRemaining={daysRemainingPremium}
+                    // hoursRemaining={hoursRemainingPremium}
+                    // onEditClick={() => handleEditClick(item)}
+                  />
                 </div>
               ))}
           </div>

@@ -11,6 +11,9 @@ const VentasComponent = ({ userId }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const handler = new HttpHandler();
 
+  // producto
+
+  // console.log(userValue);
   useEffect(() => {
     async function getUser() {
       const { user } = await handler.getUserById(userId);
@@ -20,8 +23,8 @@ const VentasComponent = ({ userId }) => {
     getUser();
   }, []);
 
-  const handleEditClick = (producto) => {
-    setSelectedProduct(producto);
+  const handleEditClick = (item) => {
+    setSelectedProduct(item);
     setShowModal(true);
   };
 
@@ -43,44 +46,24 @@ const VentasComponent = ({ userId }) => {
             <h1 className="text-center my-5">Estos son tus articulos en Venta</h1>
             {userValue.products.length === 0 ? (
               <div className="de-flex text-center">
-                <h3 className="alert alert-danger text-center">Aún no has comprado nada</h3>
+                <h3 className="alert alert-danger text-center">Aún no has vendido nada</h3>
               </div>
             ) : (
-              userValue.products.map((producto) => {
-                const currentDate = new Date();
-                const startDate = new Date(producto.created_at_product);
-                startDate.setDate(startDate.getDate() + 3);
-                const timeDiff = startDate.getTime() - currentDate.getTime();
-                const daysRemaining = Math.floor(timeDiff / (500 * 60 * 60 * 24));
-                const daysRemainingPremium = Math.floor(timeDiff / (200 * 60 * 60 * 24));
-                const hoursRemaining = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const hoursRemainingPremium = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
+              userValue.products.map((item, index) => {
+                const Component = item.premium ? CardPremium : CardFree;
 
                 return (
-                  <div className="col-lg-4 col-md-6 col-12 my-1" key={producto.id}>
-                  {userValue.is_premium ? (
-                    <CardPremium
-                      image={producto.images}
-                      title={producto.name}
-                      description={producto.description}
-                      price={producto.price}
-                      daysRemaining={daysRemainingPremium}
-                      hoursRemaining={hoursRemainingPremium}
-                      onEditClick={() => handleEditClick(producto)}
+                  <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
+                    <Component
+                      button={'Editar +'}
+                      item={item}
+                      image={item.images}
+                      title={item.name}
+                      description={item.description}
+                      price={item.price}
+                      onEditClick={() => handleEditClick(item)}
                     />
-                  ) : (
-                    <CardFree
-                      image={producto.images}
-                      title={producto.name}
-                      description={producto.description}
-                      price={producto.price}
-                      daysRemaining={daysRemaining}
-                      hoursRemaining={hoursRemaining}
-                      onEditClick={() => handleEditClick(producto)}
-                    />
-                  )}
-                </div>
+                  </div>
                 );
               })
             )}

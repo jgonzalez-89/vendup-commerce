@@ -36,7 +36,6 @@ def setup_commands(app):
                 location_country = data["results"][0]["location"]["country"]
                 location_postcode = data["results"][0]["location"]["postcode"]
                 dob_date = data["results"][0]["dob"]["date"]
-                dob_age = data["results"][0]["dob"]["age"]
                 registered_date = data["results"][0]["registered"]["date"]
                 phone = data["results"][0]["phone"]
                 profile_picture = data["results"][0]["picture"]["large"]
@@ -51,7 +50,6 @@ def setup_commands(app):
                     location_country,
                     location_postcode,
                     dob_date,
-                    dob_age,
                     registered_date,
                     phone,
                     profile_picture,
@@ -74,7 +72,6 @@ def setup_commands(app):
                 location_country,
                 location_postcode,
                 dob_date,
-                dob_age,
                 registered_date,
                 phone,
                 profile_picture,
@@ -90,7 +87,6 @@ def setup_commands(app):
             user.location_state = location_state
             user.location_country = location_country
             user.location_postcode = location_postcode
-            user.dob_age = dob_age
             user.dob_date = dob_date
             user.registered_date = registered_date
             user.phone = phone
@@ -125,6 +121,7 @@ def setup_commands(app):
 
             product = Product()
             product.name = f"{product_name} {word}"
+            product.premium = False
             product.description = product_description
             product.category = category
             product.price = random_price()
