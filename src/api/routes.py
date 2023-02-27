@@ -5,9 +5,10 @@ from sqlalchemy.exc import IntegrityError
 import stripe
 
 
-
 api = Blueprint("api", __name__)
 stripe.api_key = 'sk_test_51Mf8aTJwZ9bnrLE9ecLR2q1QeoFpuh4A8qCTK8GojuhuYZ8FQNsSYmykb2jrcgH8Rznu8tI9GX8op4sILcUkBUoD00BFItNCIy'
+
+##################### Endpoints de User #####################
 
 
 def serialize_user(user):
@@ -41,6 +42,22 @@ def serialize_product(product):
         "images": product.images,
         "created_at_product": product.created_at_product.strftime("%Y-%m-%d %H:%M:%S"),
         "status_shooping": str(product.status_shooping),
+    }
+
+
+def serialize_shoppingProduct(shoppingProduct):
+    return {
+        "id": shoppingProduct.id,
+        "owner_id": shoppingProduct.owner_id,
+        "product_id": shoppingProduct.product_id,
+        "status_shopping": shoppingProduct.status_shopping,
+        "created_at_shopping": shoppingProduct.created_at_shopping,
+        "updated_at_shopping": shoppingProduct.updated_at_shopping,
+        "price": float(shoppingProduct.price) if shoppingProduct.price is not None else None,
+        "status_paid": shoppingProduct.status_paid,
+        "paid_at": shoppingProduct.paid_at,
+        "purchase_method": shoppingProduct.purchase_method,
+        "commission": float(shoppingProduct.commission) if shoppingProduct.commission is not None else None,
     }
 
 
@@ -111,7 +128,8 @@ def update_user(id):
     user.location_city = data.get("location_city", user.location_city)
     user.location_state = data.get("location_state", user.location_state)
     user.location_country = data.get("location_country", user.location_country)
-    user.location_postcode = data.get("location_postcode", user.location_postcode)
+    user.location_postcode = data.get(
+        "location_postcode", user.location_postcode)
     user.dob_date = data.get("dob_date", user.dob_date)
     user.registered_date = data.get("registered_date", user.registered_date)
     user.phone = data.get("phone", user.phone)
@@ -135,6 +153,8 @@ def delete_user(id):
     db.session.commit()
 
     return jsonify({"message": "User and their products deleted successfully"})
+
+##################### Endpoints de Products #####################
 
 
 @api.route("/products", methods=["GET"])
@@ -187,7 +207,8 @@ def update_product(id):
     product.created_at_product = data.get(
         "created_at_product", product.created_at_product
     )
-    product.status_shooping = data.get("status_shooping", product.status_shooping)
+    product.status_shooping = data.get(
+        "status_shooping", product.status_shooping)
 
     db.session.commit()
     return jsonify({"product": serialize_product(product)})
@@ -203,6 +224,42 @@ def delete_product(id):
     db.session.commit()
 
     return jsonify({"message": "Product deleted successfully"})
+
+##################### Endpoints de Shopping Products #####################
+
+
+# @api.route("/shopping_products", methods=["GET"])
+# def get_all_shopping_products():
+#     shopping_products = Shopping_Product.query.all()
+#     return jsonify({"shopping_products": [serialize_shoppingProduct(shoppingProduct) for shoppingProduct in shoppingProducts]})
+
+
+@api.route('/shopping_products', methods=['POST'])
+def create_shopping_product():
+    data = request.get_json()
+
+    # Crear una nueva instancia de ShoppingProduct con los datos recibidos
+    shopping_product = ShoppingProduct(
+        owner_id=data.get('owner_id'),
+        product_id=data.get('product_id'),
+        status_shopping='active',
+        created_at_shopping=datetime.utcnow(),
+        price=data.get('price'),
+        status_paid='paid',
+        paid_at=datetime.utcnow(),
+        purchase_method='stripe',
+        commission=0.05 * data.get('price')
+    )
+
+    # Agregar y confirmar la transacción en la base de datos
+    db.session.add(shopping_product)
+    db.session.commit()
+
+    # Retornar una respuesta satisfactoria
+    return jsonify({'message': 'Shopping product created successfully'}), 201
+
+
+##################### Endpoints de Stripe #####################
 
 
 @api.route('/stripe', methods=['POST'])

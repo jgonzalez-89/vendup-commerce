@@ -159,6 +159,18 @@ export function HttpHandler() {
     return await response.json();
   }
 
+  async function postShoppingProduct(payload) {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/shopping_products`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getToken(),
+      },
+    });
+    return await response.json();
+  }
+
   return {
     getUser,
     getUserById,
@@ -172,6 +184,7 @@ export function HttpHandler() {
     deleteProductById,
     login,
     register,
-    postStripePayment
+    postStripePayment,
+    postShoppingProduct
   };
 }

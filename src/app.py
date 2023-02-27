@@ -107,27 +107,6 @@ def login():
     })
 
 
-# @app.route('/api/stripe', methods=['POST'])
-# def procesar_pago():
-#     # Obtener la información de pago del formulario de pago de Stripe en el frontend
-#     token = request.json["stripeToken"]
-#     monto = request.json["monto"]
-
-#     try:
-#         # Utilizar la biblioteca Stripe para procesar el pago
-#         cargo = stripe.Charge.create(
-#             amount=int(float(monto) * 100),
-#             currency="eur",
-#             description="Descripción del pago",
-#             source=token
-#         )
-#         # Retornar una respuesta satisfactoria si el pago se procesó correctamente
-#         return jsonify({"status": "success"})
-#     except stripe.error.CardError as e:
-#         # Retornar una respuesta de error si el pago falló
-#         return jsonify({"status": "error", "message": e.user_message})
-
-
 @app.route("/")
 def sitemap():
     if ENV == "1":

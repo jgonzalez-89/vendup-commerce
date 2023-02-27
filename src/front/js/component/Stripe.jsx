@@ -33,21 +33,39 @@ const Stripe = ({ store }) => {
     getUser();
   }, []);
 
-  // Manejador para el botón de pago
-  const manejarPago = (token) => {
-    // Enviar la información de pago al backend de Flask para procesar el pago
-    handler.postStripePayment({ stripeToken: token.id, monto: monto })
-      .then((data) => {
-        if (data.status === 'success') {
-          // Si el pago se procesó correctamente, hacer algo aquí
-        } else {
-          // Si el pago falló, mostrar un mensaje de error
-          alert('Error al procesar el pago: ' + data.message);
-        }
-      })
-      .catch((error) => console.error(error));
-  };
+  console.log(data)
 
+  const manejarPago = async (token) => {
+    try {
+      const data = await handler.postStripePayment({ stripeToken: token.id, monto: monto });
+      console.log(data); // Agregar esta línea para imprimir los datos enviados
+      if (data.status === 'success') {
+        // Si el pago se procesó correctamente, crear un nuevo registro en la tabla Shopping_Product y redireccionar al usuario a /user
+        const shoppingProductData = {
+          owner_id: data.owner_id,
+          product_id: data.id,
+          status_shopping: 'active',
+          created_at_shopping: new Date(),
+          updated_at_shopping: new Date(),
+          price: monto,
+          status_paid: 'paid',
+          paid_at: new Date(),
+          purchase_method: 'stripe',
+          commission: 0.1,
+        };
+      const data = await handler.postStripePayment({ stripeToken: token.id, monto: monto });
+        await handler.postShoppingProduct(shoppingProductData);
+        alert('El pago se ha procesado correctamente. Será redirigido a la página de usuario.');
+        window.location = '/user';
+      } else {
+        // Si el pago falló, mostrar un mensaje de error
+        alert('Error al procesar el pago: ' + data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+   
 
   return (
     <div>
