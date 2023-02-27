@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, ShoppingProduct
+from api.models import db, User, Product, Purchase
 from api.utils import generate_sitemap, APIException
 from sqlalchemy.exc import IntegrityError
 import stripe
@@ -45,19 +45,19 @@ def serialize_product(product):
     }
 
 
-def serialize_shoppingProduct(shoppingProduct):
+def serialize_purchase(purchase):
     return {
-        "id": shoppingProduct.id,
-        "owner_id": shoppingProduct.owner_id,
-        "product_id": shoppingProduct.product_id,
-        "status_shopping": shoppingProduct.status_shopping,
-        "created_at_shopping": shoppingProduct.created_at_shopping,
-        "updated_at_shopping": shoppingProduct.updated_at_shopping,
-        "price": float(shoppingProduct.price) if shoppingProduct.price is not None else None,
-        "status_paid": shoppingProduct.status_paid,
-        "paid_at": shoppingProduct.paid_at,
-        "purchase_method": shoppingProduct.purchase_method,
-        "commission": float(shoppingProduct.commission) if shoppingProduct.commission is not None else None,
+        "id": purchase.id,
+        "owner_id": purchase.owner_id,
+        "product_id": purchase.product_id,
+        "status_shopping": purchase.status_shopping,
+        "created_at_shopping": purchase.created_at_shopping,
+        "updated_at_shopping": purchase.updated_at_shopping,
+        "price": float(purchase.price) if purchase.price is not None else None,
+        "status_paid": purchase.status_paid,
+        "paid_at": purchase.paid_at,
+        "purchase_method": purchase.purchase_method,
+        "commission": float(purchase.commission) if purchase.commission is not None else None,
     }
 
 
@@ -228,18 +228,16 @@ def delete_product(id):
 ##################### Endpoints de Shopping Products #####################
 
 
-# @api.route("/shopping_products", methods=["GET"])
-# def get_all_shopping_products():
-#     shopping_products = Shopping_Product.query.all()
-#     return jsonify({"shopping_products": [serialize_shoppingProduct(shoppingProduct) for shoppingProduct in shoppingProducts]})
+@api.route("/purchases", methods=["GET"])
+def get_all_purchases():
+    purchases = Purchase.query.all()
+    return jsonify({"purchases": [serialize_purchase(purchase) for purchase in purchases]})
 
 
 @api.route('/shopping_products', methods=['POST'])
 def create_shopping_product():
     data = request.get_json()
-
-    # Crear una nueva instancia de ShoppingProduct con los datos recibidos
-    shopping_product = ShoppingProduct(
+    purchase = Purchase(
         owner_id=data.get('owner_id'),
         product_id=data.get('product_id'),
         status_shopping='active',
@@ -251,8 +249,7 @@ def create_shopping_product():
         commission=0.05 * data.get('price')
     )
 
-    # Agregar y confirmar la transacción en la base de datos
-    db.session.add(shopping_product)
+    db.session.add(create_purchase)
     db.session.commit()
 
     # Retornar una respuesta satisfactoria
