@@ -2,9 +2,12 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Product, ShoppingProduct
 from api.utils import generate_sitemap, APIException
 from sqlalchemy.exc import IntegrityError
+import stripe
+
 
 
 api = Blueprint("api", __name__)
+stripe.api_key = 'sk_test_51Mf8aTJwZ9bnrLE9ecLR2q1QeoFpuh4A8qCTK8GojuhuYZ8FQNsSYmykb2jrcgH8Rznu8tI9GX8op4sILcUkBUoD00BFItNCIy'
 
 
 def serialize_user(user):
@@ -200,3 +203,24 @@ def delete_product(id):
     db.session.commit()
 
     return jsonify({"message": "Product deleted successfully"})
+
+
+@api.route('/stripe', methods=['POST'])
+def procesar_pago():
+    # Obtener la información de pago del formulario de pago de Stripe en el frontend
+    token = request.json["stripeToken"]
+    monto = request.json["monto"]
+
+    try:
+        # Utilizar la biblioteca Stripe para procesar el pago
+        cargo = stripe.Charge.create(
+            amount=int(float(monto) * 100),
+            currency="eur",
+            description="Descripción del pago",
+            source=token
+        )
+        # Retornar una respuesta satisfactoria si el pago se procesó correctamente
+        return jsonify({"status": "success"})
+    except stripe.error.CardError as e:
+        # Retornar una respuesta de error si el pago falló
+        return jsonify({"status": "error", "message": e.user_message})

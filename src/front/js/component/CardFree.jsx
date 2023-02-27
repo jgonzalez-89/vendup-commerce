@@ -48,7 +48,7 @@ const CardFree = ({ image, title, description, price, onEditClick, item, actionB
           </small>
           <div>
             {actionButton === 'Comprar' && (
-              <Button variant="warning" onClick={onBuyClick} as={NavLink} to="/shopping" className="d-grid" size="lg">
+              <Button variant="warning" onClick={onBuyClick} as={NavLink} to="/pay" className="d-grid" size="lg">
                 {actionButton}
               </Button>
             )}
