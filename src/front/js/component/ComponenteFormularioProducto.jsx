@@ -4,7 +4,11 @@ import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 import { categories } from '../../../../data';
 
-const cld = new CloudinaryImage('Prueba', { cloudName: 'dazdmgrf8', apiKey: '183117376743833', apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' });
+const cld = new CloudinaryImage('Prueba', {
+  cloudName: 'dazdmgrf8',
+  apiKey: '183117376743833',
+  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA',
+});
 
 const ProductoComponent = ({ userId }) => {
   const [showMessage, setShowMessage] = useState(false);
@@ -98,9 +102,9 @@ const ProductoComponent = ({ userId }) => {
   return (
     <>
       <div>
-        <h1 className="text-center my-5">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
+        <h1 className="text-center">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
       </div>
-      <Container className="my-5 border shadow p-5 rounded">
+      <Container className="my-5 border shadow p-5 rounded mb-5">
         <Form onSubmit={handleSubmit}>
           <FormGroup controlId="categoryName" className="mt-3">
             <FormLabel>Categoría del producto</FormLabel>

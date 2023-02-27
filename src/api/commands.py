@@ -92,7 +92,6 @@ def setup_commands(app):
             user.phone = phone
             user.profile_picture = profile_picture
 
-
             db.session.add(user)
             db.session.commit()
 

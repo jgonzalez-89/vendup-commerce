@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
-const CardFree = ({ image, title, description, price, onEditClick, item, button }) => {
-  
+
+const CardFree = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick }) => {
   const currentDate = new Date();
   const startDate = new Date(item.created_at_product);
   startDate.setDate(startDate.getDate() + 3);
@@ -45,9 +46,23 @@ const CardFree = ({ image, title, description, price, onEditClick, item, button 
           <small className="text-muted">
             {daysRemaining > 0 ? `${daysRemaining} días y ${hoursRemaining} horas restantes` : 'Venta Finalizada'}
           </small>
-          <Button variant="secondary" onClick={onEditClick} className="w-50 d-grid" size="lg">
-            {button}
-          </Button>
+          <div>
+            {actionButton === 'Comprar' && (
+              <Button variant="warning" onClick={onBuyClick} as={NavLink} to="/pay" className="d-grid" size="lg">
+                {actionButton}
+              </Button>
+            )}
+            {actionButton === 'Editar' && (
+              <Button variant="warning" onClick={onEditClick} className="d-grid" size="lg">
+                {actionButton}
+              </Button>
+            )}
+            {actionButton === 'Mipolla' && (
+              <Button variant="warning" onClick={onEditClick} className="d-grid" size="lg">
+                {actionButton}
+              </Button>
+            )}
+          </div>
         </Card.Footer>
       </Card>
     </div>

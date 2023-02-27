@@ -147,6 +147,30 @@ export function HttpHandler() {
     }
   }
 
+  async function postStripePayment(payload) {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/stripe`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getToken(),
+      },
+    });
+    return await response.json();
+  }
+
+  async function postShoppingProduct(payload) {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/purchases`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getToken(),
+      },
+    });
+    return await response.json();
+  }
+
   return {
     getUser,
     getUserById,
@@ -160,5 +184,7 @@ export function HttpHandler() {
     deleteProductById,
     login,
     register,
+    postStripePayment,
+    postShoppingProduct
   };
 }

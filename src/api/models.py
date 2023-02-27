@@ -16,7 +16,7 @@ class Product(db.Model):
     price = db.Column(db.Numeric(precision=7, scale=2))
     images = db.Column(db.String)
     created_at_product = db.Column(db.DateTime)
-    status_shooping = db.Column(db.Enum("active", "inactive", "reserved", name="Product_enum_a1"))
+    status_shooping = db.Column(db.Enum("active", "inactive", "reserved", name="Product_enum_a2"))
 
 
 class User(db.Model):
@@ -37,21 +37,21 @@ class User(db.Model):
     phone = db.Column(db.String(20))
     profile_picture = db.Column(db.String)
     products = db.relationship("Product", backref="owner")
-    shopping_products = db.relationship("ShoppingProduct", backref="owner")
+    purchases = db.relationship("Purchase", backref="owner")
 
 
-class ShoppingProduct(db.Model):
-    __tablename__ = "Shopping_Product"
+class Purchase(db.Model):
+    __tablename__ = "Purchase"
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
     product_id = db.Column(db.Integer, ForeignKey("Product.id"), nullable=False)
-    status_shopping = db.Column(db.Enum("active", "inactive", "completed", name="status_shopping_enum_a1"))
+    status_shopping = db.Column(db.Enum("active", "inactive", "completed", name="Purchase_enum_a2"))
     created_at_shopping = db.Column(db.DateTime)
     updated_at_shopping = db.Column(db.DateTime)
     price = db.Column(db.Numeric)
-    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="status_paid_enum_a1"))
+    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="status_paid_enum_a2"))
     paid_at = db.Column(db.DateTime)
     purchase_method = db.Column(db.String)
     commission = db.Column(db.Numeric(6, 2))
-    product = db.relationship("Product", backref=db.backref("shopping_products", lazy=True))
+    product = db.relationship("Product", backref=db.backref("purchases", lazy=True))
 

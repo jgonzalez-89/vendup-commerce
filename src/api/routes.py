@@ -1,10 +1,17 @@
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, ShoppingProduct
+from api.models import db, User, Product, Purchase
 from api.utils import generate_sitemap, APIException
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
+import stripe
 
 
 api = Blueprint("api", __name__)
+
+stripe.api_key = os.getenv("FLASK_STRIPE_KEY")
+
+##################### Endpoints de User #####################
 
 
 def serialize_user(user):
@@ -41,12 +48,28 @@ def serialize_product(product):
     }
 
 
+def serialize_purchase(purchase):
+    return {
+        "id": purchase.id,
+        "owner_id": purchase.owner_id,
+        "product_id": purchase.product_id,
+        "status_shopping": purchase.status_shopping,
+        "created_at_shopping": purchase.created_at_shopping,
+        "updated_at_shopping": purchase.updated_at_shopping,
+        "price": float(purchase.price) if purchase.price is not None else None,
+        "status_paid": purchase.status_paid,
+        "paid_at": purchase.paid_at,
+        "purchase_method": purchase.purchase_method,
+        "commission": float(purchase.commission) if purchase.commission is not None else None,
+    }
+
+
 def serialize_user_with_products(user):
     return {
         **serialize_user(user),
         "products": [serialize_product(product) for product in user.products],
-        "shopping_products": [
-            serialize_product(product.product) for product in user.shopping_products
+        "purchases": [
+            serialize_product(product.product) for product in user.purchases
         ],
     }
 
@@ -108,7 +131,8 @@ def update_user(id):
     user.location_city = data.get("location_city", user.location_city)
     user.location_state = data.get("location_state", user.location_state)
     user.location_country = data.get("location_country", user.location_country)
-    user.location_postcode = data.get("location_postcode", user.location_postcode)
+    user.location_postcode = data.get(
+        "location_postcode", user.location_postcode)
     user.dob_date = data.get("dob_date", user.dob_date)
     user.registered_date = data.get("registered_date", user.registered_date)
     user.phone = data.get("phone", user.phone)
@@ -132,6 +156,8 @@ def delete_user(id):
     db.session.commit()
 
     return jsonify({"message": "User and their products deleted successfully"})
+
+##################### Endpoints de Products #####################
 
 
 @api.route("/products", methods=["GET"])
@@ -184,7 +210,8 @@ def update_product(id):
     product.created_at_product = data.get(
         "created_at_product", product.created_at_product
     )
-    product.status_shooping = data.get("status_shooping", product.status_shooping)
+    product.status_shooping = data.get(
+        "status_shooping", product.status_shooping)
 
     db.session.commit()
     return jsonify({"product": serialize_product(product)})
@@ -200,3 +227,56 @@ def delete_product(id):
     db.session.commit()
 
     return jsonify({"message": "Product deleted successfully"})
+
+##################### Endpoints de Purchases #####################
+
+
+@api.route("/purchases", methods=["GET"])
+def get_all_purchases():
+    purchases = Purchase.query.all()
+    return jsonify({"purchases": [serialize_purchase(purchase) for purchase in purchases]})
+
+
+@api.route('/purchases', methods=['POST'])
+def create_purchases():
+    data = request.get_json()
+    purchase = Purchase(
+        owner_id=data.get('owner_id'),
+        product_id=data.get('product_id'),
+        status_shopping='active',
+        created_at_shopping=datetime.utcnow(),
+        price=data.get('price'),
+        status_paid='paid',
+        paid_at=datetime.utcnow(),
+        purchase_method='stripe',
+        commission=0.05 * float(data.get('price'))
+    )
+    db.session.add(purchase)
+    db.session.commit()
+
+    # Retornar una respuesta satisfactoria
+    return jsonify({'message': 'Shopping product created successfully'}), 201
+
+
+##################### Endpoints de Stripe #####################
+
+
+@api.route('/stripe', methods=['POST'])
+def procesar_pago():
+    # Obtener la información de pago del formulario de pago de Stripe en el frontend
+    token = request.json["stripeToken"]
+    monto = request.json["monto"]
+
+    try:
+        # Utilizar la biblioteca Stripe para procesar el pago
+        cargo = stripe.Charge.create(
+            amount=int(float(monto) * 100),
+            currency="eur",
+            description="Descripción del pago",
+            source=token
+        )
+        # Retornar una respuesta satisfactoria si el pago se procesó correctamente
+        return jsonify({"status": "success"})
+    except stripe.error.CardError as e:
+        # Retornar una respuesta de error si el pago falló
+        return jsonify({"status": "error", "message": e.user_message})

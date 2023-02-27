@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { HttpHandler } from '../../../http/handler';
 import { categories } from '../../../../data.js';
+import { useContext } from 'react';
+import { Context } from '../store/appContext.js';
 import SearchPage from '../component/Search.jsx';
 import Header from '../component/NavbarUser.jsx';
 import CardFree from '../component/CardFree.jsx';
 import CardPremium from '../component/CardPremium.jsx';
 
 const ProductView = () => {
+  const { store, actions } = useContext(Context);
+  const { selectedProduct } = store;
+
+  const [itemsPerPage, setItemsPerPage] = useState(9);
+  const itemsPerPageOptions = [9, 15, 30];
   const [category, setCategory] = useState('');
   const [searchText, setSearchText] = useState('');
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-  const itemsPerPage = 6;
 
   const handler = new HttpHandler();
 
@@ -25,6 +31,7 @@ const ProductView = () => {
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
+    setPage(1); // reset page number when new search is performed
   };
 
   const filteredItems = data.product
@@ -38,6 +45,10 @@ const ProductView = () => {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentPageItems = filteredItems.slice(startIndex, endIndex);
+
+  const handleEditClick = (item) => {
+    actions.setSelectedProduct(item);
+  };
 
   return (
     <>
@@ -70,12 +81,13 @@ const ProductView = () => {
             return (
               <div className="col-lg-4 col-md-6 col-12 my-1 mb-5" key={index}>
                 <Component
-                  button={"Comprar"}
+                  actionButton={'Comprar'}
                   item={item}
                   image={item.images}
                   title={item.name}
                   description={item.description}
                   price={item.price}
+                  onBuyClick={() => handleEditClick(item)}
                 />
               </div>
             );
@@ -83,17 +95,22 @@ const ProductView = () => {
         </div>
         {/* Agregar componente de paginación */}
         {filteredItems.length > itemsPerPage && (
-          <div className="d-flex justify-content-center m-5">
-            {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map((pageNum) => (
-              <button
-                key={pageNum}
-                className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
-                onClick={() => setPage(pageNum)}
-              >
-                {pageNum}
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="d-flex justify-content-center">
+              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map(
+                (pageNum) => (
+                  <button
+                    style={{ marginBottom: '6rem' }}
+                    key={pageNum}
+                    className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
+                    onClick={() => setPage(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              )}
+            </div>
+          </>
         )}
       </div>
     </>
