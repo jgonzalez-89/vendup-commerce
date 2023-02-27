@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup, Button, Modal, Form } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { categories } from '../../../../data.js';
-import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../store/appContext.js';
 import SearchPage from '../component/Search.jsx';

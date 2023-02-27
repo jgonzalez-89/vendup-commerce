@@ -69,6 +69,7 @@ dist/*
 !.htaccess
 !.eslintrc
 !.env.example
+!.prettierrc
 .now
 
 # backend stuff

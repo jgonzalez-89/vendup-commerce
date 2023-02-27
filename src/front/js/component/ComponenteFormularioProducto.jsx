@@ -108,13 +108,7 @@ const ProductoComponent = ({ userId }) => {
         <Form onSubmit={handleSubmit}>
           <FormGroup controlId="categoryName" className="mt-3">
             <FormLabel>Categoría del producto</FormLabel>
-            <FormSelect
-              aria-label="Default select example"
-              name="category"
-              value={product.category}
-              onChange={handleInputChange}
-              required
-            >
+            <FormSelect aria-label="Default select example" name="category" value={product.category} onChange={handleInputChange} required>
               <option value="">Selecciona una categoría para tu producto</option>
               {categories.map((category) => (
                 <option key={category.value} value={category.value}>
@@ -126,56 +120,23 @@ const ProductoComponent = ({ userId }) => {
 
           <FormGroup controlId="productName" className="mt-3">
             <FormLabel>Nombre del producto</FormLabel>
-            <FormControl
-              type="text"
-              name="name"
-              value={product.name}
-              onChange={handleInputChange}
-              placeholder="Introduce el nombre del producto"
-              required
-            />
+            <FormControl type="text" name="name" value={product.name} onChange={handleInputChange} placeholder="Introduce el nombre del producto" required />
           </FormGroup>
 
           <FormGroup controlId="productDescription" className="mt-3">
             <FormLabel>Descripción del producto</FormLabel>
-            <FormControl
-              as="textarea"
-              rows={3}
-              name="description"
-              value={product.description}
-              onChange={handleInputChange}
-              placeholder="Introduce la descripción del producto"
-              required
-            />
+            <FormControl as="textarea" rows={3} name="description" value={product.description} onChange={handleInputChange} placeholder="Introduce la descripción del producto" required />
           </FormGroup>
 
           <FormGroup controlId="productPrice" className="mt-3">
             <FormLabel>Precio del producto</FormLabel>
-            <FormControl
-              type="number"
-              name="price"
-              value={product.price}
-              onChange={handleInputChange}
-              placeholder="Introduce el precio del producto"
-              required
-            />
+            <FormControl type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" required />
           </FormGroup>
 
           <FormGroup controlId="productImage" className="mt-3">
             <FormLabel>Imagen del producto</FormLabel>
-            {product.imagePreviewUrl && (
-              <img
-                src={product.imagePreviewUrl}
-                alt="Vista previa de la imagen"
-                style={{ maxWidth: '100%', maxHeight: '150px', margin: '30px' }}
-              />
-            )}
-            <FormControl
-              type="file"
-              name="image"
-              onChange={handleInputChange}
-              placeholder="Selecciona una imagen del producto"
-            />
+            {product.imagePreviewUrl && <img src={product.imagePreviewUrl} alt="Vista previa de la imagen" style={{ maxWidth: '100%', maxHeight: '150px', margin: '30px' }} />}
+            <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
           </FormGroup>
 
           <div className="d-flex justify-content-center m-4">
@@ -191,4 +152,3 @@ const ProductoComponent = ({ userId }) => {
 };
 
 export default ProductoComponent;
-

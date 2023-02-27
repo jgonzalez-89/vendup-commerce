@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
-import logo from '../../../../public/logowhite.png';
 import { HttpHandler } from '../../../http/handler.js';
-
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
 
@@ -11,7 +9,6 @@ const Stripe = (props) => {
   const token = Cookies.get('access_token');
   const decoded = jwt_decode(token);
   const userId = decoded.sub;
-
   const [buyerUser, setBuyerUser] = useState({});
   const [monto, setMonto] = useState(0);
   const handler = new HttpHandler();
@@ -33,9 +30,7 @@ const Stripe = (props) => {
   const manejarPago = async (token) => {
     try {
       const data = await handler.postStripePayment({ stripeToken: token.id, monto: monto, owner_id: userId, product_id: props.store.selectedProduct.id });
-      // console.log(data); // Agregar esta línea para imprimir los datos enviados
       if (data.status === 'success') {
-        // Si el pago se procesó correctamente, crear un nuevo registro en la tabla Purchases y redireccionar al usuario a /user
         const shoppingProductData = {
           owner_id: userId,
           product_id: props.store.selectedProduct.id,

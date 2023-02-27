@@ -3,7 +3,11 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler.js';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 
-const cld = new CloudinaryImage('Prueba', { cloudName: 'dazdmgrf8', apiKey: '183117376743833', apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' });
+const cld = new CloudinaryImage('Prueba', { 
+  cloudName: 'dazdmgrf8', 
+  apiKey: '183117376743833', 
+  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' 
+});
 
 const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
   const handler = new HttpHandler();
@@ -56,9 +60,7 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
         price: product.price,
         images: product.images,
       };
-      // console.log('Payload:', payload);
       const response = await handler.putProductById(selectedProduct.id, payload);
-      // console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -80,8 +82,6 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
 
     reader.readAsDataURL(file);
   };
-
-  // console.log(product);
 
   return (
     <>
