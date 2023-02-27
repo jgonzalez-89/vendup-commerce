@@ -21,17 +21,17 @@ const ComprasComponent = ({ userId }) => {
 
   return (
     <>
-      {!userValue || !userValue.shopping_products ? (
+      {!userValue || !userValue.purchases ? (
         <div>Cargando...</div>
       ) : (
         <div className="container">
           <div className="row">
             <h1 className="text-center my-5">
-              {userValue.shopping_products && userValue.shopping_products.length > 0
+              {userValue.purchases && userValue.purchases.length > 0
                 ? 'Estos son tus articulos Comprados'
                 : 'Aun no has comprado nada ...'}
             </h1>
-            {userValue.shopping_products.length === 0 ? (
+            {userValue.purchases.length === 0 ? (
               <div>
                 <div className="d-flex justify-content-center">
                   <img
@@ -45,7 +45,7 @@ const ComprasComponent = ({ userId }) => {
                 </div>
               </div>
             ) : (
-              userValue.shopping_products.map((item, index) => (
+              userValue.purchases.map((item, index) => (
                 <div className="col-sm-4 my-1 mb-5" key={index} >
                   <CardPremium
                     button={'Comprar'}

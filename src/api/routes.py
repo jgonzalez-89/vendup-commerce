@@ -1,12 +1,15 @@
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Product, Purchase
 from api.utils import generate_sitemap, APIException
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
 import stripe
 
 
 api = Blueprint("api", __name__)
-stripe.api_key = 'sk_test_51Mf8aTJwZ9bnrLE9ecLR2q1QeoFpuh4A8qCTK8GojuhuYZ8FQNsSYmykb2jrcgH8Rznu8tI9GX8op4sILcUkBUoD00BFItNCIy'
+
+stripe.api_key = os.getenv("FLASK_STRIPE_KEY")
 
 ##################### Endpoints de User #####################
 
@@ -65,8 +68,8 @@ def serialize_user_with_products(user):
     return {
         **serialize_user(user),
         "products": [serialize_product(product) for product in user.products],
-        "shopping_products": [
-            serialize_product(product.product) for product in user.shopping_products
+        "purchases": [
+            serialize_product(product.product) for product in user.purchases
         ],
     }
 
@@ -225,7 +228,7 @@ def delete_product(id):
 
     return jsonify({"message": "Product deleted successfully"})
 
-##################### Endpoints de Shopping Products #####################
+##################### Endpoints de Purchases #####################
 
 
 @api.route("/purchases", methods=["GET"])
@@ -234,8 +237,8 @@ def get_all_purchases():
     return jsonify({"purchases": [serialize_purchase(purchase) for purchase in purchases]})
 
 
-@api.route('/shopping_products', methods=['POST'])
-def create_shopping_product():
+@api.route('/purchases', methods=['POST'])
+def create_purchases():
     data = request.get_json()
     purchase = Purchase(
         owner_id=data.get('owner_id'),
@@ -246,10 +249,9 @@ def create_shopping_product():
         status_paid='paid',
         paid_at=datetime.utcnow(),
         purchase_method='stripe',
-        commission=0.05 * data.get('price')
+        commission=0.05 * float(data.get('price'))
     )
-
-    db.session.add(create_purchase)
+    db.session.add(purchase)
     db.session.commit()
 
     # Retornar una respuesta satisfactoria

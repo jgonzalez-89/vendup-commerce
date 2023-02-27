@@ -160,7 +160,7 @@ export function HttpHandler() {
   }
 
   async function postShoppingProduct(payload) {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/shopping_products`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/purchases`, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
