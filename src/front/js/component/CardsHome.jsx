@@ -6,6 +6,8 @@ import CardPremium from './CardPremium.jsx';
 function CardsHome() {
   const [data, setData] = useState({});
 
+  console.log(data);
+
   const handler = new HttpHandler();
 
   useEffect(() => {
@@ -25,23 +27,34 @@ function CardsHome() {
       ) : (
         <div className="container">
           <div className="row">
-            {data.product &&
-              data.product.slice(-6).map((item, index) => (
-                <div className="col-lg-4 col-md-6 col-12 mt-2" key={index} style={{ marginBottom: '6rem' }}>
-                  <CardPremium
-                    // button={<Login onClose={() => setShowLoginModal(false)} />}
-                    button={'Comprar'}
-                    item={item}
-                    image={item.images}
-                    title={item.name}
-                    description={item.description}
-                    price={item.price}
-                    // daysRemaining={daysRemainingPremium}
-                    // hoursRemaining={hoursRemainingPremium}
-                    // onEditClick={() => handleEditClick(item)}
-                  />
+            {data.product && data.product.filter((item) => item.premium).length === 0 ? (
+              <div>
+                <h1>No hay productos premium disponibles</h1>
+              </div>
+            ) : (
+              <div className="container">
+                <div className="row">
+                  {data.product &&
+                    data.product
+                      .filter((item) => item.premium)
+                      .slice(-6)
+                      .map((item, index) => {
+                        return (
+                          <div className="col-lg-4 col-md-6 col-12 mt-2" key={index} style={{ marginBottom: '6rem' }}>
+                            <CardPremium
+                              button={'Comprar'}
+                              item={item}
+                              image={item.images}
+                              title={item.name}
+                              description={item.description}
+                              price={item.price}
+                            />
+                          </div>
+                        );
+                      })}
                 </div>
-              ))}
+              </div>
+            )}
           </div>
         </div>
       )}
