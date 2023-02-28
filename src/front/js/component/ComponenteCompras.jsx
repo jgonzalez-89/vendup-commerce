@@ -32,8 +32,8 @@ const ComprasComponent = ({ userId }) => {
                 : 'Aun no has comprado nada ...'}
             </h1>
             {userValue.purchases.length === 0 ? (
-              <div>
-                <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
+                <a href="/products">
                   <img
                     width={400}
                     height={286}
@@ -42,11 +42,11 @@ const ComprasComponent = ({ userId }) => {
                     alt="Mi imagen"
                     style={{ borderRadius: '10%', boxShadow: '1px 2px 9px' }}
                   />
-                </div>
+                </a>
               </div>
             ) : (
               userValue.purchases.map((item, index) => (
-                <div className="col-sm-4 my-1 mb-5" key={index} >
+                <div className="col-sm-4 my-1 mb-5" key={index}>
                   <CardPremium
                     button={'Comprar'}
                     item={item}

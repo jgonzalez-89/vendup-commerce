@@ -61,71 +61,62 @@ const Userpage = () => {
       <Header NavProducts={'/products'} />
       <div className="container-fluid">
         <div className="row">
-          <div className="col-lg-3 col-md-4 col-sm-12" style={{ marginBottom: '4rem' }}>
-            <div className="d-flex flex-column p-3 bg-light ">
-              <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <div className="flex-column">
-                  <div className="">
-                    <img
-                      src={userName.profile_picture}
-                      alt=""
-                      style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover' }}
-                    />
-                  </div>
-                  <div className="row fs-4 p-3" style={{ color: 'black' }}>
-                    Hola! <br />
-                    {userName.name + ' ' + userName.surnames}
-                  </div>
-                </div>
+          <div className="col-lg-3 col-md-4 col-sm-12">
+            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3">
+              <div>
+                <img
+                  src={userName.profile_picture}
+                  alt=""
+                  style={{
+                    width: '150px',
+                    height: '150px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '2px solid #FEBD2F',
+                  }}
+                />
+              </div>
+              <div className="d-flex row fs-4 p-3 justify-content-center align-items-center" style={{ color: 'black' }}>
+                {userName.name + ' ' + userName.surnames}
               </div>
               <hr />
               <div className="">
                 <ul className="nav nav-pills flex-column mb-auto">
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser
-                        text="Tus Compras"
-                        selected={selectedButton === 'Compras'}
-                        handleClick={() => handleButtonClick('Compras')}
-                      />
-                    </div>
+                    <ButtonUser
+                      text="Tus Compras"
+                      selected={selectedButton === 'Compras'}
+                      handleClick={() => handleButtonClick('Compras')}
+                    />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser
-                        text="Tus Ventas"
-                        selected={selectedButton === 'Ventas'}
-                        handleClick={() => handleButtonClick('Ventas')}
-                      />
-                    </div>
+                    <ButtonUser
+                      text="Tus Ventas"
+                      selected={selectedButton === 'Ventas'}
+                      handleClick={() => handleButtonClick('Ventas')}
+                    />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser
-                        text="Subir Producto"
-                        selected={selectedButton === 'Producto'}
-                        handleClick={() => handleButtonClick('Producto')}
-                      />
-                    </div>
+                    <ButtonUser
+                      text="Subir Producto"
+                      selected={selectedButton === 'Producto'}
+                      handleClick={() => handleButtonClick('Producto')}
+                    />
                   </li>
 
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser
-                        text="Editar Perfil"
-                        selected={selectedButton === 'Ajustes'}
-                        handleClick={() => handleButtonClick('Ajustes')}
-                      />
-                    </div>
+                    <ButtonUser
+                      text="Editar Perfil"
+                      selected={selectedButton === 'Ajustes'}
+                      handleClick={() => handleButtonClick('Ajustes')}
+                    />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser
-                        text="Hazte Premium"
-                        selected={selectedButton === 'Premium'}
-                        handleClick={() => handleButtonClick('Premium')}
-                      />
-                    </div>
+                    <ButtonUser
+                      text="Hazte Premium"
+                      selected={selectedButton === 'Premium'}
+                      handleClick={() => handleButtonClick('Premium')}
+                    />
                   </li>
                 </ul>
               </div>

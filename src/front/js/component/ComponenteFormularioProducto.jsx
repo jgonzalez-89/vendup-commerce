@@ -102,7 +102,7 @@ const ProductoComponent = ({ userId }) => {
   return (
     <>
       <div>
-        <h1 className="text-center">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
+        <h1 className="text-center mt-5">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
       </div>
       <Container className="my-5 border shadow p-5 rounded mb-5">
         <Form onSubmit={handleSubmit}>
