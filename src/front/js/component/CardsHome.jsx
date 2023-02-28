@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import LoginModal from '../component/LoginModal.jsx';
 import SignupModal from '../component/SignupModal.jsx';
 
-
 function CardsHome() {
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;

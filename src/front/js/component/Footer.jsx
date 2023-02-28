@@ -3,7 +3,7 @@ import logo from '../../../../public/logowhite.png';
 import { Button, Nav, Container } from 'react-bootstrap';
 
 const Footer = ({ NavHome, NavUser, NavProducts }) => (
-  <Container fluid className="bg-dark text-white fixed-bottom">
+  <Container fluid className="bg-dark text-white">
     <Container>
       <Nav className="me-auto">
         {NavHome && <Nav.Link href={NavHome}>Home</Nav.Link>}
