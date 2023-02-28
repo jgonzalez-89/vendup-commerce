@@ -22,6 +22,10 @@ const ProductView = () => {
   const handler = new HttpHandler();
 
   useEffect(() => {
+    setPage(1);
+  }, [category]);
+
+  useEffect(() => {
     async function fetchData() {
       const result = await handler.getProduct();
       setData(result);
@@ -52,7 +56,7 @@ const ProductView = () => {
 
   return (
     <>
-      <Header NavUser={'/user'} NavHome={'/'} />
+      <Header NavUser={'/user'} />
 
       <div className="container">
         <h1 className="text-center my-5">Aquí podrás ver y seleccionar los productos por categorías</h1>

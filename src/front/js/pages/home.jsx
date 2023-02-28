@@ -25,7 +25,7 @@ const Home = () => {
 
       <div className="text-center mt-5 mb-5">
         <div className="container mb-5">
-          <SearchPage />
+          {/* <SearchPage /> */}
 
           <CardsHome />
         </div>

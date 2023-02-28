@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-const CardPremium = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick }) => {
+const CardPremium = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick, onAlertClick }) => {
   const currentDate = new Date();
   const startDate = new Date(item.created_at_product);
   startDate.setDate(startDate.getDate() + 3);
@@ -58,8 +58,8 @@ const CardPremium = ({ image, title, description, price, onEditClick, item, acti
                 {actionButton}
               </Button>
             )}
-            {actionButton === 'Mipolla' && (
-              <Button variant="warning" onClick={onEditClick} className="d-grid" size="lg">
+            {actionButton === 'Comprar+' && (
+              <Button variant="warning" onClick={onAlertClick} className="d-grid" size="lg">
                 {actionButton}
               </Button>
             )}

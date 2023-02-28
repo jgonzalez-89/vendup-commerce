@@ -3,7 +3,7 @@ import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 
-const CardFree = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick }) => {
+const CardFree = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick, onAlertClick }) => {
   const currentDate = new Date();
   const startDate = new Date(item.created_at_product);
   startDate.setDate(startDate.getDate() + 3);
@@ -57,8 +57,8 @@ const CardFree = ({ image, title, description, price, onEditClick, item, actionB
                 {actionButton}
               </Button>
             )}
-            {actionButton === 'Mipolla' && (
-              <Button variant="warning" onClick={onEditClick} className="d-grid" size="lg">
+            {actionButton === 'Comprar+' && (
+              <Button variant="warning" onClick={onAlertClick} className="d-grid" size="lg">
                 {actionButton}
               </Button>
             )}

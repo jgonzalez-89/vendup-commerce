@@ -58,7 +58,7 @@ const Userpage = () => {
 
   return (
     <>
-      <Header NavHome={'/'} NavProducts={'/products'} />
+      <Header NavProducts={'/products'} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12" style={{ marginBottom: '4rem' }}>
