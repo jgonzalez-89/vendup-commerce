@@ -123,7 +123,7 @@ function CardsHome() {
       </div>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Entra o registrate para comprar.</Modal.Title>
+          <Modal.Title>Entra o registrate para poder comprar.</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
           <Login />

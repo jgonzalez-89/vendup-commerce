@@ -37,9 +37,13 @@ function Register() {
     }
   };
 
+  const handleCloseView = () => {
+    setShow(false);
+  };
+
   return (
     <>
-      <Button variant="warning" className="m-2" onClick={handleShow}>
+      <Button variant="warning shadow rounded" className="m-2" onClick={handleShow}>
         Registrarse
       </Button>
 
@@ -60,8 +64,11 @@ function Register() {
           {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="warning" onClick={handleRegister}>
-            Iniciar sesión
+          <Button variant="warning w-50" onClick={handleRegister}>
+            Registrarse
+          </Button>
+          <Button variant="secondary" onClick={handleCloseView}>
+            Cerrar
           </Button>
         </Modal.Footer>
       </Modal>
