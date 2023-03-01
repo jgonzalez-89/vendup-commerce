@@ -20,8 +20,6 @@ const Userpage = () => {
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
 
-  console.log(userName);
-
   useEffect(() => {
     async function getUser() {
       const { user } = await handler.getUserById(userId);
@@ -33,19 +31,6 @@ const Userpage = () => {
     getUser();
   }, []);
 
-  // useEffect(() => {
-  //   async function getUser() {
-  //     const { user } = await handler.getUserById(userId);
-  //     if (!user.profile_picture) {
-  //       user.profile_picture = userProfilePicture;
-  //     }
-  //     else if (!user.name) {
-  //       user.name = user.email
-  //     }
-  //     setUserName(user);
-  //   }
-  //   getUser();
-  // }, []);
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);

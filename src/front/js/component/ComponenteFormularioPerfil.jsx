@@ -4,12 +4,10 @@ import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 
 const cld = new CloudinaryImage('Prueba', {
-  cloudName: 'dazdmgrf8',
-  apiKey: '183117376743833',
-  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA',
+  cloudName: process.env.CLOUDINARY_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  apiSecret: process.env.CLOUDINARY_API_SECRET,
 });
-
-// picture_large
 
 const AjustesComponent = ({ userId }) => {
   const [validated, setValidated] = useState(false);

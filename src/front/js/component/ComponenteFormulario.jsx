@@ -3,10 +3,10 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler.js';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 
-const cld = new CloudinaryImage('Prueba', { 
-  cloudName: 'dazdmgrf8', 
-  apiKey: '183117376743833', 
-  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' 
+const cld = new CloudinaryImage('Prueba', {
+  cloudName: process.env.CLOUDINARY_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  apiSecret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const FormularioComponent = ({ selectedProduct, onCloseModal }) => {

@@ -5,9 +5,9 @@ import { CloudinaryImage } from '@cloudinary/url-gen';
 import { categories } from '../../../../data';
 
 const cld = new CloudinaryImage('Prueba', {
-  cloudName: 'dazdmgrf8',
-  apiKey: '183117376743833',
-  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA',
+  cloudName: process.env.CLOUDINARY_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  apiSecret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const ProductoComponent = ({ userId }) => {
@@ -18,8 +18,8 @@ const ProductoComponent = ({ userId }) => {
     name: '',
     description: '',
     price: '',
-    images: '', // incluye la información de la imagen
-    imagePreviewUrl: '', // incluye una vista previa de la imagen
+    images: '', 
+    imagePreviewUrl: '', 
   });
   const httpHandler = new HttpHandler();
 
@@ -76,7 +76,7 @@ const ProductoComponent = ({ userId }) => {
         created_at_product: new Date().toISOString(), // Agregar fecha actual
       };
       const response = await httpHandler.postProduct(payload);
-      // console.log(response);
+      console.log(response);
       setShowMessage(true);
       resetForm();
     } catch (error) {
