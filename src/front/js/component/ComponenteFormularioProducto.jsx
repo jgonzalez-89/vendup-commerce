@@ -14,9 +14,9 @@ const ProductoComponent = ({ userId }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [product, setProduct] = useState({
     owner_id: userId,
-    category: '',
     name: '',
     description: '',
+    category: '',
     price: '',
     images: '', 
     imagePreviewUrl: '', 
@@ -71,6 +71,7 @@ const ProductoComponent = ({ userId }) => {
         owner_id: product.owner_id,
         name: product.name,
         description: product.description,
+        category: product.category,
         price: product.price,
         images: product.images,
         created_at_product: new Date().toISOString(), // Agregar fecha actual
@@ -97,7 +98,7 @@ const ProductoComponent = ({ userId }) => {
     reader.readAsDataURL(file);
   };
 
-  // console.log(product);
+  console.log(product);
 
   return (
     <>

@@ -16,10 +16,18 @@ const Userpage = () => {
   const decoded = jwt_decode(token);
   const userId = decoded.sub;
 
-  const [userName, setUserName] = useState({ profile_picture: userProfilePicture, email: 'mipo' });
+  const [userName, setUserName] = useState({ profile_picture: userProfilePicture });
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
 
+  const logout = () => {
+      Cookies.remove('access_token')
+  }
+
+  // console.log(token)
+
+
+  // IMPLEMENTAR MENSAJE DE ERROR SI NO ESTA EL TOKEN!!!
   useEffect(() => {
     async function getUser() {
       const { user } = await handler.getUserById(userId);
@@ -60,7 +68,7 @@ const Userpage = () => {
 
   return (
     <>
-      <Header NavProducts={'/products'} />
+      <Header NavProducts={'/products'} NavLogOut={'/'} onClickLogOut={logout} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">

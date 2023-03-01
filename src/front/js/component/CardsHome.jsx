@@ -23,13 +23,16 @@ function CardsHome() {
 
   const handler = new HttpHandler();
 
+  console.log(data)
+
+
   useEffect(() => {
     setPage(1);
   }, [category]);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await handler.getProduct();
+      const result = await handler.getProduct(); // eliminar el parámetro sort
       setData(result);
     }
     fetchData();
@@ -40,9 +43,21 @@ function CardsHome() {
     setPage(1); // reset page number when new search is performed
   };
 
-  const filteredItems = data.product
-    ? data.product.filter((item) => (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())))
-    : [];
+  let filteredItems = [];
+
+  if (data.product) {
+    const premiumItems = data.product.filter(
+      (item) => item.premium && (category === '' || item.category === category) &&
+        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
+    );
+
+    const nonPremiumItems = data.product.filter(
+      (item) => !item.premium && (category === '' || item.category === category) &&
+        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
+    );
+
+    filteredItems = premiumItems.concat(nonPremiumItems);
+  }
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -62,11 +77,18 @@ function CardsHome() {
         <SearchPage onSearch={handleSearch} />
         <div className="my-3">
           {categories.map((categoryItem) => (
-            <button key={categoryItem.value} className={`btn btn-outline-warning mx-1 ${category === categoryItem.value ? 'active' : ''}`} onClick={() => setCategory(categoryItem.value)}>
+            <button
+              key={categoryItem.value}
+              className={`btn btn-outline-warning mx-1 ${category === categoryItem.value ? 'active' : ''}`}
+              onClick={() => setCategory(categoryItem.value)}
+            >
               {categoryItem.label}
             </button>
           ))}
-          <button className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`} onClick={() => setCategory('')}>
+          <button
+            className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`}
+            onClick={() => setCategory('')}
+          >
             Mostrar Todos
           </button>
         </div>
@@ -76,7 +98,15 @@ function CardsHome() {
 
             return (
               <div className="col-lg-4 col-md-6 col-12 my-1 mb-5" key={index}>
-                <Component actionButton={'Comprar+'} item={item} image={item.images} title={item.name} description={item.description} price={item.price} onAlertClick={() => handleClick()} />
+                <Component
+                  actionButton={'Comprar+'}
+                  item={item}
+                  image={item.images}
+                  title={item.name}
+                  description={item.description}
+                  price={item.price}
+                  onAlertClick={() => handleClick()}
+                />
               </div>
             );
           })}
@@ -85,11 +115,18 @@ function CardsHome() {
         {filteredItems.length > itemsPerPage && (
           <>
             <div className="d-flex justify-content-center">
-              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map((pageNum) => (
-                <button style={{ marginBottom: '6rem' }} key={pageNum} className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`} onClick={() => setPage(pageNum)}>
-                  {pageNum}
-                </button>
-              ))}
+              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map(
+                (pageNum) => (
+                  <button
+                    style={{ marginBottom: '6rem' }}
+                    key={pageNum}
+                    className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
+                    onClick={() => setPage(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              )}
             </div>
           </>
         )}
@@ -98,13 +135,9 @@ function CardsHome() {
         <Modal.Header closeButton>
           <Modal.Title>Entra o registrate para comprar.</Modal.Title>
         </Modal.Header>
-        {/* <Modal.Body>
-          <p>Esta es una alerta personalizada mostrada en un modal.</p>
-        </Modal.Body> */}
         <Modal.Footer>
           <Login />
           <Register />
-
           <Button variant="secondary" onClick={handleCloseModal}>
             Cerrar
           </Button>
