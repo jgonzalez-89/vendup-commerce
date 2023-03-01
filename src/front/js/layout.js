@@ -9,6 +9,7 @@ import FAQs from './component/FAQS.jsx';
 import Userpage from './pages/userpage.jsx';
 import ProductView from './pages/productview.jsx';
 import Payment from './pages/payment.jsx';
+import Error404 from './pages/error404.jsx';
 
 //create your first component
 const Layout = () => {
@@ -29,9 +30,9 @@ const Layout = () => {
           <Route element={<FAQs />} path="/FAQs" />
           <Route element={<Team />} path="/team" />
 
-          <Route element={<h1> Not found! </h1>} path="*"/>
+          <Route element={ <Error404 />} path="*"/>
         </Routes>{' '}
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>{' '}
     </>
   );

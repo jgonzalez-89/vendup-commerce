@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect } from 'react-bootstrap';
+import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect, InputGroup } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 import { categories } from '../../../../data';
 
 const cld = new CloudinaryImage('Prueba', {
-  cloudName: 'dazdmgrf8',
-  apiKey: '183117376743833',
-  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA',
+  cloudName: process.env.CLOUDINARY_NAME,
+  apiKey: process.env.CLOUDINARY_API_KEY,
+  apiSecret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const ProductoComponent = ({ userId }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [product, setProduct] = useState({
     owner_id: userId,
-    category: '',
     name: '',
     description: '',
+    category: '',
     price: '',
-    images: '', // incluye la información de la imagen
-    imagePreviewUrl: '', // incluye una vista previa de la imagen
+    images: '',
+    imagePreviewUrl: '',
   });
   const httpHandler = new HttpHandler();
 
@@ -71,12 +71,13 @@ const ProductoComponent = ({ userId }) => {
         owner_id: product.owner_id,
         name: product.name,
         description: product.description,
+        category: product.category,
         price: product.price,
         images: product.images,
         created_at_product: new Date().toISOString(), // Agregar fecha actual
       };
       const response = await httpHandler.postProduct(payload);
-      // console.log(response);
+      console.log(response);
       setShowMessage(true);
       resetForm();
     } catch (error) {
@@ -97,12 +98,10 @@ const ProductoComponent = ({ userId }) => {
     reader.readAsDataURL(file);
   };
 
-  // console.log(product);
-
   return (
     <>
       <div>
-        <h1 className="text-center">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
+        <h1 className="text-center mt-5">¿Qué subirás? En Vendup hay sitio para (casi) todo</h1>
       </div>
       <Container className="my-5 border shadow p-5 rounded mb-5">
         <Form onSubmit={handleSubmit}>
@@ -125,13 +124,35 @@ const ProductoComponent = ({ userId }) => {
 
           <FormGroup controlId="productDescription" className="mt-3">
             <FormLabel>Descripción del producto</FormLabel>
-            <FormControl as="textarea" rows={3} name="description" value={product.description} onChange={handleInputChange} placeholder="Introduce la descripción del producto" required />
+            <FormControl
+              as="textarea"
+              rows={3}
+              name="description"
+              value={product.description}
+              onChange={handleInputChange}
+              placeholder="Introduce la descripción del producto"
+              required
+            />
           </FormGroup>
 
           <FormGroup controlId="productPrice" className="mt-3">
             <FormLabel>Precio del producto</FormLabel>
-            <FormControl type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" required />
+            <InputGroup>
+              <FormControl
+                type="number"
+                name="price"
+                value={product.price}
+                onChange={handleInputChange}
+                placeholder="Introduce el precio del producto"
+                aria-label="Precio del producto"
+              />
+              <InputGroup.Text>€</InputGroup.Text>
+            </InputGroup>
           </FormGroup>
+          {/* <FormGroup controlId="productPrice" className="mt-3">
+            <FormLabel>Precio del producto</FormLabel>
+            <FormControl type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" required />
+          </FormGroup> */}
 
           <FormGroup controlId="productImage" className="mt-3">
             <FormLabel>Imagen del producto</FormLabel>

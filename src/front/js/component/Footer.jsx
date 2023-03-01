@@ -3,22 +3,20 @@ import logo from '../../../../public/logowhite.png';
 import { Button, Nav, Container } from 'react-bootstrap';
 
 const Footer = ({ NavHome, NavUser, NavProducts }) => (
-  <Container fluid className="bg-dark text-white fixed-bottom">
+  <Container fluid className="bg-dark text-white">
     <Container>
       <Nav className="me-auto">
         {NavHome && <Nav.Link href={NavHome}>Home</Nav.Link>}
         {NavUser && <Nav.Link href={NavUser}>Usuario</Nav.Link>}
         {NavProducts && <Nav.Link href={NavProducts}>Productos</Nav.Link>}
       </Nav>
-      <Nav className="ms-auto">
-      </Nav>
+      <Nav className="ms-auto"></Nav>
       <img src={logo} width="100" role="img" aria-label="Vendup" />
     </Container>
   </Container>
 );
 
 export default Footer;
-
 
 {
   /* <div className="container-fluid p-3 bg-dark text-bg-dark">

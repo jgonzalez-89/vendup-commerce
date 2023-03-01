@@ -10,10 +10,6 @@ function Forgotpass(props) {
   };
   const handleShow = () => setShow(true);
 
-  // const handleForgotpassClick = () => {
-  //   setShowForgotpassModal(true);
-  // };
-
   return (
     <>
       {/* <a className="m-2 text-white position-absolute bottom-0 end-0" variant="warning" onClick={handleShow}>

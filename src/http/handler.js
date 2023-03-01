@@ -108,17 +108,43 @@ export function HttpHandler() {
   }
 
   async function register(email, password) {
-    const response = await fetch(urlRegister, {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: contentType,
-    });
+    try {
+      console.log('Enviando datos al backend:', email, password);
+      const response = await fetch(urlRegister, {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: contentType,
+      });
 
-    return response.json();
+      const data = await response.json();
+      console.log('Respuesta del backend:', data);
+
+      if (response.ok) {
+        // Agregar el token de acceso a la cookie del cliente
+        Cookies.set('access_token', data.access_token, { expires: 1 });
+      }
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
+  // async function register(email, password) {
+  //   const response = await fetch(urlRegister, {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       email,
+  //       password,
+  //     }),
+  //     headers: contentType,
+  //   });
+
+  //   return response.json();
+  // }
 
   async function login(email, password) {
     try {

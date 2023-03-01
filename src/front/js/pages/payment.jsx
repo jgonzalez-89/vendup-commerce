@@ -3,8 +3,12 @@ import { Context } from '../store/appContext.js';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 import Header from '../component/NavbarUser.jsx';
 import FormularioDePago from '../component/Stripe.jsx';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const Payment = () => {
+  const token = Cookies.get('access_token');
+  const decoded = jwt_decode(token);
   const { store } = useContext(Context);
   const { selectedProduct } = store;
 
@@ -12,9 +16,26 @@ const Payment = () => {
     // console.log(selectedProduct);
   }, [selectedProduct]);
 
+  const Logout = () => {
+    try {
+      Cookies.remove('access_token');
+      window.location.href = '/'; // redirect to home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
+  const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutes in milliseconds
+  const currentTime = Date.now();
+
+  if (currentTime > expirationTime) {
+    Cookies.remove('access_token');
+    window.location.href = '/';
+  }
+
   return (
     <>
-      <Header NavUser={'/user'} NavHome={'/'} NavProducts={'/products'} />
+      <Header NavUser={'/user'} NavHome={'/'} NavProducts={'/products'} onClickLogOut={Logout} />
       <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px auto' }}>Cesta de la compra</h1>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {selectedProduct ? (
@@ -33,7 +54,6 @@ const Payment = () => {
                 <small className="text-muted"></small>
 
                 <FormularioDePago store={store} />
-
               </Card.Footer>
             </Card>
           </div>

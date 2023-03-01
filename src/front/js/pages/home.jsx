@@ -3,10 +3,9 @@ import React, { useState, useContext } from 'react';
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import '../../styles/home.css';
 import logo from '../../../../public/logowhite.png';
-import SearchPage from '../component/Search.jsx';
 import CardsHome from '../component/CardsHome.jsx';
-import Login from '../component/LoginModal.jsx';
-import SignUp from '../component/SignupModal.jsx';
+import Login from '../component/ModalLogin.jsx';
+import Register from '../component/ModalRegister.jsx';
 
 const Home = () => {
   return (
@@ -18,14 +17,14 @@ const Home = () => {
           </Navbar.Brand>
           <Nav className="ms-auto">
             <Login className="me-2" onClose={() => setShowLoginModal(false)} />
-            <SignUp className="me-2" onClose={() => setShowSignupModal(false)} />
+            <Register className="me-2" onClose={() => setShowSignupModal(false)} />
           </Nav>
         </Container>
       </Navbar>
 
       <div className="text-center mt-5 mb-5">
         <div className="container mb-5">
-          <SearchPage />
+          {/* <SearchPage /> */}
 
           <CardsHome />
         </div>
