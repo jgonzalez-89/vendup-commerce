@@ -3,11 +3,13 @@ import { Container, Form, Row, Col, FormGroup, FormLabel, FormControl, Button } 
 import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 
-const cld = new CloudinaryImage('Prueba', { 
-  cloudName: 'dazdmgrf8', 
-  apiKey: '183117376743833', 
-  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA' 
+const cld = new CloudinaryImage('Prueba', {
+  cloudName: 'dazdmgrf8',
+  apiKey: '183117376743833',
+  apiSecret: 'RFasbAmBv7LtgBfTyUAQcJCEfcA',
 });
+
+// picture_large
 
 const AjustesComponent = ({ userId }) => {
   const [validated, setValidated] = useState(false);
@@ -22,8 +24,7 @@ const AjustesComponent = ({ userId }) => {
     location_country: '',
     location_city: '',
     location_postcode: '',
-    picture_large: '', // incluye la información de la imagen
-    // imagePreviewUrl: '', // incluye una vista previa de la imagen
+    profile_picture: '',
   });
   const [acceptedTerms, setAcceptedTerms] = useState(false); // nuevo estado para controlar la aceptación de términos y condiciones
   const handler = new HttpHandler();
@@ -54,7 +55,7 @@ const AjustesComponent = ({ userId }) => {
       console.log(data);
       setUserName((prevState) => ({
         ...prevState,
-        picture_large: data.secure_url,
+        profile_picture: data.secure_url,
       }));
       handleImagePreview(file); // crea una vista previa de la imagen
     } else {
@@ -80,12 +81,11 @@ const AjustesComponent = ({ userId }) => {
         surnames: userName.surnames,
         email: userName.email,
         phone: userName.phone,
-        dob_age: userName.dob_age,
         dob_date: userName.dob_date,
         location_country: userName.location_country,
         location_city: userName.location_city,
         location_postcode: userName.location_postcode,
-        picture_large: userName.picture_large,
+        profile_picture: userName.profile_picture,
       };
       const response = await handler.putUserById(userId, payload);
       setShowMessage(true);
@@ -119,20 +119,37 @@ const AjustesComponent = ({ userId }) => {
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">
             <FormGroup as={Col} md="4" controlId="validationCustom01">
-              <FormLabel>First name</FormLabel>
-              <FormControl required type="text" placeholder="First name" value={userName.name} onChange={(e) => setUserName({ ...userName, name: e.target.value })} />
+              <FormLabel>Nombre</FormLabel>
+              <FormControl
+                required
+                type="text"
+                placeholder="Nombre"
+                value={userName.name || ''}
+                onChange={(e) => setUserName({ ...userName, name: e.target.value })}
+              />
               <FormControl.Feedback>Looks good!</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom02">
-              <FormLabel>Last name</FormLabel>
-              <FormControl required type="text" placeholder="Last name" value={userName.surnames} onChange={(e) => setUserName({ ...userName, surnames: e.target.value })} />
+              <FormLabel>Apellidos</FormLabel>
+              <FormControl
+                required
+                type="text"
+                placeholder="Apellidos"
+                value={userName.surnames || ''}
+                onChange={(e) => setUserName({ ...userName, surnames: e.target.value })}
+              />
               <FormControl.Feedback>Looks good!</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom03">
               <FormLabel>Fecha de nacimiento</FormLabel>
-              <FormControl type="date" placeholder="Fecha de nacimiento" value={userName.dob_date} onChange={(e) => setUserName({ ...userName, dob_date: e.target.value })} />
+              <FormControl
+                type="date"
+                placeholder="Fecha de nacimiento"
+                value={userName.dob_date || ''}
+                onChange={(e) => setUserName({ ...userName, dob_date: e.target.value })}
+              />
               <FormControl.Feedback>¡Se ve bien!</FormControl.Feedback>
             </FormGroup>
           </Row>
@@ -140,7 +157,12 @@ const AjustesComponent = ({ userId }) => {
           <Row className="mb-3">
             <FormGroup as={Col} md="4" controlId="validationCustom04">
               <FormLabel>Teléfono</FormLabel>
-              <FormControl type="tel" placeholder="Teléfono" value={userName.phone} onChange={(e) => setUserName({ ...userName, phone: e.target.value })} />
+              <FormControl
+                type="tel"
+                placeholder="Teléfono"
+                value={userName.phone || ''}
+                onChange={(e) => setUserName({ ...userName, phone: e.target.value })}
+              />
               <FormControl.Feedback>¡Se ve bien!</FormControl.Feedback>
             </FormGroup>
 
@@ -150,7 +172,7 @@ const AjustesComponent = ({ userId }) => {
                 required
                 type="email"
                 placeholder="name@example.com"
-                value={userName.email}
+                value={userName.email || ''}
                 onChange={(e) => setUserName({ ...userName, email: e.target.value })}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               />
@@ -161,20 +183,40 @@ const AjustesComponent = ({ userId }) => {
           <Row className="mb-3">
             <FormGroup as={Col} md="4" controlId="validationCustom07">
               <FormLabel>País</FormLabel>
-              <FormControl type="text" placeholder="País" value={userName.location_country} required onChange={(e) => setUserName({ ...userName, location_country: e.target.value })} />
+              <FormControl
+                type="text"
+                placeholder="País"
+                value={userName.location_country || ''}
+                required
+                onChange={(e) => setUserName({ ...userName, location_country: e.target.value })}
+              />
               <FormControl.Feedback type="invalid">Por favor, proporciona un país válido.</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom08">
               <FormLabel>Ciudad</FormLabel>
-              <FormControl type="text" placeholder="Ciudad" value={userName.location_city} required onChange={(e) => setUserName({ ...userName, location_city: e.target.value })} />
+              <FormControl
+                type="text"
+                placeholder="Ciudad"
+                value={userName.location_city || ''}
+                required
+                onChange={(e) => setUserName({ ...userName, location_city: e.target.value })}
+              />
               <FormControl.Feedback type="invalid">Por favor, proporciona una ciudad válida.</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom09">
               <FormLabel>Código Postal</FormLabel>
-              <FormControl type="text" placeholder="Código Postal" value={userName.location_postcode} required onChange={(e) => setUserName({ ...userName, location_postcode: e.target.value })} />
-              <FormControl.Feedback type="invalid">Por favor, proporciona un código postal válido.</FormControl.Feedback>
+              <FormControl
+                type="text"
+                placeholder="Código Postal"
+                value={userName.location_postcode || ''}
+                required
+                onChange={(e) => setUserName({ ...userName, location_postcode: e.target.value })}
+              />
+              <FormControl.Feedback type="invalid">
+                Por favor, proporciona un código postal válido.
+              </FormControl.Feedback>
             </FormGroup>
           </Row>
 
@@ -184,10 +226,23 @@ const AjustesComponent = ({ userId }) => {
               <img
                 src={userName.imagePreviewUrl}
                 alt="Vista previa de la imagen"
-                style={{ maxWidth: '150px', width: '150px', maxHeight: '150px', height: '150px', margin: '30px', borderRadius: '50%', objectFit: 'cover' }}
+                style={{
+                  maxWidth: '150px',
+                  width: '150px',
+                  maxHeight: '150px',
+                  height: '150px',
+                  margin: '30px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                }}
               />
             )}
-            <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen de perfil" />
+            <FormControl
+              type="file"
+              name="image"
+              onChange={handleInputChange}
+              placeholder="Selecciona una imagen de perfil"
+            />
           </FormGroup>
 
           <FormGroup className="mb-3 m-4">

@@ -9,26 +9,43 @@ import ProductoComponent from '../component/ComponenteFormularioProducto.jsx';
 import AjustesComponent from '../component/ComponenteFormularioPerfil.jsx';
 import PremiumComponent from '../component/ComponentePremium.jsx';
 import ButtonUser from '../component/ButtonUser.jsx';
+import userProfilePicture from '../../../../public/perfil.jpg';
 
 const Userpage = () => {
   const token = Cookies.get('access_token');
   const decoded = jwt_decode(token);
   const userId = decoded.sub;
 
-  const [userName, setUserName] = useState({});
+  const [userName, setUserName] = useState({ profile_picture: userProfilePicture, email: 'mipo' });
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
 
+  console.log(userName);
+
   useEffect(() => {
-    // debugger;
     async function getUser() {
       const { user } = await handler.getUserById(userId);
+      if (!user.profile_picture) {
+        user.profile_picture = userProfilePicture;
+      }
       setUserName(user);
-      // console.log(user);
     }
-
     getUser();
   }, []);
+
+  // useEffect(() => {
+  //   async function getUser() {
+  //     const { user } = await handler.getUserById(userId);
+  //     if (!user.profile_picture) {
+  //       user.profile_picture = userProfilePicture;
+  //     }
+  //     else if (!user.name) {
+  //       user.name = user.email
+  //     }
+  //     setUserName(user);
+  //   }
+  //   getUser();
+  // }, []);
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
@@ -77,7 +94,7 @@ const Userpage = () => {
                 />
               </div>
               <div className="d-flex row fs-4 p-3 justify-content-center align-items-center" style={{ color: 'black' }}>
-                {userName.name + ' ' + userName.surnames}
+                {userName.name && userName.surnames ? userName.name + ' ' + userName.surnames : 'Bienvenido!'}
               </div>
               <hr />
               <div className="">

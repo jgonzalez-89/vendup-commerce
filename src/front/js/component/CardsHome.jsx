@@ -8,8 +8,8 @@ import CardFree from '../component/CardFree.jsx';
 import CardPremium from '../component/CardPremium.jsx';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import LoginModal from '../component/LoginModal.jsx';
-import SignupModal from '../component/SignupModal.jsx';
+import Login from '../component/ModalLogin.jsx';
+import Register from '../component/ModalRegister.jsx';
 
 function CardsHome() {
   const { store, actions } = useContext(Context);
@@ -102,8 +102,8 @@ function CardsHome() {
           <p>Esta es una alerta personalizada mostrada en un modal.</p>
         </Modal.Body> */}
         <Modal.Footer>
-          <LoginModal />
-          <SignupModal />
+          <Login />
+          <Register />
 
           <Button variant="secondary" onClick={handleCloseModal}>
             Cerrar
