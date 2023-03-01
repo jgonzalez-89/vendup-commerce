@@ -15,10 +15,17 @@ const Userpage = () => {
   const token = Cookies.get('access_token');
   const decoded = jwt_decode(token);
   const userId = decoded.sub;
-
   const [userName, setUserName] = useState({ profile_picture: userProfilePicture });
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
+
+  const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutes in milliseconds
+  const currentTime = Date.now();
+
+  if (currentTime > expirationTime) {
+    Cookies.remove('access_token');
+    window.location.href = '/';
+  }
 
   const Logout = () => {
     try {

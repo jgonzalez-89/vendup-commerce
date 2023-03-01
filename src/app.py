@@ -80,7 +80,7 @@ def register():
 
     # Generar el token de acceso
     access_token = create_access_token(
-        identity=new_user.id, expires_delta=timedelta(minutes=1))
+        identity=new_user.id, expires_delta=timedelta(minutes=30))
 
     return jsonify({
         "message": "Registered successfully",
@@ -105,7 +105,7 @@ def login():
 
     # Generar el token de acceso
     access_token = create_access_token(
-        identity=user.id, expires_delta=timedelta(minutes=1))
+        identity=user.id, expires_delta=timedelta(minutes=30))
 
     return jsonify({
         "message": "Logged in successfully",
