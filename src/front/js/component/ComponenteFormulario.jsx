@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button, Modal } from 'react-bootstrap';
+import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect, ModalFooter, InputGroup } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler.js';
 import { CloudinaryImage } from '@cloudinary/url-gen';
+import { categories } from '../../../../data';
 
 const cld = new CloudinaryImage('Prueba', {
   cloudName: process.env.CLOUDINARY_NAME,
@@ -86,34 +87,56 @@ const FormularioComponent = ({ selectedProduct, onCloseModal }) => {
   return (
     <>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="productName">
-          <Form.Label>Nombre del producto</Form.Label>
-          <Form.Control type="text" name="name" value={product.name} onChange={handleInputChange} placeholder="Introduce el nombre del producto" />
-        </Form.Group>
+        <FormGroup controlId="categoryName" className="mt-3">
+          <FormLabel>Categoría del producto</FormLabel>
+          <FormSelect aria-label="Default select example" name="category" value={product.category} onChange={handleInputChange} required>
+            <option value="">Selecciona una categoría para tu producto</option>
+            {categories.map((category) => (
+              <option key={category.value} value={category.value}>
+                {category.label}
+              </option>
+            ))}
+          </FormSelect>
+        </FormGroup>
 
-        <Form.Group controlId="productDescription">
-          <Form.Label>Descripción del producto</Form.Label>
-          <Form.Control as="textarea" rows={3} name="description" value={product.description} onChange={handleInputChange} placeholder="Introduce la descripción del producto" />
-        </Form.Group>
+        <FormGroup controlId="productName">
+          <FormLabel>Nombre del producto</FormLabel>
+          <FormControl type="text" name="name" value={product.name} onChange={handleInputChange} placeholder="Introduce el nombre del producto" />
+        </FormGroup>
 
-        <Form.Group controlId="productPrice">
-          <Form.Label>Precio del producto</Form.Label>
-          <Form.Control type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" />
-        </Form.Group>
+        <FormGroup controlId="productDescription">
+          <FormLabel>Descripción del producto</FormLabel>
+          <FormControl as="textarea" rows={3} name="description" value={product.description} onChange={handleInputChange} placeholder="Introduce la descripción del producto" />
+        </FormGroup>
 
-        <Form.Group controlId="productImage">
-          <Form.Label>Imagen del producto</Form.Label>
+        <FormGroup controlId="productPrice">
+          <FormLabel>Precio del producto</FormLabel>
+          <InputGroup>
+            <FormControl
+              type="number"
+              name="price"
+              value={product.price}
+              onChange={handleInputChange}
+              placeholder="Introduce el precio del producto"
+              aria-label="Precio del producto"
+            />
+            <InputGroup.Text>€</InputGroup.Text>
+          </InputGroup>
+        </FormGroup>
+
+        <FormGroup controlId="productImage">
+          <FormLabel>Imagen del producto</FormLabel>
           {product.imagePreviewUrl && <img src={product.imagePreviewUrl} alt="Vista previa de la imagen" style={{ maxWidth: '100%', maxHeight: '150px', margin: '30px' }} />}
-          <Form.Control type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
-        </Form.Group>
-        <Modal.Footer>
+          <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen del producto" />
+        </FormGroup>
+        <ModalFooter>
           <Button variant="secondary" onClick={handleClose}>
             Cerrar
           </Button>
           <Button variant="warning" type="submit">
             Guardar cambios
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Form>
     </>
   );

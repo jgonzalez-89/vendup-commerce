@@ -27,7 +27,7 @@ function Login() {
 
     if (response.access_token) {
       setShow(false);
-      Cookies.set('access_token', response.access_token, { expires: 7 });
+      Cookies.set('access_token', response.access_token);
       navigate('/user');
     } else {
       setErrorMessage('Email o contraseña incorrectos');
@@ -36,8 +36,6 @@ function Login() {
 
   const handleCloseView = () => {
     setShow(false);
-    // setShowForgotpassModal(true);
-    // console.log('working');
   };
 
   return (
@@ -54,19 +52,9 @@ function Login() {
           <Form>
             <Form.Group className="mb-3 p-1">
               <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               <Form.Label className="pt-2">Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <Form.Control type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
           </Form>
           {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}

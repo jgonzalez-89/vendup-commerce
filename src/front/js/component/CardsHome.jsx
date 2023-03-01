@@ -23,9 +23,6 @@ function CardsHome() {
 
   const handler = new HttpHandler();
 
-  console.log(data)
-
-
   useEffect(() => {
     setPage(1);
   }, [category]);
@@ -47,13 +44,11 @@ function CardsHome() {
 
   if (data.product) {
     const premiumItems = data.product.filter(
-      (item) => item.premium && (category === '' || item.category === category) &&
-        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
+      (item) => item.premium && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
     );
 
     const nonPremiumItems = data.product.filter(
-      (item) => !item.premium && (category === '' || item.category === category) &&
-        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
+      (item) => !item.premium && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
     );
 
     filteredItems = premiumItems.concat(nonPremiumItems);
@@ -85,10 +80,7 @@ function CardsHome() {
               {categoryItem.label}
             </button>
           ))}
-          <button
-            className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`}
-            onClick={() => setCategory('')}
-          >
+          <button className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`} onClick={() => setCategory('')}>
             Mostrar Todos
           </button>
         </div>
@@ -115,18 +107,16 @@ function CardsHome() {
         {filteredItems.length > itemsPerPage && (
           <>
             <div className="d-flex justify-content-center">
-              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map(
-                (pageNum) => (
-                  <button
-                    style={{ marginBottom: '6rem' }}
-                    key={pageNum}
-                    className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
-                    onClick={() => setPage(pageNum)}
-                  >
-                    {pageNum}
-                  </button>
-                )
-              )}
+              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  style={{ marginBottom: '6rem' }}
+                  key={pageNum}
+                  className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
+                  onClick={() => setPage(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
             </div>
           </>
         )}

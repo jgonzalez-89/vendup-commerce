@@ -10,15 +10,13 @@ const Footer = ({ NavHome, NavUser, NavProducts }) => (
         {NavUser && <Nav.Link href={NavUser}>Usuario</Nav.Link>}
         {NavProducts && <Nav.Link href={NavProducts}>Productos</Nav.Link>}
       </Nav>
-      <Nav className="ms-auto">
-      </Nav>
+      <Nav className="ms-auto"></Nav>
       <img src={logo} width="100" role="img" aria-label="Vendup" />
     </Container>
   </Container>
 );
 
 export default Footer;
-
 
 {
   /* <div className="container-fluid p-3 bg-dark text-bg-dark">

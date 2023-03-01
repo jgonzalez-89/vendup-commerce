@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect } from 'react-bootstrap';
+import { Container, Form, FormGroup, FormLabel, FormControl, Button, FormSelect, InputGroup } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import { CloudinaryImage } from '@cloudinary/url-gen';
 import { categories } from '../../../../data';
@@ -18,8 +18,8 @@ const ProductoComponent = ({ userId }) => {
     description: '',
     category: '',
     price: '',
-    images: '', 
-    imagePreviewUrl: '', 
+    images: '',
+    imagePreviewUrl: '',
   });
   const httpHandler = new HttpHandler();
 
@@ -98,8 +98,6 @@ const ProductoComponent = ({ userId }) => {
     reader.readAsDataURL(file);
   };
 
-  console.log(product);
-
   return (
     <>
       <div>
@@ -126,13 +124,35 @@ const ProductoComponent = ({ userId }) => {
 
           <FormGroup controlId="productDescription" className="mt-3">
             <FormLabel>Descripción del producto</FormLabel>
-            <FormControl as="textarea" rows={3} name="description" value={product.description} onChange={handleInputChange} placeholder="Introduce la descripción del producto" required />
+            <FormControl
+              as="textarea"
+              rows={3}
+              name="description"
+              value={product.description}
+              onChange={handleInputChange}
+              placeholder="Introduce la descripción del producto"
+              required
+            />
           </FormGroup>
 
           <FormGroup controlId="productPrice" className="mt-3">
             <FormLabel>Precio del producto</FormLabel>
-            <FormControl type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" required />
+            <InputGroup>
+              <FormControl
+                type="number"
+                name="price"
+                value={product.price}
+                onChange={handleInputChange}
+                placeholder="Introduce el precio del producto"
+                aria-label="Precio del producto"
+              />
+              <InputGroup.Text>€</InputGroup.Text>
+            </InputGroup>
           </FormGroup>
+          {/* <FormGroup controlId="productPrice" className="mt-3">
+            <FormLabel>Precio del producto</FormLabel>
+            <FormControl type="number" name="price" value={product.price} onChange={handleInputChange} placeholder="Introduce el precio del producto" required />
+          </FormGroup> */}
 
           <FormGroup controlId="productImage" className="mt-3">
             <FormLabel>Imagen del producto</FormLabel>

@@ -20,14 +20,15 @@ const Userpage = () => {
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
 
-  const logout = () => {
-      Cookies.remove('access_token')
-  }
+  const Logout = () => {
+    try {
+      Cookies.remove('access_token');
+      window.location.href = '/'; // redirect to home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
-  // console.log(token)
-
-
-  // IMPLEMENTAR MENSAJE DE ERROR SI NO ESTA EL TOKEN!!!
   useEffect(() => {
     async function getUser() {
       const { user } = await handler.getUserById(userId);
@@ -38,7 +39,6 @@ const Userpage = () => {
     }
     getUser();
   }, []);
-
 
   const handleButtonClick = (buttonName) => {
     setSelectedButton(buttonName);
@@ -68,7 +68,7 @@ const Userpage = () => {
 
   return (
     <>
-      <Header NavProducts={'/products'} NavLogOut={'/'} onClickLogOut={logout} />
+      <Header NavProducts={'/products'} NavLogOut={'/'} onClickLogOut={Logout} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
@@ -93,40 +93,20 @@ const Userpage = () => {
               <div className="">
                 <ul className="nav nav-pills flex-column mb-auto">
                   <li className="nav-item">
-                    <ButtonUser
-                      text="Tus Compras"
-                      selected={selectedButton === 'Compras'}
-                      handleClick={() => handleButtonClick('Compras')}
-                    />
+                    <ButtonUser text="Tus Compras" selected={selectedButton === 'Compras'} handleClick={() => handleButtonClick('Compras')} />
                   </li>
                   <li className="nav-item">
-                    <ButtonUser
-                      text="Tus Ventas"
-                      selected={selectedButton === 'Ventas'}
-                      handleClick={() => handleButtonClick('Ventas')}
-                    />
+                    <ButtonUser text="Tus Ventas" selected={selectedButton === 'Ventas'} handleClick={() => handleButtonClick('Ventas')} />
                   </li>
                   <li className="nav-item">
-                    <ButtonUser
-                      text="Subir Producto"
-                      selected={selectedButton === 'Producto'}
-                      handleClick={() => handleButtonClick('Producto')}
-                    />
+                    <ButtonUser text="Subir Producto" selected={selectedButton === 'Producto'} handleClick={() => handleButtonClick('Producto')} />
                   </li>
 
                   <li className="nav-item">
-                    <ButtonUser
-                      text="Editar Perfil"
-                      selected={selectedButton === 'Ajustes'}
-                      handleClick={() => handleButtonClick('Ajustes')}
-                    />
+                    <ButtonUser text="Editar Perfil" selected={selectedButton === 'Ajustes'} handleClick={() => handleButtonClick('Ajustes')} />
                   </li>
                   <li className="nav-item">
-                    <ButtonUser
-                      text="Hazte Premium"
-                      selected={selectedButton === 'Premium'}
-                      handleClick={() => handleButtonClick('Premium')}
-                    />
+                    <ButtonUser text="Hazte Premium" selected={selectedButton === 'Premium'} handleClick={() => handleButtonClick('Premium')} />
                   </li>
                 </ul>
               </div>

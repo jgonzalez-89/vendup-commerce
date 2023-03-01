@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
-
 const CardFree = ({ image, title, description, price, onEditClick, item, actionButton, onBuyClick, onAlertClick }) => {
   const currentDate = new Date();
   const startDate = new Date(item.created_at_product);
@@ -43,9 +42,7 @@ const CardFree = ({ image, title, description, price, onEditClick, item, actionB
           </ListGroup>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between align-items-center">
-          <small className="text-muted">
-            {daysRemaining > 0 ? `${daysRemaining} días y ${hoursRemaining} horas restantes` : 'Venta Finalizada'}
-          </small>
+          <small className="text-muted">{daysRemaining > 0 ? `${daysRemaining} días y ${hoursRemaining} horas restantes` : 'Venta Finalizada'}</small>
           <div>
             {actionButton === 'Comprar' && (
               <Button variant="warning" onClick={onBuyClick} as={NavLink} to="/pay" className="d-grid" size="lg">

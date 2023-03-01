@@ -42,11 +42,7 @@ const CardPremium = ({ image, title, description, price, onEditClick, item, acti
           </ListGroup>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between align-items-center">
-          <small className="text-muted">
-            {daysRemainingPremium > 0
-              ? `${daysRemainingPremium} días y ${hoursRemainingPremium} horas restantes`
-              : 'Venta Finalizada'}
-          </small>
+          <small className="text-muted">{daysRemainingPremium > 0 ? `${daysRemainingPremium} días y ${hoursRemainingPremium} horas restantes` : 'Venta Finalizada'}</small>
           <div>
             {actionButton === 'Comprar' && (
               <Button variant="warning" onClick={onBuyClick} as={NavLink} to="/pay" className="d-grid" size="lg">

@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import '../../styles/home.css';
 import logo from '../../../../public/logowhite.png';
-import SearchPage from '../component/Search.jsx';
 import CardsHome from '../component/CardsHome.jsx';
 import Login from '../component/ModalLogin.jsx';
 import Register from '../component/ModalRegister.jsx';

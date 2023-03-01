@@ -25,11 +25,14 @@ const Stripe = (props) => {
     getUser();
   }, []);
 
-  console.log(userId);
-
   const manejarPago = async (token) => {
     try {
-      const data = await handler.postStripePayment({ stripeToken: token.id, monto: monto, owner_id: userId, product_id: props.store.selectedProduct.id });
+      const data = await handler.postStripePayment({
+        stripeToken: token.id,
+        monto: monto,
+        owner_id: userId,
+        product_id: props.store.selectedProduct.id,
+      });
       if (data.status === 'success') {
         const shoppingProductData = {
           owner_id: userId,

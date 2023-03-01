@@ -106,8 +106,6 @@ const AjustesComponent = ({ userId }) => {
     reader.readAsDataURL(file);
   };
 
-  console.log(userName);
-
   return (
     <>
       <div>
@@ -118,36 +116,19 @@ const AjustesComponent = ({ userId }) => {
           <Row className="mb-3">
             <FormGroup as={Col} md="4" controlId="validationCustom01">
               <FormLabel>Nombre</FormLabel>
-              <FormControl
-                required
-                type="text"
-                placeholder="Nombre"
-                value={userName.name || ''}
-                onChange={(e) => setUserName({ ...userName, name: e.target.value })}
-              />
+              <FormControl required type="text" placeholder="Nombre" value={userName.name || ''} onChange={(e) => setUserName({ ...userName, name: e.target.value })} />
               <FormControl.Feedback>Looks good!</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom02">
               <FormLabel>Apellidos</FormLabel>
-              <FormControl
-                required
-                type="text"
-                placeholder="Apellidos"
-                value={userName.surnames || ''}
-                onChange={(e) => setUserName({ ...userName, surnames: e.target.value })}
-              />
+              <FormControl required type="text" placeholder="Apellidos" value={userName.surnames || ''} onChange={(e) => setUserName({ ...userName, surnames: e.target.value })} />
               <FormControl.Feedback>Looks good!</FormControl.Feedback>
             </FormGroup>
 
             <FormGroup as={Col} md="4" controlId="validationCustom03">
               <FormLabel>Fecha de nacimiento</FormLabel>
-              <FormControl
-                type="date"
-                placeholder="Fecha de nacimiento"
-                value={userName.dob_date || ''}
-                onChange={(e) => setUserName({ ...userName, dob_date: e.target.value })}
-              />
+              <FormControl type="date" placeholder="Fecha de nacimiento" value={userName.dob_date || ''} onChange={(e) => setUserName({ ...userName, dob_date: e.target.value })} />
               <FormControl.Feedback>¡Se ve bien!</FormControl.Feedback>
             </FormGroup>
           </Row>
@@ -155,12 +136,7 @@ const AjustesComponent = ({ userId }) => {
           <Row className="mb-3">
             <FormGroup as={Col} md="4" controlId="validationCustom04">
               <FormLabel>Teléfono</FormLabel>
-              <FormControl
-                type="tel"
-                placeholder="Teléfono"
-                value={userName.phone || ''}
-                onChange={(e) => setUserName({ ...userName, phone: e.target.value })}
-              />
+              <FormControl type="tel" placeholder="Teléfono" value={userName.phone || ''} onChange={(e) => setUserName({ ...userName, phone: e.target.value })} />
               <FormControl.Feedback>¡Se ve bien!</FormControl.Feedback>
             </FormGroup>
 
@@ -212,9 +188,7 @@ const AjustesComponent = ({ userId }) => {
                 required
                 onChange={(e) => setUserName({ ...userName, location_postcode: e.target.value })}
               />
-              <FormControl.Feedback type="invalid">
-                Por favor, proporciona un código postal válido.
-              </FormControl.Feedback>
+              <FormControl.Feedback type="invalid">Por favor, proporciona un código postal válido.</FormControl.Feedback>
             </FormGroup>
           </Row>
 
@@ -235,12 +209,7 @@ const AjustesComponent = ({ userId }) => {
                 }}
               />
             )}
-            <FormControl
-              type="file"
-              name="image"
-              onChange={handleInputChange}
-              placeholder="Selecciona una imagen de perfil"
-            />
+            <FormControl type="file" name="image" onChange={handleInputChange} placeholder="Selecciona una imagen de perfil" />
           </FormGroup>
 
           <FormGroup className="mb-3 m-4">

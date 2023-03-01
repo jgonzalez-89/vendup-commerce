@@ -10,7 +10,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from flask_bcrypt import Bcrypt
-
+from datetime import timedelta
 
 
 ENV = os.getenv("FLASK_DEBUG")
@@ -79,7 +79,8 @@ def register():
     db.session.commit()
 
     # Generar el token de acceso
-    access_token = create_access_token(identity=new_user.id)
+    access_token = create_access_token(
+        identity=new_user.id, expires_delta=timedelta(minutes=1))
 
     return jsonify({
         "message": "Registered successfully",
@@ -103,7 +104,8 @@ def login():
         return jsonify({"message": "Invalid email or password", "status": 401})
 
     # Generar el token de acceso
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(
+        identity=user.id, expires_delta=timedelta(minutes=1))
 
     return jsonify({
         "message": "Logged in successfully",

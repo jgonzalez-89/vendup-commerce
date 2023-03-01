@@ -7,8 +7,12 @@ import SearchPage from '../component/Search.jsx';
 import Header from '../component/NavbarUser.jsx';
 import CardFree from '../component/CardFree.jsx';
 import CardPremium from '../component/CardPremium.jsx';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const ProductView = () => {
+  const token = Cookies.get('access_token');
+  const decoded = jwt_decode(token);
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;
 
@@ -39,11 +43,7 @@ const ProductView = () => {
   };
 
   const filteredItems = data.product
-    ? data.product.filter(
-        (item) =>
-          (category === '' || item.category === category) &&
-          (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
-      )
+    ? data.product.filter((item) => (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())))
     : [];
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -54,9 +54,18 @@ const ProductView = () => {
     actions.setSelectedProduct(item);
   };
 
+  const Logout = () => {
+    try {
+      Cookies.remove('access_token');
+      window.location.href = '/'; // redirect to home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <>
-      <Header NavUser={'/user'} />
+      <Header NavUser={'/user'} NavLogOut={'/'} onClickLogOut={Logout} />
 
       <div className="container">
         <h1 className="text-center my-5">Aquí podrás ver y seleccionar los productos por categorías</h1>
@@ -71,10 +80,7 @@ const ProductView = () => {
               {categoryItem.label}
             </button>
           ))}
-          <button
-            className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`}
-            onClick={() => setCategory('')}
-          >
+          <button className={`btn mx-1 ${category === '' ? 'btn-warning' : 'btn-outline-warning'}`} onClick={() => setCategory('')}>
             Mostrar Todos
           </button>
         </div>
@@ -101,18 +107,16 @@ const ProductView = () => {
         {filteredItems.length > itemsPerPage && (
           <>
             <div className="d-flex justify-content-center">
-              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map(
-                (pageNum) => (
-                  <button
-                    style={{ marginBottom: '6rem' }}
-                    key={pageNum}
-                    className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
-                    onClick={() => setPage(pageNum)}
-                  >
-                    {pageNum}
-                  </button>
-                )
-              )}
+              {Array.from({ length: Math.ceil(filteredItems.length / itemsPerPage) }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  style={{ marginBottom: '6rem' }}
+                  key={pageNum}
+                  className={`btn ${pageNum === page ? 'btn-warning' : 'btn-outline-warning'} mx-1`}
+                  onClick={() => setPage(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
             </div>
           </>
         )}

@@ -30,7 +30,7 @@ function Register() {
 
     if (response && response.access_token) {
       setShow(false);
-      Cookies.set('access_token', response.access_token, { expires: 7 });
+      Cookies.set('access_token', response.access_token);
       navigate('/user');
     } else {
       setErrorMessage('Email o contraseña incorrectos');
@@ -48,23 +48,13 @@ function Register() {
           <Modal.Title>Bienvenido!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form>
+          <Form>
             <Form.Group className="mb-3 p-1">
               <Form.Label>Dirección de correo electrónico</Form.Label>
               <Form.Control type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <Form.Label className="pt-2">Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <Form.Check
-                className="mt-3"
-                type="checkbox"
-                label="He leído y acepto los términos y condiciones"
-                onChange={(e) => setAcceptedTerms(e.target.checked)}
-              />
+              <Form.Control type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Form.Check className="mt-3" type="checkbox" label="He leído y acepto los términos y condiciones" onChange={(e) => setAcceptedTerms(e.target.checked)} />
             </Form.Group>
           </Form>
           {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}
