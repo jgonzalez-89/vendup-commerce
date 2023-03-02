@@ -109,7 +109,7 @@ export function HttpHandler() {
 
   async function register(email, password) {
     try {
-      console.log('Enviando datos al backend:', email, password);
+      // console.log('Enviando datos al backend:', email, password);
       const response = await fetch(urlRegister, {
         method: 'POST',
         body: JSON.stringify({
@@ -148,7 +148,7 @@ export function HttpHandler() {
 
   async function login(email, password) {
     try {
-      console.log('Enviando datos al backend:', email, password);
+      // console.log('Enviando datos al backend:', email, password);
       const response = await fetch(urlLogin, {
         method: 'POST',
         body: JSON.stringify({

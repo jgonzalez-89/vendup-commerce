@@ -25,13 +25,13 @@ const ProductView = () => {
 
   const handler = new HttpHandler();
 
-  const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutes in milliseconds
-  const currentTime = Date.now();
+  // const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutos
+  // const currentTime = Date.now();
 
-  if (currentTime > expirationTime) {
-    Cookies.remove('access_token');
-    window.location.href = '/';
-  }
+  // if (currentTime > expirationTime) {
+  //   Cookies.remove('access_token');
+  //   window.location.href = '/';
+  // }
 
   useEffect(() => {
     setPage(1);
