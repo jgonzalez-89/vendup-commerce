@@ -6,6 +6,7 @@ import logo from '../../../../public/logowhite.png';
 import CardsHome from '../component/CardsHome.jsx';
 import Login from '../component/ModalLogin.jsx';
 import Register from '../component/ModalRegister.jsx';
+import LogoVendup from '../../../../public/vendup.png'
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
       <Navbar bg="dark" variant="dark" style={{ minHeight: '50px', top: '0' }}>
         <Container>
           <Navbar.Brand href="/">
-            <img src={logo} width="100" role="img" aria-label="Vendup" />
+            <img src={LogoVendup} width="100" role="img" aria-label="Vendup" />
           </Navbar.Brand>
           <Nav className="ms-auto">
             <Login className="me-2" onClose={() => setShowLoginModal(false)} />
