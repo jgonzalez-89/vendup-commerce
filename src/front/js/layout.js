@@ -29,10 +29,9 @@ const Layout = () => {
           <Route element={<Terms />} path="/terms" />
           <Route element={<FAQs />} path="/FAQs" />
           <Route element={<Team />} path="/team" />
-
-          <Route element={ <Error404 />} path="*"/>
+          <Route element={<Error404 />} path="*" />
         </Routes>{' '}
-        <Footer />
+        {/* <Footer /> */}{' '}
       </BrowserRouter>{' '}
     </>
   );

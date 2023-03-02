@@ -82,7 +82,7 @@ const ProductView = () => {
           {categories.map((categoryItem) => (
             <button
               key={categoryItem.value}
-              className={`btn btn-outline-warning mx-1 ${category === categoryItem.value ? 'active' : ''}`}
+              className={`btn btn-outline-warning mx-1 m-1${category === categoryItem.value ? 'active' : ''}`}
               onClick={() => setCategory(categoryItem.value)}
             >
               {categoryItem.label}
@@ -129,6 +129,7 @@ const ProductView = () => {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 };

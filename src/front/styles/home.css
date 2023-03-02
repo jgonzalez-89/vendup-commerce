@@ -1,4 +1,4 @@
-/*
+/* /*
     home.css: This website contains selectors only used in home.css
 
     All pages share the styles on index.css but you should create 
@@ -7,6 +7,5 @@
 */
 
 .mb-6 {
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
 }
-

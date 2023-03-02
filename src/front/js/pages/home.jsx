@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 // import { Context } from '../store/appContext';
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
 import '../../styles/home.css';
-import logo from '../../../../public/logowhite.png';
 import CardsHome from '../component/CardsHome.jsx';
 import Login from '../component/ModalLogin.jsx';
 import Register from '../component/ModalRegister.jsx';
-import LogoVendup from '../../../../public/vendup.png'
+import LogoVendup from '../../../../public/vendup.png';
+import Footer from '../component/Footer.jsx';
 
 const Home = () => {
   return (
@@ -30,6 +30,7 @@ const Home = () => {
           <CardsHome />
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -79,7 +79,7 @@ const Userpage = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
-            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3">
+            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3 sticky-top">
               <div>
                 <img
                   src={userName.profile_picture}
@@ -98,7 +98,7 @@ const Userpage = () => {
               </div>
               <hr />
               <div className="">
-                <ul className="nav nav-pills flex-column mb-auto">
+                <ul className="nav nav-pills flex-column mb-auto ">
                   <li className="nav-item">
                     <ButtonUser text="Tus Compras" selected={selectedButton === 'Compras'} handleClick={() => handleButtonClick('Compras')} />
                   </li>
@@ -120,7 +120,7 @@ const Userpage = () => {
               <hr />
             </div>
           </div>
-          <div className="col-lg-9 col-md-8 col-sm-12" style={{}}>
+          <div className="col-lg-9 col-md-8 col-sm-12 " style={{}}>
             <div className="container">{renderComponent}</div>
           </div>
         </div>

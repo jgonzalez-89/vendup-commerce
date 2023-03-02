@@ -1,22 +1,8 @@
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
- .container{
+.container {
     transform-style: preserve-3d;
 }
 
-.container .box{
+.container .box {
     position: relative;
     width: 300px;
     height: 300px;
@@ -26,7 +12,7 @@ body{
     cursor: pointer;
 }
 
-.container .box .body{
+.container .box .body {
     position: absolute;
     top: 0;
     left: 0;
@@ -36,9 +22,7 @@ body{
     transition: 0.9s ease;
 }
 
-
-
-.container .box .body .imgContainer{
+.container .box .body .imgContainer {
     position: absolute;
     top: 0;
     left: 0;
@@ -47,7 +31,7 @@ body{
     transform-style: preserve-3d;
 }
 
-.container .box .body .imgContainer img{
+.container .box .body .imgContainer img {
     position: absolute;
     top: 0;
     left: 0;
@@ -56,7 +40,7 @@ body{
     object-fit: cover;
 }
 
-.container .box .body .content{
+.container .box .body .content {
     position: absolute;
     top: 0;
     left: 0;
@@ -68,17 +52,17 @@ body{
     transform: rotateY(180deg);
 }
 
-.container .box:hover .body{
+.container .box:hover .body {
     transform: rotateY(180deg);
 }
 
-.container .box .body .content div{
+.container .box .body .content div {
     transform-style: preserve-3d;
     padding: 20px;
     background: #212529;
     transform: translateZ(100px);
 }
 
-.container .box .body .content div h3{
+.container .box .body .content div h3 {
     letter-spacing: 1px;
-} */
+}
