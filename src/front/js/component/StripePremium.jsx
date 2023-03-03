@@ -4,16 +4,18 @@ import StripeCheckout from 'react-stripe-checkout';
 import { HttpHandler } from '../../../http/handler.js';
 
 const Stripepremium = ({ userId }) => {
-  const [buyerUser, setBuyerUser] = useState(null);
-  const [monto, setMonto] = useState(3.99);
+  const [buyerUser, setBuyerUser] = useState("");
+  const [monto, setMonto] = useState('');
   const handler = new HttpHandler();
 
-  console.log(buyerUser);
+  console.log(buyerUser.products)
 
   useEffect(() => {
     async function getUser() {
       const { user } = await handler.getUserById(userId);
       setBuyerUser(user);
+      setMonto(user.products.length)
+      console.log(user)
     }
     getUser();
   }, []);
@@ -24,14 +26,13 @@ const Stripepremium = ({ userId }) => {
         stripeToken: token.id,
         monto: monto,
         owner_id: userId,
-        product_id: props.store.selectedProduct.id,
+        product_id: buyerUser.products.id,
       });
       if (data.status === 'success') {
-        const updatedProduct = { ...props.store.selectedProduct, premium: true };
-        if (buyerUser && buyerUser.products) {
-          updatedProduct.premium = true;
-        }
-        await handler.putProductById(updatedProduct.id, updatedProduct);
+        const updatedProducts = buyerUser.products.map((product) => {
+          return { ...product, premium: true };
+        });
+        await handler.putProductsById(buyerUser.id, updatedProducts);
         alert('El pago se ha procesado correctamente. Será redirigido a la página de usuario.');
         window.location = '/user';
       } else {
@@ -52,9 +53,9 @@ const Stripepremium = ({ userId }) => {
       <StripeCheckout
         stripeKey={process.env.STRIPE_KEY}
         token={manejarPago}
-        amount={monto * 100}
+        amount={(monto * 100)* 0.99}
         name={buyerUser.name}
-        description={buyerUser.products[0].name}
+        description={"Usuario Premium"}
         currency="EUR"
         email={buyerUser.email}
         image={buyerUser.profile_picture}
@@ -63,7 +64,7 @@ const Stripepremium = ({ userId }) => {
         locale="es"
         allowRememberMe={true}
       >
-        <Button variant="warning">Pagar</Button>
+        <Button className="w-100 d-grid" variant="warning" size="lg">Pagar</Button>
       </StripeCheckout>
     </div>
   );

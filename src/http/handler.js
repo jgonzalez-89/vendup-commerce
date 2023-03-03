@@ -91,11 +91,17 @@ export function HttpHandler() {
   }
 
   async function putProductById(id, payload) {
-    const response = await fetch(`${urlProduct}/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: contentType,
-    });
+    try {
+      const response = await fetch(`${urlProduct}/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: contentType,
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async function deleteProductById(id) {
