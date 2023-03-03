@@ -32,7 +32,7 @@ const Layout = () => {
 
           <Route element={ <Error404 />} path="*"/>
         </Routes>{' '}
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>{' '}
     </>
   );
