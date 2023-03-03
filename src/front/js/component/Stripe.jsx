@@ -14,6 +14,8 @@ const Stripe = (props) => {
   const handler = new HttpHandler();
   const data = props.store.selectedProduct;
 
+  // console.log('Desde data:', data);
+
   useEffect(() => {
     // debugger;
     async function getUser() {
@@ -37,7 +39,7 @@ const Stripe = (props) => {
         const shoppingProductData = {
           owner_id: userId,
           product_id: props.store.selectedProduct.id,
-          status_shopping: 'active',
+          status_shopping: true,
           created_at_shopping: new Date(),
           updated_at_shopping: new Date(),
           price: monto,
@@ -47,6 +49,8 @@ const Stripe = (props) => {
           commission: 0.1,
         };
         await handler.postShoppingProduct(shoppingProductData);
+        const updatedProduct = { ...props.store.selectedProduct, status_shooping: false };
+        await handler.putProductById(updatedProduct.id, updatedProduct);
         alert('El pago se ha procesado correctamente. Será redirigido a la página de usuario.');
         window.location = '/user';
       } else {

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2bf4bf876131
+Revision ID: 117d9d68ba52
 Revises: 
-Create Date: 2023-02-27 18:53:13.350009
+Create Date: 2023-03-03 15:11:55.096872
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2bf4bf876131'
+revision = '117d9d68ba52'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,7 @@ def upgrade():
     sa.Column('surnames', sa.String(length=100), nullable=True),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('is_premium', sa.Boolean(), nullable=True),
-    sa.Column('password', sa.String(length=200), nullable=False),
+    sa.Column('password', sa.String(length=200), nullable=True),
     sa.Column('hash', sa.Text(), nullable=True),
     sa.Column('location_city', sa.String(length=50), nullable=True),
     sa.Column('location_state', sa.String(length=50), nullable=True),
@@ -44,10 +44,10 @@ def upgrade():
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('premium', sa.Boolean(), nullable=True),
     sa.Column('category', sa.String(), nullable=True),
-    sa.Column('price', sa.Numeric(precision=7, scale=2), nullable=True),
+    sa.Column('price', sa.Numeric(precision=8, scale=2), nullable=True),
     sa.Column('images', sa.String(), nullable=True),
     sa.Column('created_at_product', sa.DateTime(), nullable=True),
-    sa.Column('status_shooping', sa.Enum('active', 'inactive', 'reserved', name='Product_enum_a2'), nullable=True),
+    sa.Column('status_shooping', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['owner_id'], ['User.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -55,11 +55,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('product_id', sa.Integer(), nullable=False),
-    sa.Column('status_shopping', sa.Enum('active', 'inactive', 'completed', name='Purchase_enum_a2'), nullable=True),
+    sa.Column('status_shopping', sa.Boolean(), nullable=True),
     sa.Column('created_at_shopping', sa.DateTime(), nullable=True),
     sa.Column('updated_at_shopping', sa.DateTime(), nullable=True),
-    sa.Column('price', sa.Numeric(), nullable=True),
-    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_a2'), nullable=True),
+    sa.Column('price', sa.Numeric(precision=8, scale=2), nullable=True),
+    sa.Column('status_paid', sa.Enum('paid', 'pending', 'refunded', name='status_paid_enum_a3'), nullable=True),
     sa.Column('paid_at', sa.DateTime(), nullable=True),
     sa.Column('purchase_method', sa.String(), nullable=True),
     sa.Column('commission', sa.Numeric(precision=6, scale=2), nullable=True),

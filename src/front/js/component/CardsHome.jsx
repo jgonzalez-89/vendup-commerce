@@ -43,15 +43,9 @@ function CardsHome() {
   let filteredItems = [];
 
   if (data.product) {
-    const premiumItems = data.product.filter(
-      (item) => item.premium && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
+    filteredItems = data.product.filter(
+      (item) => item.status_shooping && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
     );
-
-    const nonPremiumItems = data.product.filter(
-      (item) => !item.premium && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
-    );
-
-    filteredItems = premiumItems.concat(nonPremiumItems);
   }
 
   const startIndex = (page - 1) * itemsPerPage;

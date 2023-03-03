@@ -19,6 +19,8 @@ const ComprasComponent = ({ userId }) => {
     getUser();
   }, []);
 
+  console.log(userValue)
+
   return (
     <>
       {!userValue || !userValue.purchases ? (
@@ -36,15 +38,15 @@ const ComprasComponent = ({ userId }) => {
             ) : (
               userValue.purchases.map((item, index) => (
                 <div className="col-sm-4 my-1 mb-5" key={index}>
-                  <CardPremium button={'Comprar'} item={item} image={item.images} title={item.name} description={item.description} price={item.price} />
+                  {/* <CardPremium button={'Comprar'} item={item} image={item.images} title={item.name} description={item.description} price={item.price} /> */}
 
-                  {/* <Card>
-                    <Card.Header className="text-bg-primary border-warning bg-warning">
-                      <h4 className="my-0 fw-normal text-center">Item purchased</h4>
+                  <Card>
+                    <Card.Header className="text-bg-primary">
+                      <h4 className="my-0 fw-normal text-center">Articulo Comprado</h4>
                     </Card.Header>
                     <Card.Img
                       variant="top"
-                      src={producto.images}
+                      src={item.images}
                       style={{
                         height: '200px',
                         width: '100%',
@@ -52,7 +54,7 @@ const ComprasComponent = ({ userId }) => {
                       }}
                     />
                     <Card.Body>
-                      <Card.Title>{producto.name}</Card.Title>
+                      <Card.Title>{item.name}</Card.Title>
                       <Card.Text
                         style={{
                           height: '150px',
@@ -60,17 +62,17 @@ const ComprasComponent = ({ userId }) => {
                           overflow: 'hidden',
                         }}
                       >
-                        {producto.description}
+                        {item.description}
                       </Card.Text>
                       <ListGroup className="list-group-flush">
                         <hr />
-                        <ListGroup.Item>Precio: {producto.price} €</ListGroup.Item>
+                        <ListGroup.Item>Precio: {item.price} €</ListGroup.Item>
                       </ListGroup>
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between align-items-center">
                       <small className="text-muted">Aqui va algo, quizas cuando se compró!</small>
                     </Card.Footer>
-                  </Card> */}
+                  </Card>
                 </div>
               ))
             )}

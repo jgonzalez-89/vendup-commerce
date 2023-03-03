@@ -56,8 +56,8 @@ const Payment = () => {
     }
   };
 
-  console.log('Datos del vendedor:', sellerData.user);
-  console.log('Datos del producto:', productData);
+  // console.log('Datos del vendedor:', sellerData.user);
+  // console.log('Datos del producto:', productData);
 
   return (
 <>

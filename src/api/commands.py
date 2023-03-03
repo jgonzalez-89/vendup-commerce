@@ -126,7 +126,7 @@ def setup_commands(app):
             product.price = random_price()
             product.images = ":".join(http_url)
             product.created_at_product = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            product.status_shooping = "active"
+            product.status_shooping = True
             product.owner_id = random_user.id
             db.session.add(product)
             db.session.commit()

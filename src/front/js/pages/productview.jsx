@@ -51,8 +51,13 @@ const ProductView = () => {
   };
 
   const filteredItems = data.product
-    ? data.product.filter((item) => (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())))
-    : [];
+  ? data.product.filter(
+      (item) =>
+        (category === '' || item.category === category) &&
+        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())) &&
+        item.status_shooping === true // Condición para productos con status_shooping true
+    )
+  : [];
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
