@@ -129,7 +129,8 @@ def update_user(id):
     user.location_city = data.get("location_city", user.location_city)
     user.location_state = data.get("location_state", user.location_state)
     user.location_country = data.get("location_country", user.location_country)
-    user.location_postcode = data.get("location_postcode", user.location_postcode)
+    user.location_postcode = data.get(
+        "location_postcode", user.location_postcode)
     user.dob_date = data.get("dob_date", user.dob_date)
     user.registered_date = data.get("registered_date", user.registered_date)
     user.phone = data.get("phone", user.phone)
@@ -203,6 +204,7 @@ def update_product(id):
     product.description = data.get("description", product.description)
     product.category = data.get("category", product.category)
     product.price = data.get("price", product.price)
+    product.premium = data.get("premium", product.premium)
     product.images = data.get("images", product.images)
     product.created_at_product = data.get("created_at_product", product.created_at_product)
     product.status_shooping = data.get("status_shooping", product.status_shooping)
@@ -230,6 +232,7 @@ def get_all_purchases():
     purchases = Purchase.query.all()
     return jsonify({"purchases": [serialize_purchase(purchase) for purchase in purchases]})
 
+
 @api.route('/purchases/<int:id>', methods=['PUT'])
 def update_purchase(id):
     # Obtener el producto comprado por su ID
@@ -243,7 +246,8 @@ def update_purchase(id):
     data = request.get_json()
 
     # Actualizar el parámetro deseado del producto comprado
-    purchase.status_shopping = data.get('status_shopping', purchase.status_shopping)
+    purchase.status_shopping = data.get(
+        'status_shopping', purchase.status_shopping)
 
     # Guardar los cambios en la base de datos
     db.session.commit()
