@@ -36,12 +36,10 @@ def setup_commands(app):
                 location_country = data["results"][0]["location"]["country"]
                 location_postcode = data["results"][0]["location"]["postcode"]
                 dob_date = data["results"][0]["dob"]["date"]
-                dob_age = data["results"][0]["dob"]["age"]
                 registered_date = data["results"][0]["registered"]["date"]
                 phone = data["results"][0]["phone"]
-                picture_large = data["results"][0]["picture"]["large"]
-                picture_medium = data["results"][0]["picture"]["medium"]
-                picture_thumbnail = data["results"][0]["picture"]["thumbnail"]
+                profile_picture = data["results"][0]["picture"]["large"]
+
                 return (
                     name,
                     surnames,
@@ -52,12 +50,10 @@ def setup_commands(app):
                     location_country,
                     location_postcode,
                     dob_date,
-                    dob_age,
                     registered_date,
                     phone,
-                    picture_large,
-                    picture_medium,
-                    picture_thumbnail,
+                    profile_picture,
+
                 )
             else:
                 print("Error al llamar a la API: ", response.status_code)
@@ -76,31 +72,25 @@ def setup_commands(app):
                 location_country,
                 location_postcode,
                 dob_date,
-                dob_age,
                 registered_date,
                 phone,
-                picture_large,
-                picture_medium,
-                picture_thumbnail,
+                profile_picture,
             ) = generate_random_person()
 
             user.name = name
             user.surnames = surnames
             user.email = email
-            user.is_admin = False
+            user.is_premium = False
             user.password = password
             user.hash = bcrypt.generate_password_hash(password).decode("utf-8")
             user.location_city = location_city
             user.location_state = location_state
             user.location_country = location_country
             user.location_postcode = location_postcode
-            user.dob_age = dob_age
             user.dob_date = dob_date
             user.registered_date = registered_date
             user.phone = phone
-            user.picture_large = picture_large
-            user.picture_medium = picture_medium
-            user.picture_thumbnail = picture_thumbnail
+            user.profile_picture = profile_picture
 
             db.session.add(user)
             db.session.commit()
@@ -130,12 +120,13 @@ def setup_commands(app):
 
             product = Product()
             product.name = f"{product_name} {word}"
+            product.premium = False
             product.description = product_description
             product.category = category
             product.price = random_price()
             product.images = ":".join(http_url)
             product.created_at_product = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            product.status_shooping = "active"
+            product.status_shooping = True
             product.owner_id = random_user.id
             db.session.add(product)
             db.session.commit()

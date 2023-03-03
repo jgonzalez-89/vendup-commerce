@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, Form, Row, Col, Container } from 'react-bootstrap';
-import Forgotpass from './PasswordModal.jsx';
+import { HttpHandler } from '../../../http/handler.js';
+import Cookies from 'js-cookie';
 import '../../../../public/logoblack.png';
 import '../../styles/modals.css';
-import { HttpHandler } from '../../../http/handler.js';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -25,8 +25,9 @@ function Login() {
     const response = await handler.login(email, password);
     console.log(response);
 
-    if (response.status === 200) {
+    if (response.access_token) {
       setShow(false);
+      Cookies.set('access_token', response.access_token);
       navigate('/user');
     } else {
       setErrorMessage('Email o contraseña incorrectos');
@@ -35,34 +36,35 @@ function Login() {
 
   const handleCloseView = () => {
     setShow(false);
-    setShowForgotpassModal(true);
-    console.log('working');
   };
 
   return (
     <>
-      <Button variant="warning" onClick={handleShow}>
-        Login
+      <Button variant="warning" className="m-2" onClick={handleShow}>
+        Entrar
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Welcome Back!</Modal.Title>
+          <Modal.Title>Bienvenido de nuevo!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3 p-1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Form.Label className="pt-2">Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <Form.Label>Correo electrónico</Form.Label>
+              <Form.Control type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Form.Label className="pt-2">Contraseña</Form.Label>
+              <Form.Control type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
           </Form>
-          {errorMessage !== '' && <p className="text-danger">{errorMessage}</p>}
+          {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="warning" onClick={handleLogin}>
-            Login
+          <Button variant="warning w-50" onClick={handleLogin}>
+            Entrar
+          </Button>
+          <Button variant="secondary" onClick={handleCloseView}>
+            Cerrar
           </Button>
         </Modal.Footer>
       </Modal>

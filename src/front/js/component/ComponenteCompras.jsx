@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
+import empy from '../../../../public/empy2.jpg';
+import CardPremium from './CardPremium.jsx';
 
 const ComprasComponent = ({ userId }) => {
   const [userValue, setUserValue] = useState({});
@@ -17,25 +19,34 @@ const ComprasComponent = ({ userId }) => {
     getUser();
   }, []);
 
+  // console.log(userValue)
+
   return (
     <>
-      {!userValue || !userValue.shopping_products ? (
+      {!userValue || !userValue.purchases ? (
         <div>Cargando...</div>
       ) : (
         <div className="container">
           <div className="row">
-            <h1 className="text-center my-5">Estos son tus articulos Comprados</h1>
-            {userValue.shopping_products.length === 0 ? (
-              <div className="de-flex text-center">
-                <h1>Aún no has comprado nada</h1>
+            <h1 className="text-center my-5">{userValue.purchases && userValue.purchases.length > 0 ? 'Estos son tus articulos Comprados' : 'Aun no has comprado nada ...'}</h1>
+            {userValue.purchases.length === 0 ? (
+              <div className="d-flex justify-content-center">
+                <a href="/products">
+                  <img width={400} height={286} className="align-self-center mr-3" src={empy} alt="Mi imagen" style={{ borderRadius: '10%', boxShadow: '1px 2px 9px' }} />
+                </a>
               </div>
             ) : (
-              userValue.shopping_products.map((producto) => (
-                <div className="col-sm-4 my-1" key={producto.id}>
+              userValue.purchases.map((item, index) => (
+                <div className="col-sm-4 my-1 mb-5" key={index}>
+                  {/* <CardPremium button={'Comprar'} item={item} image={item.images} title={item.name} description={item.description} price={item.price} /> */}
+
                   <Card>
+                    <Card.Header className="text-bg-primary">
+                      <h4 className="my-0 fw-normal text-center">Articulo Comprado</h4>
+                    </Card.Header>
                     <Card.Img
                       variant="top"
-                      src={producto.images}
+                      src={item.images}
                       style={{
                         height: '200px',
                         width: '100%',
@@ -43,7 +54,7 @@ const ComprasComponent = ({ userId }) => {
                       }}
                     />
                     <Card.Body>
-                      <Card.Title>{producto.name}</Card.Title>
+                      <Card.Title>{item.name}</Card.Title>
                       <Card.Text
                         style={{
                           height: '150px',
@@ -51,35 +62,17 @@ const ComprasComponent = ({ userId }) => {
                           overflow: 'hidden',
                         }}
                       >
-                        {producto.description}
+                        {item.description}
                       </Card.Text>
                       <ListGroup className="list-group-flush">
                         <hr />
-                        <ListGroup.Item>Precio: {producto.price} €</ListGroup.Item>
+                        <ListGroup.Item>Precio: {item.price} €</ListGroup.Item>
                       </ListGroup>
                     </Card.Body>
                     <Card.Footer className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                        Aqui va algo, quizas cuando se compró!
-                        {/* {daysRemaining > 0
-                            ? `${daysRemaining} días y ${hoursRemaining} horas restantes`
-                            : "Venta Finalizada"} */}
-                      </small>
-                      {/* <Button variant="warning">Editar +</Button> */}
+                      <small className="text-muted">Aqui va algo, quizas cuando se compró!</small>
                     </Card.Footer>
                   </Card>
-                  {/* <Card style={{ width: "18rem", height: "100%" }}>
-                  <Card.Img
-                    variant="top"
-                    src={producto.images}
-                    style={{ height: "50%" }}
-                  />
-                  <Card.Body style={{ height: "50%" }}>
-                    <Card.Title>{producto.name}</Card.Title>
-                    <Card.Text>{producto.description}</Card.Text>
-                    <Card.Text>Precio: {producto.price} €</Card.Text>
-                  </Card.Body>
-                </Card> */}
                 </div>
               ))
             )}

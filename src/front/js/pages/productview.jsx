@@ -4,24 +4,39 @@ import { categories } from '../../../../data.js';
 import { useContext } from 'react';
 import { Context } from '../store/appContext.js';
 import SearchPage from '../component/Search.jsx';
+import Header from '../component/NavbarUser.jsx';
 import CardFree from '../component/CardFree.jsx';
 import CardPremium from '../component/CardPremium.jsx';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Login from '../component/ModalLogin.jsx';
-import Register from '../component/ModalRegister.jsx';
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
-function CardsHome() {
+const ProductView = () => {
+
+  const token = Cookies.get('access_token');
+  const decoded = jwt_decode(token);
+  const userId = decoded.sub;
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;
+
   const [itemsPerPage, setItemsPerPage] = useState(9);
+  const itemsPerPageOptions = [9, 15, 30];
   const [category, setCategory] = useState('');
   const [searchText, setSearchText] = useState('');
   const [data, setData] = useState({});
   const [page, setPage] = useState(1);
-  const [showModal, setShowModal] = useState(false); // estado para mostrar el modal
 
   const handler = new HttpHandler();
+
+  console.log(data)
+  console.log(userId)
+
+  // const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutos
+  // const currentTime = Date.now();
+
+  // if (currentTime > expirationTime) {
+  //   Cookies.remove('access_token');
+  //   window.location.href = '/';
+  // }
 
   useEffect(() => {
     setPage(1);
@@ -29,7 +44,7 @@ function CardsHome() {
 
   useEffect(() => {
     async function fetchData() {
-      const result = await handler.getProduct(); // eliminar el parámetro sort
+      const result = await handler.getProduct();
       setData(result);
     }
     fetchData();
@@ -40,29 +55,39 @@ function CardsHome() {
     setPage(1); // reset page number when new search is performed
   };
 
-  let filteredItems = [];
-
-  if (data.product) {
-    filteredItems = data.product.filter(
-      (item) => item.status_shooping && (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase()))
-    );
-  }
+  const filteredItems = data.product
+  ? data.product.filter(
+      (item) =>
+        (category === '' || item.category === category) &&
+        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())) &&
+        item.status_shooping === true && // Condición para productos con status_shooping true
+        item.owner_id !== userId // Agregar condición para que el userId no pueda comprar sus propios productos
+    )
+  : [];
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentPageItems = filteredItems.slice(startIndex, endIndex);
 
-  const handleClick = () => {
-    setShowModal(true); // actualizar el estado para mostrar el modal
+  const handleEditClick = (item) => {
+    actions.setSelectedProduct(item);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false); // actualizar el estado para cerrar el modal
+  const Logout = () => {
+    try {
+      Cookies.remove('access_token');
+      window.location.href = '/'; // redirect to home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
     <>
+      <Header NavUser={'/user'} NavLogOut={'/'} onClickLogOut={Logout} />
+
       <div className="container">
+        <h1 className="text-center my-5">Aquí podrás ver y seleccionar los productos por categorías</h1>
         <SearchPage onSearch={handleSearch} />
         <div className="my-3">
           {categories.map((categoryItem) => (
@@ -85,13 +110,13 @@ function CardsHome() {
             return (
               <div className="col-lg-4 col-md-6 col-12 my-1 mb-5" key={index}>
                 <Component
-                  actionButton={'Comprar+'}
+                  actionButton={'Comprar'}
                   item={item}
                   image={item.images}
                   title={item.name}
                   description={item.description}
                   price={item.price}
-                  onAlertClick={() => handleClick()}
+                  onBuyClick={() => handleEditClick(item)}
                 />
               </div>
             );
@@ -115,20 +140,8 @@ function CardsHome() {
           </>
         )}
       </div>
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Entra o registrate para poder comprar.</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <Login />
-          <Register />
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
-}
+};
 
-export default CardsHome;
+export default ProductView;

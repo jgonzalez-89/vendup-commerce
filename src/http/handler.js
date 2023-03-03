@@ -1,8 +1,19 @@
+import Cookies from 'js-cookie';
+
 export function HttpHandler() {
   const urlUser = process.env.BACKEND_URL + '/api/users';
   const urlProduct = process.env.BACKEND_URL + '/api/products';
   const urlLogin = process.env.BACKEND_URL + '/login';
   const urlRegister = process.env.BACKEND_URL + '/register';
+
+  function getToken() {
+    const access_token = Cookies.get('access_token');
+    if (access_token) {
+      return `Bearer ${access_token}`;
+    } else {
+      return '';
+    }
+  }
 
   const contentType = {
     'Content-Type': 'application/json',
@@ -80,11 +91,17 @@ export function HttpHandler() {
   }
 
   async function putProductById(id, payload) {
-    const response = await fetch(`${urlProduct}/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload),
-      headers: contentType,
-    });
+    try {
+      const response = await fetch(`${urlProduct}/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: contentType,
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async function deleteProductById(id) {
@@ -97,21 +114,47 @@ export function HttpHandler() {
   }
 
   async function register(email, password) {
-    const response = await fetch(urlRegister, {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: contentType,
-    });
+    try {
+      // console.log('Enviando datos al backend:', email, password);
+      const response = await fetch(urlRegister, {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: contentType,
+      });
 
-    return response.json();
+      const data = await response.json();
+      console.log('Respuesta del backend:', data);
+
+      if (response.ok) {
+        // Agregar el token de acceso a la cookie del cliente
+        Cookies.set('access_token', data.access_token, { expires: 1 });
+      }
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
+  // async function register(email, password) {
+  //   const response = await fetch(urlRegister, {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       email,
+  //       password,
+  //     }),
+  //     headers: contentType,
+  //   });
+
+  //   return response.json();
+  // }
 
   async function login(email, password) {
     try {
-      console.log('Enviando datos al backend:', email, password);
+      // console.log('Enviando datos al backend:', email, password);
       const response = await fetch(urlLogin, {
         method: 'POST',
         body: JSON.stringify({
@@ -123,11 +166,41 @@ export function HttpHandler() {
 
       const data = await response.json();
       console.log('Respuesta del backend:', data);
+
+      if (response.ok) {
+        // Agregar el token de acceso a la cookie del cliente
+        Cookies.set('access_token', data.access_token, { expires: 1 });
+      }
+
       return data;
     } catch (error) {
       console.error(error);
       return null;
     }
+  }
+
+  async function postStripePayment(payload) {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/stripe`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getToken(),
+      },
+    });
+    return await response.json();
+  }
+
+  async function postShoppingProduct(payload) {
+    const response = await fetch(`${process.env.BACKEND_URL}/api/purchases`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getToken(),
+      },
+    });
+    return await response.json();
   }
 
   return {
@@ -143,5 +216,7 @@ export function HttpHandler() {
     deleteProductById,
     login,
     register,
+    postStripePayment,
+    postShoppingProduct
   };
 }

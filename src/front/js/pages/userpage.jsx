@@ -1,31 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { HttpHandler } from '../../../http/handler';
-
+import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 import Header from '../component/NavbarUser.jsx';
-import ComprasComponent from '../component/ComprasComponent.jsx';
-import VentasComponent from '../component/VentasComponent.jsx';
-import ProductoComponent from '../component/ProductoComponent.jsx';
-import FavoritosComponent from '../component/FavoritosComponent.jsx';
-import BuzonComponent from '../component/BuzonComponent.jsx';
-import AjustesComponent from '../component/AjustesComponent.jsx';
-import PremiumComponent from '../component/PremiumComponent.jsx';
+import ComprasComponent from '../component/ComponenteCompras.jsx';
+import VentasComponent from '../component/ComponenteVentas.jsx';
+import ProductoComponent from '../component/ComponenteFormularioProducto.jsx';
+import AjustesComponent from '../component/ComponenteFormularioPerfil.jsx';
+import PremiumComponent from '../component/ComponentePremium.jsx';
 import ButtonUser from '../component/ButtonUser.jsx';
+import userProfilePicture from '../../../../public/perfil.jpg';
 
 const Userpage = () => {
-  const userId = 4; // Aquí se especifica el ID del usuario
-
-  const [userName, setUserName] = useState({});
+  const token = Cookies.get('access_token');
+  const decoded = jwt_decode(token);
+  const userId = decoded.sub;
+  const [userName, setUserName] = useState({ profile_picture: userProfilePicture });
   const handler = new HttpHandler();
   const [selectedButton, setSelectedButton] = useState('Compras');
 
+  // const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutos
+  // const currentTime = Date.now();
+
+  // if (currentTime > expirationTime) {
+  //   Cookies.remove('access_token');
+  //   window.location.href = '/';
+  // }
+
+  const Logout = () => {
+    try {
+      Cookies.remove('access_token');
+      window.location.href = '/'; // redirect to home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   useEffect(() => {
-    // debugger;
     async function getUser() {
       const { user } = await handler.getUserById(userId);
+      if (!user.profile_picture) {
+        user.profile_picture = userProfilePicture;
+      }
       setUserName(user);
-      // console.log(user);
     }
-
     getUser();
   }, []);
 
@@ -45,92 +63,64 @@ const Userpage = () => {
     case 'Producto':
       renderComponent = <ProductoComponent userId={userId} />;
       break;
-    case 'Favoritos':
-      renderComponent = <FavoritosComponent />;
-      break;
-    case 'Buzón':
-      renderComponent = <BuzonComponent />;
-      break;
     case 'Ajustes':
-      renderComponent = <AjustesComponent />;
+      renderComponent = <AjustesComponent userId={userId} />;
       break;
     case 'Premium':
-      renderComponent = <PremiumComponent />;
-      break;
-        case 'Premium':
-      renderComponent = <PremiumComponent />;
+      renderComponent = <PremiumComponent userId={userId}/>;
       break;
     default:
       renderComponent = <div>No se encontró componente.</div>;
   }
 
-  // const navbarHeight = 50;
   return (
     <>
-      <Header />
+      <Header NavProducts={'/products'} NavLogOut={'/'} onClickLogOut={Logout} />
       <div className="container-fluid">
         <div className="row">
-          <div
-            className="col-lg-3 col-md-4 col-sm-12"
-            // style={{height: "100vh"}}
-            // style={{ height: `calc(100vh - ${navbarHeight}px)` }}
-          >
-            <div className="d-flex flex-column flex-shrink-0 p-3 bg-light">
-              <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <div className="flex-column">
-                  <div className="row mx-auto">
-                    <img src={userName.pictures} alt="" className="rounded-circle" style={{ maxHeight: '80px', maxWidth: '80px' }} />
-                  </div>
-                  <div className="row fs-4 mx-auto p-3" style={{ color: 'black' }}>
-                    Bienvenido <br />
-                    {userName.name + ' ' + userName.surnames}
-                  </div>
-                </div>
+          <div className="col-lg-3 col-md-4 col-sm-12">
+            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3">
+              <div>
+                <img
+                  src={userName.profile_picture}
+                  alt=""
+                  style={{
+                    width: '150px',
+                    height: '150px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '2px solid #FEBD2F',
+                  }}
+                />
+              </div>
+              <div className="d-flex row fs-4 p-3 justify-content-center align-items-center" style={{ color: 'black' }}>
+                {userName.name && userName.surnames ? userName.name + ' ' + userName.surnames : 'Bienvenido!'}
               </div>
               <hr />
               <div className="">
                 <ul className="nav nav-pills flex-column mb-auto">
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Compras" selected={selectedButton === 'Compras'} handleClick={() => handleButtonClick('Compras')} />
-                    </div>
+                    <ButtonUser text="Tus Compras" selected={selectedButton === 'Compras'} handleClick={() => handleButtonClick('Compras')} />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Ventas" selected={selectedButton === 'Ventas'} handleClick={() => handleButtonClick('Ventas')} />
-                    </div>
+                    <ButtonUser text="Tus Ventas" selected={selectedButton === 'Ventas'} handleClick={() => handleButtonClick('Ventas')} />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Producto" selected={selectedButton === 'Producto'} handleClick={() => handleButtonClick('Producto')} />
-                    </div>
+                    <ButtonUser text="Subir Producto" selected={selectedButton === 'Producto'} handleClick={() => handleButtonClick('Producto')} />
+                  </li>
+
+                  <li className="nav-item">
+                    <ButtonUser text="Editar Perfil" selected={selectedButton === 'Ajustes'} handleClick={() => handleButtonClick('Ajustes')} />
                   </li>
                   <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Favoritos" selected={selectedButton === 'Favoritos'} handleClick={() => handleButtonClick('Favoritos')} />
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Buzón" selected={selectedButton === 'Buzón'} handleClick={() => handleButtonClick('Buzón')} />
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Ajustes" selected={selectedButton === 'Ajustes'} handleClick={() => handleButtonClick('Ajustes')} />
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <div className="d-flex justify-content-center">
-                      <ButtonUser text="Premium" selected={selectedButton === 'Premium'} handleClick={() => handleButtonClick('Premium')} />
-                    </div>
+                    <ButtonUser text="Hazte Premium" selected={selectedButton === 'Premium'} handleClick={() => handleButtonClick('Premium')} />
                   </li>
                 </ul>
               </div>
               <hr />
             </div>
           </div>
-          <div className="col-lg-9 col-md-8 col-sm-12" style={{ maxHeight: 'calc(100vh - 64px)', overflowY: 'auto' }}>
+          <div className="col-lg-9 col-md-8 col-sm-12" style={{}}>
             <div className="container">{renderComponent}</div>
           </div>
         </div>

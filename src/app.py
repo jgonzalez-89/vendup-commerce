@@ -10,8 +10,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from flask_bcrypt import Bcrypt
-
-# from models import Person
+from datetime import timedelta
 
 
 ENV = os.getenv("FLASK_DEBUG")
@@ -62,28 +61,31 @@ def handle_invalid_usage(error):
 
 # generate sitemap with all your endpoints
 
-
 @app.route("/register", methods=["POST"])
 def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    if not email:
-        return jsonify({"message": "Missing email", "status": 400})
-    if not password:
-        return jsonify({"message": "Missing password", "status": 400})
+    if not email or not password:
+        return jsonify({"message": "Missing email or password", "status": 400})
 
-    user = User.query.filter_by(email=email).first()
-    if user:
-        return jsonify({"message": "Email already exists", "status": 400})
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"message": "Email already registered", "status": 400})
 
-    hashed = bcrypt.generate_password_hash(password).decode("utf-8")
-    user = User(email=email, hash=hashed)
-
-    db.session.add(user)
+    hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
+    new_user = User(email=email, hash=hashed_password)
+    db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({"message": f"Welcome! {email}", "status": 200})
+    # Generar el token de acceso
+    access_token = create_access_token(
+        identity=new_user.id, expires_delta=timedelta(minutes=30))
+
+    return jsonify({
+        "message": "Registered successfully",
+        "access_token": access_token
+    })
 
 
 @app.route("/login", methods=["POST"])
@@ -91,19 +93,24 @@ def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    if not email:
-        return jsonify({"message": "Missing email", "status": 400})
-    if not password:
-        return jsonify({"message": "Missing password", "status": 400})
+    if not email or not password:
+        return jsonify({"message": "Missing email or password", "status": 400})
 
     user = User.query.filter_by(email=email).first()
     if not user:
-        return jsonify({"message": "User Not Found!", "status": 404})
+        return jsonify({"message": "User not found", "status": 404})
 
-    if bcrypt.check_password_hash(user.hash, password):
-        return jsonify({"message": f"Logged in, Welcome {email}!", "status": 200})
-    else:
-        return jsonify({"message": "Invalid Login Info!", "status": 400})
+    if not bcrypt.check_password_hash(user.hash, password):
+        return jsonify({"message": "Invalid email or password", "status": 401})
+
+    # Generar el token de acceso
+    access_token = create_access_token(
+        identity=user.id, expires_delta=timedelta(minutes=30))
+
+    return jsonify({
+        "message": "Logged in successfully",
+        "access_token": access_token
+    })
 
 
 @app.route("/")
@@ -111,9 +118,6 @@ def sitemap():
     if ENV == "1":
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, "index.html")
-
-
-# any other endpoint will try to serve it like a static file
 
 
 @app.route("/<path:path>", methods=["GET"])

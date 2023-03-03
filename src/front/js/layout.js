@@ -7,6 +7,9 @@ import Terms from './component/Terms.jsx';
 import Team from './component/Team.jsx';
 import FAQs from './component/FAQS.jsx';
 import Userpage from './pages/userpage.jsx';
+import ProductView from './pages/productview.jsx';
+import Payment from './pages/payment.jsx';
+import Error404 from './pages/error404.jsx';
 
 //create your first component
 const Layout = () => {
@@ -19,15 +22,17 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<Home />} path="/" />
+          <Route element={<ProductView />} path="/products" />
+          <Route element={<Payment />} path="/pay" />
           <Route element={<Userpage />} path="/user" />
           <Route element={<Home />} path="/home" />
           <Route element={<Terms />} path="/terms" />
           <Route element={<FAQs />} path="/FAQs" />
           <Route element={<Team />} path="/team" />
 
-          <Route element={<h1> Not found! </h1>} />
+          <Route element={ <Error404 />} path="*"/>
         </Routes>{' '}
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>{' '}
     </>
   );
