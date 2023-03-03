@@ -52,19 +52,56 @@ const VentasComponent = ({ userId }) => {
               userValue.products.map((item, index) => {
                 const Component = item.premium ? CardPremium : CardFree;
 
-                return (
-                  <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
-                    <Component
-                      actionButton={'Editar'}
-                      item={item}
-                      image={item.images}
-                      title={item.name}
-                      description={item.description}
-                      price={item.price}
-                      onEditClick={() => handleEditClick(item)}
-                    />
-                  </div>
-                );
+                if (item.status_shooping === true) {
+                  return (
+                    <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
+                      <Component
+                        actionButton={'Editar'}
+                        item={item}
+                        image={item.images}
+                        title={item.name}
+                        description={item.description}
+                        price={item.price}
+                        onEditClick={() => handleEditClick(item)}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="col-lg-4 col-md-6 col-12 my-1" key={index}>
+                      <Card>
+                        <Card.Header className="bg-secondary bg-opacity-50 bg-danger">
+                          <h4 className="my-0 fw-normal text-center">Vendido</h4>
+                        </Card.Header>
+                        <Card.Img
+                          variant="top"
+                          src={item.images}
+                          style={{
+                            height: '200px',
+                            width: '100%',
+                            objectFit: 'cover',
+                          }}
+                        />
+                        <Card.Body>
+                          <Card.Title>{item.name}</Card.Title>
+                          <Card.Text
+                            style={{
+                              height: '150px',
+                              maxHeight: '150px',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {item.description}
+                          </Card.Text>
+                          <ListGroup className="list-group-flush">
+                            <hr />
+                            <ListGroup.Item>Precio: {item.price} €</ListGroup.Item>
+                          </ListGroup>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  );
+                }
               })
             )}
           </div>

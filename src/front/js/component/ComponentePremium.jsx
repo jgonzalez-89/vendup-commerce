@@ -1,7 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import Stripepremium from './StripePremium.jsx';
 
-const PremiumComponent = () => {
+const PremiumComponent = ({userId}) => {
+  // console.log(userId)
+
+
   return (
     <div>
       <header>
@@ -30,7 +34,7 @@ const PremiumComponent = () => {
                     </h1>
                   </Card.Title>
                   <ul className="list-unstyled mt-3 mb-4">
-                    <li>10 products included</li>
+                    <li>1 products included</li>
                     <li>Posted by 5 days</li>
                     <li>Email support</li>
                     <li>Help center access</li>
@@ -49,7 +53,7 @@ const PremiumComponent = () => {
                 <Card.Body>
                   <Card.Title className="pricing-card-title">
                     <h1>
-                      3€<small className="text-muted fw-light">/mo</small>
+                      3.99€<small className="text-muted fw-light">/mo</small>
                     </h1>
                   </Card.Title>
                   <ul className="list-unstyled mt-3 mb-4">
@@ -59,6 +63,7 @@ const PremiumComponent = () => {
                     <li>Phone and email support</li>
                     <li>Help center access</li>
                   </ul>
+                  <Stripepremium userId={userId}/>
                   <Button className="w-100 d-grid" variant="warning" size="lg">
                     Hire Premium
                   </Button>

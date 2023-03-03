@@ -19,7 +19,7 @@ const ComprasComponent = ({ userId }) => {
     getUser();
   }, []);
 
-  console.log(userValue)
+  // console.log(userValue)
 
   return (
     <>
