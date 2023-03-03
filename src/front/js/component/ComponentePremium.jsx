@@ -37,7 +37,7 @@ const Stripepremium = ({ userId, buyerUser, selectedProductId }) => {
           id: selectedProductId,
           category: product.category,
           created_at_product: product.created_at_product,
-          description: "me cago en todo",
+          description: 'me cago en todo',
           images: product.images,
           name: product.name,
           owner_id: product.owner_id,
@@ -45,7 +45,7 @@ const Stripepremium = ({ userId, buyerUser, selectedProductId }) => {
           price: product.price,
           status_shooping: true,
         };
-        console.log('payload:', payload);
+        // console.log('payload:', payload);
         const response = await handler.putProductById(selectedProductId, payload);
 
         alert('El pago se ha procesado correctamente. Será redirigido a la página de usuario.');
