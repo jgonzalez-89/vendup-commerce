@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 import { HttpHandler } from '../../../http/handler.js';
-import jwt_decode from 'jwt-decode';
-import Cookies from 'js-cookie';
 
-const Stripe = (props) => {
-  const token = Cookies.get('access_token');
-  const decoded = jwt_decode(token);
-  const userId = decoded.sub;
-  const [buyerUser, setBuyerUser] = useState({});
-  const [monto, setMonto] = useState(0);
+const Stripepremium = ({ userId }) => {
+  const [buyerUser, setBuyerUser] = useState("");
+  const [monto, setMonto] = useState('');
   const handler = new HttpHandler();
-  const data = props.store.selectedProduct;
 
-  // console.log('Desde data:', data);
+  console.log(buyerUser.products)
 
   useEffect(() => {
-    // debugger;
     async function getUser() {
       const { user } = await handler.getUserById(userId);
       setBuyerUser(user);
-      setMonto(data.price);
+      setMonto(user.products.length)
+      console.log(user)
     }
-
     getUser();
   }, []);
 
@@ -33,24 +26,13 @@ const Stripe = (props) => {
         stripeToken: token.id,
         monto: monto,
         owner_id: userId,
-        product_id: props.store.selectedProduct.id,
+        product_id: buyerUser.products.id,
       });
       if (data.status === 'success') {
-        const shoppingProductData = {
-          owner_id: userId,
-          product_id: props.store.selectedProduct.id,
-          status_shopping: true,
-          created_at_shopping: new Date(),
-          updated_at_shopping: new Date(),
-          price: monto,
-          status_paid: 'paid',
-          paid_at: new Date(),
-          purchase_method: 'stripe',
-          commission: 0.1,
-        };
-        await handler.postShoppingProduct(shoppingProductData);
-        const updatedProduct = { ...props.store.selectedProduct, status_shooping: false };
-        await handler.putProductById(updatedProduct.id, updatedProduct);
+        const updatedProducts = buyerUser.products.map((product) => {
+          return { ...product, premium: true };
+        });
+        await handler.putProductsById(buyerUser.id, updatedProducts);
         alert('El pago se ha procesado correctamente. Será redirigido a la página de usuario.');
         window.location = '/user';
       } else {
@@ -62,14 +44,18 @@ const Stripe = (props) => {
     }
   };
 
+  if (!buyerUser) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <StripeCheckout
         stripeKey={process.env.STRIPE_KEY}
         token={manejarPago}
-        amount={monto * 100}
+        amount={(monto * 100)* 0.99}
         name={buyerUser.name}
-        description={data.name}
+        description={"Usuario Premium"}
         currency="EUR"
         email={buyerUser.email}
         image={buyerUser.profile_picture}
@@ -78,10 +64,10 @@ const Stripe = (props) => {
         locale="es"
         allowRememberMe={true}
       >
-        <Button variant="warning">Pagar</Button>
+        <Button className="w-100 d-grid" variant="warning" size="lg">Pagar</Button>
       </StripeCheckout>
     </div>
   );
 };
 
-export default Stripe;
+export default Stripepremium;

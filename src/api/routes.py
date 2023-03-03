@@ -44,7 +44,7 @@ def serialize_product(product):
         "price": str(product.price),
         "images": product.images,
         "created_at_product": product.created_at_product.strftime("%Y-%m-%d %H:%M:%S"),
-        "status_shooping": str(product.status_shooping),
+        "status_shooping": product.status_shooping,
     }
 
 
@@ -68,9 +68,7 @@ def serialize_user_with_products(user):
     return {
         **serialize_user(user),
         "products": [serialize_product(product) for product in user.products],
-        "purchases": [
-            serialize_product(product.product) for product in user.purchases
-        ],
+        "purchases": [serialize_product(product.product) for product in user.purchases],
     }
 
 
@@ -186,7 +184,7 @@ def create_products():
         price=data.get("price"),
         images=data.get("images"),
         created_at_product=data.get("created_at_product"),
-        status_shooping=data.get("status_shooping"),
+        status_shooping=data.get("status_shooping", True),
     )
     db.session.add(product)
     db.session.commit()
@@ -206,12 +204,10 @@ def update_product(id):
     product.description = data.get("description", product.description)
     product.category = data.get("category", product.category)
     product.price = data.get("price", product.price)
+    product.premium = data.get("premium", product.premium)
     product.images = data.get("images", product.images)
-    product.created_at_product = data.get(
-        "created_at_product", product.created_at_product
-    )
-    product.status_shooping = data.get(
-        "status_shooping", product.status_shooping)
+    product.created_at_product = data.get("created_at_product", product.created_at_product)
+    product.status_shooping = data.get("status_shooping", product.status_shooping)
 
     db.session.commit()
     return jsonify({"product": serialize_product(product)})
@@ -237,13 +233,37 @@ def get_all_purchases():
     return jsonify({"purchases": [serialize_purchase(purchase) for purchase in purchases]})
 
 
+@api.route('/purchases/<int:id>', methods=['PUT'])
+def update_purchase(id):
+    # Obtener el producto comprado por su ID
+    purchase = Purchase.query.get(id)
+
+    # Verificar si el producto existe
+    if not purchase:
+        return jsonify({'message': 'No purchase found with that ID'}), 404
+
+    # Obtener los datos enviados en la solicitud PUT
+    data = request.get_json()
+
+    # Actualizar el parámetro deseado del producto comprado
+    purchase.status_shopping = data.get(
+        'status_shopping', purchase.status_shopping)
+
+    # Guardar los cambios en la base de datos
+    db.session.commit()
+
+    # Retornar el producto comprado actualizado
+    return jsonify({'purchase': serialize_purchase(purchase)})
+
+
 @api.route('/purchases', methods=['POST'])
 def create_purchases():
     data = request.get_json()
+
     purchase = Purchase(
         owner_id=data.get('owner_id'),
         product_id=data.get('product_id'),
-        status_shopping='active',
+        status_shopping=True,
         created_at_shopping=datetime.utcnow(),
         price=data.get('price'),
         status_paid='paid',

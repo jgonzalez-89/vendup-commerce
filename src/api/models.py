@@ -16,7 +16,7 @@ class Product(db.Model):
     price = db.Column(db.Numeric(precision=8, scale=2))
     images = db.Column(db.String)
     created_at_product = db.Column(db.DateTime)
-    status_shooping = db.Column(db.Enum("active", "inactive", "reserved", name="Product_enum_a2"))
+    status_shooping = db.Column(db.Boolean)
 
 
 class User(db.Model):
@@ -45,11 +45,11 @@ class Purchase(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, ForeignKey("User.id"), nullable=False)
     product_id = db.Column(db.Integer, ForeignKey("Product.id"), nullable=False)
-    status_shopping = db.Column(db.Enum("active", "inactive", "completed", name="Purchase_enum_a2"))
+    status_shopping = db.Column(db.Boolean)
     created_at_shopping = db.Column(db.DateTime)
     updated_at_shopping = db.Column(db.DateTime)
     price = db.Column(db.Numeric(precision=8, scale=2))
-    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="status_paid_enum_a2"))
+    status_paid = db.Column(db.Enum("paid", "pending", "refunded", name="status_paid_enum_a3"))
     paid_at = db.Column(db.DateTime)
     purchase_method = db.Column(db.String)
     commission = db.Column(db.Numeric(6, 2))

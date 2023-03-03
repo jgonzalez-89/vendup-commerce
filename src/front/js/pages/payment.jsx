@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext.js';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
 import Header from '../component/NavbarUser.jsx';
 import FormularioDePago from '../component/Stripe.jsx';
@@ -55,74 +56,89 @@ const Payment = () => {
     }
   };
 
-  console.log('Datos del vendedor:', sellerData.user);
-  console.log('Datos del producto:', productData);
+  // console.log('Datos del vendedor:', sellerData.user);
+  // console.log('Datos del producto:', productData);
 
   return (
-    <>
+<>
       <Header NavUser={'/user'} NavHome={'/'} NavProducts={'/products'} onClickLogOut={Logout} />
       <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px auto' }}>Cesta de la compra</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-        <div style={{ width: '50%', maxWidth: '400px', margin: '20px auto' }}>
-          {sellerData.user ? (
-            <Card>
-              <Card.Header className="text-bg-primary">
-                <h4 className="my-0 fw-normal text-center">Vendedor</h4>
-              </Card.Header>
-              <Card.Img
-                variant="top"
-                src={sellerData.user.profile_picture}
-                style={{
-                  width: '150px',
-                  height: '150px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '2px solid #FEBD2F',
-                }}
-              />
-              <Card.Body>
-                <Card.Title>
-                  {sellerData.user.name} {sellerData.user.surnames}
-                </Card.Title>
-                <Card.Text>Email: {sellerData.user.email}</Card.Text>
-                <Card.Text>Teléfono: {sellerData.user.phone}</Card.Text>
-                <Card.Text>
-                  {sellerData.user.location_city}, {sellerData.user.location_country}
-                </Card.Text>
-                <Card.Text>
-                  Ciudad: {sellerData.user.location_city}, Código postal: {sellerData.user.location_postcode}, País: {sellerData.user.location_country}
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          ) : (
-            <div className="d-flex justify-content-center m-5">
-              <h1>No se encontraron datos del vendedor.</h1>
-            </div>
-          )}
-        </div>
-        <div style={{ width: '50%', maxWidth: '400px', margin: '20px auto' }}>
-          {productData ? (
-            <Card>
-              <Card.Img variant="top" src={productData.images} style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover' }} />
-              <Card.Body>
-                <Card.Title>{productData.name}</Card.Title>
-                <Card.Text style={{ maxHeight: '150px', overflow: 'hidden' }}>{productData.description}</Card.Text>
-                <ListGroup className="list-group-flush">
-                  <hr />
-                  <ListGroup.Item>Precio: {productData.price} €</ListGroup.Item>
-                </ListGroup>
-              </Card.Body>
-              <Card.Footer className="d-flex justify-content-between align-items-center">
-                <small className="text-muted"></small>
-                <FormularioDePago store={store} />
-              </Card.Footer>
-            </Card>
-          ) : (
-            <div className="d-flex justify-content-center m-5">
-              <h1>No se ha seleccionado ningún producto.</h1>
-            </div>
-          )}
-        </div>
+      <div className="container">
+        <Container fluid>
+          <Row>
+            <Col xs={4} className="">
+              {sellerData.user ? (
+                <Card>
+                  <Card.Header className="text-bg-primary">
+                    <h4 className="my-0 fw-normal text-center">Vendedor</h4>
+                  </Card.Header>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Card.Img
+                      variant="top"
+                      src={sellerData.user.profile_picture}
+                      style={{
+                        width: '150px',
+                        height: '150px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        border: '2px solid #FEBD2F',
+                      }}
+                    />
+                  </div>
+                  <Card.Body>
+                    <Card.Title>
+                      {sellerData.user.name} {sellerData.user.surnames}
+                    </Card.Title>
+                    <Card.Text>Email: {sellerData.user.email}</Card.Text>
+                    <Card.Text>Teléfono: {sellerData.user.phone}</Card.Text>
+                    <Card.Text>
+                      {sellerData.user.location_city}, {sellerData.user.location_country}
+                    </Card.Text>
+                    <Card.Text>
+                      Ciudad: {sellerData.user.location_city}, Código postal: {sellerData.user.location_postcode}, País: {sellerData.user.location_country}
+                    </Card.Text>
+                    <Card.Text>Registrado desde : {sellerData.user.registered_date}</Card.Text>
+                  </Card.Body>
+                  <Card.Footer className="d-flex justify-content-between align-items-center">{/* <Button>Chat en vivo</Button> */}</Card.Footer>
+                </Card>
+              ) : (
+                <div className="d-flex justify-content-center m-5">
+                  <h1>No se encontraron datos del vendedor.</h1>
+                </div>
+              )}
+            </Col>
+            <Col xs={4} className="bg-light text-center">
+              <h1>Aqui va un chat</h1>
+              {/* <ChatComponente /> */}
+            </Col>
+            <Col xs={4} className="">
+              {productData ? (
+                <Card>
+                  <Card.Header className="text-bg-primary">
+                    <h4 className="my-0 fw-normal text-center">Vas a comprar</h4>
+                  </Card.Header>
+                  <Card.Img variant="top" src={productData.images} style={{ maxWidth: '100%', maxHeight: '200px', objectFit: 'cover' }} />
+                  <Card.Body>
+                    <Card.Title>{productData.name}</Card.Title>
+                    <Card.Text style={{ maxHeight: '150px', overflow: 'hidden' }}>{productData.description}</Card.Text>
+                    <ListGroup className="list-group-flush">
+                      <hr />
+                      <ListGroup.Item>Precio: {productData.price} €</ListGroup.Item>
+                    </ListGroup>
+                  </Card.Body>
+                  <Card.Footer className="d-flex justify-content-between align-items-center">
+                    <small className="text-muted"></small>
+                    <FormularioDePago store={store} />
+                  </Card.Footer>
+                </Card>
+              ) : (
+                <div className="d-flex justify-content-center m-5">
+                  <h1>No se ha seleccionado ningún producto.</h1>
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Container>
       </div>
     </>
   );

@@ -11,8 +11,10 @@ import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
 
 const ProductView = () => {
+
   const token = Cookies.get('access_token');
   const decoded = jwt_decode(token);
+  const userId = decoded.sub;
   const { store, actions } = useContext(Context);
   const { selectedProduct } = store;
 
@@ -24,6 +26,9 @@ const ProductView = () => {
   const [page, setPage] = useState(1);
 
   const handler = new HttpHandler();
+
+  console.log(data)
+  console.log(userId)
 
   // const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutos
   // const currentTime = Date.now();
@@ -51,8 +56,14 @@ const ProductView = () => {
   };
 
   const filteredItems = data.product
-    ? data.product.filter((item) => (category === '' || item.category === category) && (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())))
-    : [];
+  ? data.product.filter(
+      (item) =>
+        (category === '' || item.category === category) &&
+        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())) &&
+        item.status_shooping === true && // Condición para productos con status_shooping true
+        item.owner_id !== userId // Agregar condición para que el userId no pueda comprar sus propios productos
+    )
+  : [];
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;

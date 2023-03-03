@@ -67,7 +67,7 @@ const Userpage = () => {
       renderComponent = <AjustesComponent userId={userId} />;
       break;
     case 'Premium':
-      renderComponent = <PremiumComponent />;
+      renderComponent = <PremiumComponent userId={userId}/>;
       break;
     default:
       renderComponent = <div>No se encontró componente.</div>;
