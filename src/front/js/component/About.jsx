@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import {CardGroup}  from "react-bootstrap";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Footer from "./Footer.jsx";
 import "../../../../public/image1.jpeg";
 import "../../../../public/products.jpeg";
 import "../../../../public/chat.png";
@@ -78,6 +79,7 @@ const About = () => (
      <br/>
      <a className= "text-center" href="/faqs"><h2>¿Tienes más preguntas?</h2></a>
      <br/>
+     <Footer></Footer>
      </>
 );
 

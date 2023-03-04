@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import Footer from "./Footer.jsx";
 // import Navbar from './Navbar.jsx';
 import '../../styles/team.css';
 import '../../../../public/Jose.png';
@@ -94,6 +95,7 @@ const Team = () => (
       </Card>
     </CardGroup>
     <hr className="featurette-divider"></hr>
+    <Footer></Footer>
   </>
 );
 export default Team;

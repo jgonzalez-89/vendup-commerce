@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Header from './NavbarUser.jsx';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Footer from "./Footer.jsx";
 
 
 // import Navbar from '../component/Navbar.jsx';
@@ -36,6 +37,7 @@ const Terms = () => (
         </Card.Body>
       </Card>
       <br />
+      <Footer></Footer>
   </>
 );
 export default Terms;
