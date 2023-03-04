@@ -33,11 +33,11 @@ function Forgotpass(props) {
           </form>
         </Modal.Body>
 
-        <Modal.Footer className="show-grid">
+        <Modal.Footer style={{background: "#212529"}} className="show-grid">
           <Container>
             <Row>
               <Col xs={6} md={6}>
-                <img alt="" src="logowhite.png" width="100" height="60" className="position-absolute top-0 start-0" />{' '}
+                <img alt="logo" src="logowhite.png" width="100" height="60" className="position-absolute top-0 start-0" />{' '}
               </Col>
               <Col xs={6} md={6}>
                 <Button variant="warning btn-lg" onClick={handleClose}>
