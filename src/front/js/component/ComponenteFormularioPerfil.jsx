@@ -143,7 +143,7 @@ const AjustesComponent = ({ userId }) => {
             <FormGroup as={Col} md="8" controlId="validationCustom05">
               <FormLabel>Email address</FormLabel>
               <FormControl
-                required
+                disabled
                 type="email"
                 placeholder="name@example.com"
                 value={userName.email || ''}
