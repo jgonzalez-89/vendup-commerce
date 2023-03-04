@@ -4,14 +4,14 @@ import { categories } from '../../../../data.js';
 import { useContext } from 'react';
 import { Context } from '../store/appContext.js';
 import SearchPage from '../component/Search.jsx';
-import Header from '../component/NavbarUser.jsx';
+import Header from '../component/Navbar.jsx';
 import CardFree from '../component/CardFree.jsx';
 import CardPremium from '../component/CardPremium.jsx';
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
+import Footer from '../component/Footer.jsx';
 
 const ProductView = () => {
-
   const token = Cookies.get('access_token');
   const decoded = jwt_decode(token);
   const userId = decoded.sub;
@@ -27,8 +27,8 @@ const ProductView = () => {
 
   const handler = new HttpHandler();
 
-  console.log(data)
-  console.log(userId)
+  console.log(data);
+  console.log(userId);
 
   // const expirationTime = decoded.exp * 1000 - 1800000; // 30 minutos
   // const currentTime = Date.now();
@@ -56,14 +56,14 @@ const ProductView = () => {
   };
 
   const filteredItems = data.product
-  ? data.product.filter(
-      (item) =>
-        (category === '' || item.category === category) &&
-        (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())) &&
-        item.status_shooping === true && // Condición para productos con status_shooping true
-        item.owner_id !== userId // Agregar condición para que el userId no pueda comprar sus propios productos
-    )
-  : [];
+    ? data.product.filter(
+        (item) =>
+          (category === '' || item.category === category) &&
+          (searchText === '' || item.name.toLowerCase().includes(searchText.toLowerCase())) &&
+          item.status_shooping === true && // Condición para productos con status_shooping true
+          item.owner_id !== userId // Agregar condición para que el userId no pueda comprar sus propios productos
+      )
+    : [];
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -93,7 +93,7 @@ const ProductView = () => {
           {categories.map((categoryItem) => (
             <button
               key={categoryItem.value}
-              className={`btn btn-outline-warning mx-1 ${category === categoryItem.value ? 'active' : ''}`}
+              className={`btn btn-outline-warning mx-1 m-1${category === categoryItem.value ? 'active' : ''}`}
               onClick={() => setCategory(categoryItem.value)}
             >
               {categoryItem.label}
@@ -140,6 +140,8 @@ const ProductView = () => {
           </>
         )}
       </div>
+
+      <Footer />
     </>
   );
 };
