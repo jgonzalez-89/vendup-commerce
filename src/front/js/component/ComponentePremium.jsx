@@ -37,7 +37,7 @@ const Stripepremium = ({ userId, buyerUser, selectedProductId }) => {
           id: selectedProductId,
           category: product.category,
           created_at_product: product.created_at_product,
-          description: 'me cago en todo',
+          description: product.description,
           images: product.images,
           name: product.name,
           owner_id: product.owner_id,

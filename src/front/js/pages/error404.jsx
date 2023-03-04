@@ -1,7 +1,7 @@
 import React from 'react';
 import img404 from '../../../../public/error-404.jpg';
 
-import Header from '../component/NavbarUser.jsx';
+import Header from '../component/Navbar.jsx';
 
 const Error404 = () => {
   return (

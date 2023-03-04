@@ -2,15 +2,16 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { Button, Navbar, Nav, Container } from 'react-bootstrap';
-import logo from '../../../../public/logowhite.png';
 import LogoVendup from '../../../../public/vendup.png';
 
 const Header = ({ NavHome, NavProducts, NavUser, onClickLogOut }) => {
   return (
     <Navbar bg="dark" variant="dark" style={{ minHeight: '50px', top: '0' }}>
       <Container>
-        <Navbar.Brand href="#home">
-          <img src={LogoVendup} width="100" role="img" aria-label="Vendup" />
+        <Navbar.Brand>
+          <a href="/">
+            <img src={LogoVendup} width="100" role="img" aria-label="Vendup" />
+          </a>
         </Navbar.Brand>
 
         <Nav className="me-auto">

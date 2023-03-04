@@ -1,6 +1,6 @@
-/* .card.disabled {
+.card.disabled {
   opacity: 0.5;
   pointer-events: none;
   background-color: #6c757d;
   color: #6c757d !important;
-} */
+}

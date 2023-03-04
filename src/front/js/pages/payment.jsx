@@ -3,7 +3,7 @@ import { Context } from '../store/appContext.js';
 import { Card, Modal, ListGroup, Button } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import { HttpHandler } from '../../../http/handler';
-import Header from '../component/NavbarUser.jsx';
+import Header from '../component/Navbar.jsx';
 import FormularioDePago from '../component/Stripe.jsx';
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
@@ -60,7 +60,7 @@ const Payment = () => {
   // console.log('Datos del producto:', productData);
 
   return (
-<>
+    <>
       <Header NavUser={'/user'} NavHome={'/'} NavProducts={'/products'} onClickLogOut={Logout} />
       <h1 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px auto' }}>Cesta de la compra</h1>
       <div className="container">
@@ -108,7 +108,7 @@ const Payment = () => {
               )}
             </Col>
             <Col xs={4} className="bg-light text-center">
-              <h1>Aqui va un chat</h1>
+              {/* <h1>Aqui va un chat</h1> */}
               {/* <ChatComponente /> */}
             </Col>
             <Col xs={4} className="">
