@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HttpHandler } from '../../../http/handler';
 import jwt_decode from 'jwt-decode';
 import Cookies from 'js-cookie';
-import Header from '../component/NavbarUser.jsx';
+import Header from '../component/Navbar.jsx';
 import ComprasComponent from '../component/ComponenteCompras.jsx';
 import VentasComponent from '../component/ComponenteVentas.jsx';
 import ProductoComponent from '../component/ComponenteFormularioProducto.jsx';
@@ -67,7 +67,7 @@ const Userpage = () => {
       renderComponent = <AjustesComponent userId={userId} />;
       break;
     case 'Premium':
-      renderComponent = <PremiumComponent userId={userId}/>;
+      renderComponent = <PremiumComponent userId={userId} />;
       break;
     default:
       renderComponent = <div>No se encontró componente.</div>;
@@ -79,7 +79,7 @@ const Userpage = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-3 col-md-4 col-sm-12">
-            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3">
+            <div className="d-flex flex-column p-3 bg-light justify-content-center align-items-center rounded shadow m-3 sticky-top">
               <div>
                 <img
                   src={userName.profile_picture}

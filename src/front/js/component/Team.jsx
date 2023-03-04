@@ -4,33 +4,15 @@ import '../../styles/team.css';
 import '../../../../public/Jose.png';
 import '../../../../public/quique.jpeg';
 import '../../../../public/Lola.png';
-import Header from './NavbarUser.jsx';
+import Header from './Navbar.jsx';
 
 const Team = () => (
   <>
     <Header NavHome={'/'} NavProducts={'/products'} NavUser={'/user'} />
-    <div className="card text-bg-dark">
-      <img src="" class="video" alt="..." />
-      <div className="card-img-overlay">
-        <h5 className="card-title">Meet Our team</h5>
-        <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p className="card-text">
-          <small>Last updated 3 mins ago</small>
-        </p>
-      </div>
-    </div>
-    {/* <div className="container">
-      <div className="mbr-white col-md-12">
-        <h1 className="d-flex mt-5 justify-content-center">MEET OUR TEAM</h1>
-        <p className="m-3 align-center pb-3">
-            We are all very different. <br>
-            </br>We were born in different cities, at different times, we love different music, food, movies. But we have something that unites us all. It is our company. WE are its heart. We are not just a team, we are a family!</p>    
-      </div>  
-    </div> */}
 
     <hr className="featurette-divider"></hr>
 
-    <div className="row gx-5">
+    <div className="cuerpopagina row gx-5">
       <div className="col-lg-4">
         <div className="container d-flex align-items-center justify-content-center flex-wrap">
           <div className="box">
@@ -41,7 +23,7 @@ const Team = () => (
               <div className="content d-flex flex-column justify-content-center">
                 <div className="center">
                   <h3 className="text-white fs-5">Jose L. Gonzalez Diaz</h3>
-                  <p className="fs-6 text-white">Self-Taught Developer and Designer</p>
+                  <p className="fs-6 text-white">FullStack Developer</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/jgonzalez89/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
@@ -71,7 +53,7 @@ const Team = () => (
               <div className="content d-flex flex-column justify-content-center">
                 <div className="center">
                   <h3 className="text-white fs-5">Enrique Ares Lorenzo</h3>
-                  <p className="fs-6 text-white">Some Information</p>
+                  <p className="fs-6 text-white">Frontend Developed</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/j-enrique-ar%C3%A9s-lorenzo-6a636a148/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
@@ -101,7 +83,7 @@ const Team = () => (
               <div className="content d-flex flex-column justify-content-center">
                 <div className="center">
                   <h3 className="text-white fs-5">Lola Petrement Sanchez</h3>
-                  <p className="fs-6 text-white">Some Information</p>
+                  <p className="fs-6 text-white">Frontend Developed</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/lola-petrement/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">

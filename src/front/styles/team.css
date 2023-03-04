@@ -1,15 +1,5 @@
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.cuerpopagina {
+    margin-top: 15vh;
 }
 
  .container{
@@ -81,4 +71,4 @@ body{
 
 .container .box .body .content div h3{
     letter-spacing: 1px;
-} */
+}
