@@ -58,7 +58,7 @@ function Register() {
               <Form.Control type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <Form.Label className="pt-2">Contraseña</Form.Label>
               <Form.Control type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <Form.Check className="mt-3" type="checkbox" label="He leído y acepto los términos y condiciones" onChange={(e) => setAcceptedTerms(e.target.checked)} />
+              <Form.Check className="mt-3" type="checkbox" label="He leido los " onChange={(e) => setAcceptedTerms(e.target.checked)} /><a href="/terms">terminos y condiciones</a>
             </Form.Group>
           </Form>
           {errorMessage !== '' && <p className="alert alert-danger text-center">{errorMessage}</p>}

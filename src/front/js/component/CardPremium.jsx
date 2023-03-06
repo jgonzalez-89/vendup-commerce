@@ -54,7 +54,7 @@ const CardPremium = ({ image, title, description, price, onEditClick, item, acti
                 {actionButton}
               </Button>
             )}
-            {actionButton === 'Comprar+' && (
+            {actionButton === 'Ver' && (
               <Button variant="warning" onClick={onAlertClick} className="d-grid" size="lg">
                 {actionButton}
               </Button>

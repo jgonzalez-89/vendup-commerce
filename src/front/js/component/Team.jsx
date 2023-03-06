@@ -11,6 +11,8 @@ const Team = () => (
     <Header NavHome={'/'} NavProducts={'/products'} NavUser={'/user'} />
 
     <hr className="featurette-divider"></hr>
+    <h1 className="m-2 text-center">Nuestro Equipo</h1>
+      <p clasName="m-2 text-center">Hemos creado VENDUP para ¡ti! pero puedes conocer un poco más de nosotros abajo</p>
 
     <div className="cuerpopagina row gx-5">
       <div className="col-lg-4">
@@ -24,6 +26,7 @@ const Team = () => (
                 <div className="center">
                   <h3 className="text-white fs-5">Jose L. Gonzalez Diaz</h3>
                   <p className="fs-6 text-white">FullStack Developer</p>
+                  <p className="text-center text-white">Self-Taught Developer and Designer</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/jgonzalez89/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
@@ -54,6 +57,7 @@ const Team = () => (
                 <div className="center">
                   <h3 className="text-white fs-5">Enrique Ares Lorenzo</h3>
                   <p className="fs-6 text-white">Frontend Developed</p>
+                  <p className="text-center text-white">La verdad es… Yo soy Iron Man.</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/j-enrique-ar%C3%A9s-lorenzo-6a636a148/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
@@ -84,6 +88,7 @@ const Team = () => (
                 <div className="center">
                   <h3 className="text-white fs-5">Lola Petrement Sanchez</h3>
                   <p className="fs-6 text-white">Frontend Developed</p>
+                  <p className="text-center text-white">Veni, vidi, vinci</p>
                   <p>
                     <a className="btn btn-dark" href="https://www.linkedin.com/in/lola-petrement/">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16">
